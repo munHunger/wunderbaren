@@ -20,7 +20,7 @@ public class Item
 	@Column(name = "category")
 	public String category;
 	@Column(name = "amount")
-	public int ammount;
+	public int amount;
 	@Column(name = "price")
 	public int price;
 
@@ -33,7 +33,7 @@ public class Item
 	{
 		this.name = name;
 		this.category = category;
-		this.ammount = amount;
+		this.amount = amount;
 		this.price = price;
 	}
 }
