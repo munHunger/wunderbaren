@@ -37,7 +37,7 @@ public class Wunderbaren
 		param.put("name", name);
 		List items = Database.getObjects("from Item WHERE name = :name", param);
 		Item item = (Item)items.get(0);
-		item.ammount--;
+		item.amount--;
 		Database.updateObject(item);
 		return Response.ok().build();
 	}
@@ -51,7 +51,7 @@ public class Wunderbaren
 		param.put("name", name);
 		List items = Database.getObjects("from Item WHERE name = :name", param);
 		Item item = (Item)items.get(0);
-		item.ammount++;
+		item.amount++;
 		Database.updateObject(item);
 		return Response.ok().build();
 	}
