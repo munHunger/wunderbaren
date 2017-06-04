@@ -14,10 +14,10 @@
 
     <!-- Swagger Configuration -->
     <bean id="beanConfig" class="io.swagger.jaxrs.config.BeanConfig">
-        <property name="schemes" value="https"/>
+        <property name="schemes" value="http, https"/>
         <property name="filterClass"
                   value="se.munhunger.notes.util.swagger.ApiAuthorizationFilterImpl"/>
-        <property name="resourcePackage" value="se.munhunger.notes"/>
+        <property name="resourcePackage" value="se.munhunger.wunderbaren"/>
         <property name="version" value="0.0.1"/>
         <property name="host" value=""/>
         <property name="basePath" value="/api"/>
