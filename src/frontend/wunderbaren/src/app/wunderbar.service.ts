@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Http, Headers, Response} from "@angular/http";
+import {Http, Headers, Response, URLSearchParams} from "@angular/http";
 import {Observable} from "rxjs";
 import {Item} from "./item.model";
 
@@ -12,7 +12,7 @@ export class WunderbarService
   constructor(private http: Http)
   {
     this.headers = new Headers();
-    this.headers.append('Content-Type', 'application/json');
+    this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
     this.headers.append('Access-Control-Allow-Headers', '*');
   }
 
@@ -20,6 +20,27 @@ export class WunderbarService
   {
     return this.http.get(this.baseURL + "?category=" + category).map(body => body.json()).catch(this.handleError);
   }
+
+  public decrease(name: string)
+  {
+    const body = new URLSearchParams();
+    body.set("name", name);
+
+    return this.http.put(this.baseURL + "/decrease", body.toString(), {
+      headers : this.headers
+    }).subscribe();
+  }
+
+  public increase(name: string)
+  {
+    const body = new URLSearchParams();
+    body.set("name", name);
+
+    return this.http.put(this.baseURL + "/increase", body.toString(), {
+      headers : this.headers
+    }).subscribe();
+  }
+
   private handleError(error: Response | any)
   {
     // In a real world app, you might use a remote logging infrastructure
