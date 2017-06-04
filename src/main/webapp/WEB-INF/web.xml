@@ -22,7 +22,7 @@
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>
                 io.swagger.jaxrs.listing,
-                se.munhunger.notes
+                se.munhunger.wunderbaren
             </param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
@@ -49,7 +49,7 @@
 
     <servlet>
         <servlet-name>SwaggerBootstrap</servlet-name>
-        <servlet-class>se.munhunger.notes.util.swagger.Bootstrap</servlet-class>
+        <servlet-class>se.munhunger.wunderbaren.util.swagger.Bootstrap</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
 
