@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import {EventComponent} from "./event/event.component";
 import {StockComponent} from "./stock/stock.component";
+import {WunderbarService} from "./wunderbar.service";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import {StockComponent} from "./stock/stock.component";
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [WunderbarService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

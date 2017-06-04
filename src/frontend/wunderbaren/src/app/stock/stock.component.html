@@ -1,5 +1,19 @@
 <div>
   <div class="w3-half w3-padding">
+
+    <ul class="w3-ul">
+      <li><h4>ÖL</h4></li>
+      <li *ngFor="let item of beerList" class="w3-display-container">
+        {{item.name}}
+        <span class="small-text">(x{{item.amount}})</span>
+        <span class="w3-display-right">
+          {{item.price}}
+          <span class="small-text">kr</span>
+        </span>
+      </li>
+    </ul>
+
+
     <ul class="w3-ul">
       <li><h4>ÖL</h4></li>
       <li class="w3-display-container">
