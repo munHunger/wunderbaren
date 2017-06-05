@@ -17,10 +17,10 @@ export class StockComponent {
 
   public update()
   {
-    Observable.interval(1000).subscribe(x => {
+    setInterval(() => {
       this.service.getCategory("beer").subscribe(items => {
         this.beerList = items;
       });
-    });
+    }, 1000);
   }
 }
