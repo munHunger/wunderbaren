@@ -65,10 +65,12 @@
             <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
             <param-value>true</param-value>
         </init-param>
+        <async-supported>true</async-supported>
     </filter>
 
     <filter-mapping>
         <filter-name>ApiOriginFilter</filter-name>
         <url-pattern>/*</url-pattern>
+        <async-supported>true</async-supported>
     </filter-mapping>
 </web-app>
