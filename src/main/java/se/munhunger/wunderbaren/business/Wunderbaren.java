@@ -2,7 +2,6 @@ package se.munhunger.wunderbaren.business;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.glassfish.jersey.server.ManagedAsync;
 import org.springframework.stereotype.Component;
 import se.munhunger.wunderbaren.model.Item;
 import se.munhunger.wunderbaren.util.database.jpa.Database;
@@ -65,7 +64,6 @@ public class Wunderbaren
 	}
 
 	@GET
-	@ManagedAsync
 	@ApiOperation(value = "Gets all items of the same category")
 	public void getItems(@Suspended final AsyncResponse asyncResponse, @HeaderParam("hash")int hash, @QueryParam("category") String category) throws Exception
 	{
