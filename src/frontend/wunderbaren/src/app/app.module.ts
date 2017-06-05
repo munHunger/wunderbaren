@@ -8,12 +8,14 @@ import {EventComponent} from "./event/event.component";
 import {StockComponent} from "./stock/stock.component";
 import {WunderbarService} from "./wunderbar.service";
 import {ItemComponent} from "./stock/item/item.component";
+import {LoginComponent} from "./login/login.component";
 
 @NgModule({
   declarations: [
     EventComponent,
     StockComponent,
     ItemComponent,
+    LoginComponent,
     AppComponent
   ],
   imports: [

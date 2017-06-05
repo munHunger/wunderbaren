@@ -1,0 +1,36 @@
+<div class="overlay"></div>
+<div style="clear: both;"></div>
+<div class="login">
+  <div class="w3-card">
+    <header class="w3-container w3-padding w3-light-gray">
+      <span *ngIf="!newUser" class="w3-animate-opacity">
+        Logga in
+      </span>
+      <span *ngIf="newUser" class="w3-animate-opacity">
+        <h3>Registrera en ny användare</h3>
+        Alla användaruppgifter lagras hashat i en lokal databas.<br />
+        Autentisering sker med OAuth 2.0 och OpenID Connect.<br />
+        JSON WebTokens används för att säkerställa vem som tar han om inloggninguppgifter.<br />
+        Nonce tokens används för att unvika replay attacker.<br />
+        Servern kör med TSL 1.2 för kryptering av data trafik.<br />
+      </span>
+    </header>
+    <div class="w3-container w3-white">
+      <form>
+        <input class="w3-check w3-margin" [checked]="newUser" (change)="newUser = !newUser" type="checkbox"><label>Ny användare</label><br />
+        <div *ngIf="!newUser" class="w3-animate-opacity">
+          <input class="w3-input w3-animate-input" style="width: 50%;" type="text" name="username" id="username" placeholder="Namn Namnsson"><br />
+          <input class="w3-input w3-animate-input" style="width: 50%;" type="password" name="password" id="password" placeholder="Lösenord"><br />
+          <button class="w3-btn w3-blue-grey w3-margin">Logga in</button>
+        </div>
+        <div *ngIf="newUser" class="w3-animate-opacity">
+          <input class="w3-input w3-animate-input" style="width: 50%;" type="text" name="username" id="username" placeholder="Namn Namnsson"><br />
+          <input class="w3-input w3-animate-input" style="width: 50%;" type="number" name="number" id="number" placeholder="070 xxx xxxx"><br />
+          <input class="w3-input w3-animate-input" style="width: 50%;" type="password" name="password" id="password" placeholder="Lösenord"><br />
+          <input type="hidden" name="client_id" id="client_id" value="wunderbarenrml59a10ad6ab0jubpe5c"><br />
+          <button class="w3-btn w3-blue-grey w3-margin">Registrera</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
