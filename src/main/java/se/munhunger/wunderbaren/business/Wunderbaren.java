@@ -75,6 +75,7 @@ public class Wunderbaren
 	}
 
 	@GET
+	@Path("/update")
 	@ApiOperation(value = "Gets all items of the same category if the hash does not equal. plain 200 OK otherwise")
 	public Response getUpdate(@HeaderParam("hash")int hash, @QueryParam("category") String category) throws Exception
 	{
