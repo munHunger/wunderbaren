@@ -6,7 +6,7 @@
 
 
     <!-- Application Beans -->
-    <context:component-scan base-package="se.munhunger.wunderbaren"/>
+    <context:component-scan base-package="se.munhunger"/>
 
     <!-- Swagger Beans -->
     <bean id="apiListingResource" class="io.swagger.jaxrs.listing.ApiListingResource"/>
@@ -17,7 +17,7 @@
         <property name="schemes" value="http, https"/>
         <property name="filterClass"
                   value="se.munhunger.notes.util.swagger.ApiAuthorizationFilterImpl"/>
-        <property name="resourcePackage" value="se.munhunger.wunderbaren"/>
+        <property name="resourcePackage" value="se.munhunger"/>
         <property name="version" value="0.0.1"/>
         <property name="host" value=""/>
         <property name="basePath" value="/api"/>

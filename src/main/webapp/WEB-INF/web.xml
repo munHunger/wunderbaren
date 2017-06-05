@@ -23,7 +23,7 @@
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>
                 io.swagger.jaxrs.listing,
-                se.munhunger.wunderbaren
+                se.munhunger
             </param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>

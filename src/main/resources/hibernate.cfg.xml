@@ -25,5 +25,11 @@
 
         <!-- List of XML mapping files -->
         <mapping class="se.munhunger.wunderbaren.model.Item"/>
+        <mapping class="se.munhunger.oauth.model.client.RegisteredClient"/>
+        <mapping class="se.munhunger.oauth.model.client.ClientURL"/>
+        <mapping class="se.munhunger.oauth.model.user.User"/>
+        <mapping class="se.munhunger.oauth.model.user.UserRoles"/>
+        <mapping class="se.munhunger.oauth.model.token.AuthenticationToken"/>
+        <mapping class="se.munhunger.oauth.model.token.NonceToken"/>
     </session-factory>
 </hibernate-configuration>
