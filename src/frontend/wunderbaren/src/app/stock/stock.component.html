@@ -1,88 +1,37 @@
 <div>
   <div class="w3-half w3-padding">
-
     <ul class="w3-ul">
       <li><h4>ÖL</h4></li>
       <li *ngFor="let item of beerList" class="w3-display-container">
         <item [item]="item"></item>
       </li>
     </ul>
+  </div>
 
-
+  <div class="w3-half w3-padding">
     <ul class="w3-ul">
-      <li><h4>ÖL</h4></li>
-      <li class="w3-display-container">
-        Mariestad
-        <span class="small-text">(x55)</span>
-        <span class="w3-display-right">
-          15
-          <span class="small-text">kr</span>
-        </span>
-      </li>
-      <li class="w3-display-container">
-        Pistonhead
-        <span class="small-text">(x34)</span>
-        <span class="w3-display-right">
-          12
-          <span class="small-text">kr</span>
-        </span>
-      </li>
-      <li class="w3-display-container">
-        Hoegarden
-        <span class="small-text">(x4)</span>
-        <span class="w3-display-right">
-          17
-          <span class="small-text">kr</span>
-        </span>
-      </li>
-      <li class="w3-display-container">
-        1664 Blanc
-        <span class="small-text">(x7)</span>
-        <span class="w3-display-right">
-          16
-          <span class="small-text">kr</span>
-        </span>
+      <li><h4>CIDER</h4></li>
+      <li *ngFor="let item of ciderList" class="w3-display-container">
+        <item [item]="item"></item>
       </li>
     </ul>
-  </div><div class="w3-half w3-padding">
-  <ul class="w3-ul">
-    <li><h4>CIDER</h4></li>
-    <li class="w3-display-container">
-      Sommersby päron
-      <span class="small-text">(x13)</span>
-      <span class="w3-display-right">
-          12
-          <span class="small-text">kr</span>
-      </span>
-    </li>
-    <li class="w3-display-container">
-      Strongbow
-      <span class="small-text">(x4)</span>
-      <span class="w3-display-right">
-          16
-          <span class="small-text">kr</span>
-      </span>
-    </li>
-  </ul>
-</div><div class="w3-half w3-padding">
-  <ul class="w3-ul">
-    <li><h4>VIN</h4></li>
-    <li class="w3-display-container">
-      Tre apor
-      <span class="small-text">(x1)</span>
-      <span class="w3-display-right">
-          20
-          <span class="small-text">kr</span>
-      </span>
-    </li>
-    <li class="w3-display-container">
-      Chateau flogsta
-      <span class="small-text">(x2)</span>
-      <span class="w3-display-right">
-          18
-          <span class="small-text">kr</span>
-      </span>
-    </li>
-  </ul>
-</div>
+  </div>
+
+  <div class="w3-half w3-padding">
+    <ul class="w3-ul">
+      <li><h4>VIN</h4></li>
+      <li *ngFor="let item of whineList" class="w3-display-container">
+        <item [item]="item"></item>
+      </li>
+    </ul>
+  </div>
+
+  <div class="w3-half w3-padding">
+    <ul class="w3-ul">
+      <li><h4>DRINKAR</h4></li>
+      <li *ngFor="let item of drinkList" class="w3-display-container">
+        <item [item]="item"></item>
+      </li>
+    </ul>
+  </div>
 </div>
