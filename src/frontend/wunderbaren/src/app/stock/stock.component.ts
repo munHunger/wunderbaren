@@ -13,10 +13,7 @@ export class StockComponent {
   beerListHash: string;
   constructor(private service: WunderbarService)
   {
-    setInterval(() => {
-      console.log("updating!");
       this.update();
-    }, 1000);
   }
 
   public update()
@@ -24,6 +21,7 @@ export class StockComponent {
       this.service.getCategory("beer", this.beerListHash).subscribe(items => {
         this.beerList = items.json();
         this.beerListHash = items.headers.get('hash');
+        this.update();
       });
   }
 }
