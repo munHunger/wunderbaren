@@ -11,8 +11,14 @@ export class StockComponent {
   beerList: Item[] = [];
   constructor(private service: WunderbarService)
   {
-    service.getCategory("beer").subscribe(items => {
+    this.update();
+  }
+
+  public update()
+  {
+    this.service.getCategory("beer").subscribe(items => {
       this.beerList = items;
+      setTimeout(() => { this.update(); }, 5000);
     });
   }
 }
