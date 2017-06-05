@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by marcu on 2017-06-04.
@@ -24,6 +26,8 @@ import java.util.Map;
 @Api(value = "Wunderbaren")
 public class Wunderbaren
 {
+	private static final ExecutorService TASK_EXECUTOR = Executors.newCachedThreadPool();
+
 	@POST
 	@ApiOperation(value = "Create a new item")
 	public Response createNewItem(@FormParam("name") String name, @FormParam("category") String category, @FormParam("amount") int amount, @FormParam("price") int price)
@@ -65,20 +69,29 @@ public class Wunderbaren
 	@ApiOperation(value = "Gets all items of the same category")
 	public void getItems(@Suspended final AsyncResponse asyncResponse, @HeaderParam("hash")int hash, @QueryParam("category") String category) throws Exception
 	{
-		int newHash = hash;
-		int attempts = 0;
-		List items = new ArrayList<>();
-		while(newHash == hash && attempts < 300)
-		{
-			Map<String, Object> param = new HashMap<>();
-			param.put("category", category);
-			items = Database.getObjects("from Item WHERE category = :category", param);
-			newHash = getItemHash(items);
-			if(attempts > 0)
-				Thread.sleep(100);
-			attempts++;
-		}
-		asyncResponse.resume(Response.ok(items).header("hash", "" + getItemHash(items)).build());
+		TASK_EXECUTOR.submit(() -> {
+			try
+			{
+				int newHash = hash;
+				int attempts = 0;
+				List items = new ArrayList<>();
+				while (newHash == hash && attempts < 300)
+				{
+					Map<String, Object> param = new HashMap<>();
+					param.put("category", category);
+					items = Database.getObjects("from Item WHERE category = :category", param);
+					newHash = getItemHash(items);
+					if (attempts > 0)
+						Thread.sleep(100);
+					attempts++;
+				}
+				asyncResponse.resume(Response.ok(items).header("hash", "" + getItemHash(items)).build());
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		});
 	}
 
 	private int getItemHash(List items)
