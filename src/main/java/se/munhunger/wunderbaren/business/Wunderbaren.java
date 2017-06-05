@@ -8,9 +8,13 @@ import se.munhunger.wunderbaren.util.database.jpa.Database;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.sun.xml.internal.ws.api.message.Packet.Status.Response;
+import static org.reflections.util.ConfigurationBuilder.build;
 
 /**
  * Created by marcu on 2017-06-04.
@@ -58,11 +62,29 @@ public class Wunderbaren
 
 	@GET
 	@ApiOperation(value = "Gets all items of the same category")
-	public Response getItems(@QueryParam("category") String category) throws Exception
+	public Response getItems(@HeaderParam("hash") int hash, @QueryParam("category") String category) throws Exception
 	{
-		Map<String, Object> param = new HashMap<>();
-		param.put("category", category);
-		List items = Database.getObjects("from Item WHERE category = :category", param);
-		return Response.ok(items).build();
+		int newHash = hash;
+		int attempts = 0;
+		List items = new ArrayList<>();
+		while(newHash == hash && attempts < 300)
+		{
+			Map<String, Object> param = new HashMap<>();
+			param.put("category", category);
+			items = Database.getObjects("from Item WHERE category = :category", param);
+			newHash = getItemHash(items);
+			if(attempts > 0)
+				Thread.sleep(100);
+			attempts++;
+		}
+		return Response.ok(items).header("hash", "" + getItemHash(items)).build();
+	}
+
+	private int getItemHash(List items)
+	{
+		StringBuilder builder = new StringBuilder();
+		for(Object o : items)
+			builder.append(o.toString());
+		return builder.toString().hashCode();
 	}
 }

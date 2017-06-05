@@ -16,9 +16,14 @@ export class WunderbarService
     this.headers.append('Access-Control-Allow-Headers', '*');
   }
 
-  public getCategory(category: string): Observable<any>
+  public getCategory(category: string, hash: string): Observable<any>
   {
-    return this.http.get(this.baseURL + "?category=" + category).map(body => body.json()).catch(this.handleError);
+    var headers = new Headers();
+    headers.append('Access-Control-Allow-Headers', '*');
+    headers.append('hash', hash);
+    return this.http.get(this.baseURL + "?category=" + category, {
+      headers : headers
+    }).catch(this.handleError);
   }
 
   public decrease(name: string)

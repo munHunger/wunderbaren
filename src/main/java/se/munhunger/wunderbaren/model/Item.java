@@ -1,7 +1,5 @@
 package se.munhunger.wunderbaren.model;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -35,5 +33,11 @@ public class Item
 		this.category = category;
 		this.amount = amount;
 		this.price = price;
+	}
+
+	@Override
+	public String toString()
+	{
+		return name + ":" + category + ":" + amount + ":" + price;
 	}
 }

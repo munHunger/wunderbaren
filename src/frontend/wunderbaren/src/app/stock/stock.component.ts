@@ -10,6 +10,7 @@ import {Observable} from 'rxjs/Rx';
 })
 export class StockComponent {
   beerList: Item[] = [];
+  beerListHash: string;
   constructor(private service: WunderbarService)
   {
     setInterval(() => {
@@ -20,8 +21,9 @@ export class StockComponent {
 
   public update()
   {
-      this.service.getCategory("beer").subscribe(items => {
-        this.beerList = items;
+      this.service.getCategory("beer", this.beerListHash).subscribe(items => {
+        this.beerList = items.json();
+        this.beerListHash = items.headers.get('hash');
       });
   }
 }
