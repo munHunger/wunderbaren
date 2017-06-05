@@ -12,15 +12,16 @@ export class StockComponent {
   beerList: Item[] = [];
   constructor(private service: WunderbarService)
   {
-    this.update();
+    setInterval(() => {
+      console.log("updating!");
+      this.update();
+    }, 1000);
   }
 
   public update()
   {
-    setInterval(() => {
       this.service.getCategory("beer").subscribe(items => {
         this.beerList = items;
       });
-    }, 1000);
   }
 }
