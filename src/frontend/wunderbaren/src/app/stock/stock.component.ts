@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {WunderbarService} from "../wunderbar.service";
 import {Item} from "../item.model";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'stock',
@@ -17,10 +16,9 @@ export class StockComponent {
 
   public update()
   {
-    Observable.interval(100).flatMap(() => {
-      this.service.getCategory("beer").subscribe(items => {
-        this.beerList = items;
-      });
-    }).subscribe();
+    this.service.getCategory("beer").subscribe(items => {
+      this.beerList = items;
+      setTimeout(() => { this.update(); }, 100);
+    });
   }
 }
