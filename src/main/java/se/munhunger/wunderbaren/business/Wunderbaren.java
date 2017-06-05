@@ -2,11 +2,14 @@ package se.munhunger.wunderbaren.business;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.glassfish.jersey.server.ManagedAsync;
 import org.springframework.stereotype.Component;
 import se.munhunger.wunderbaren.model.Item;
 import se.munhunger.wunderbaren.util.database.jpa.Database;
 
 import javax.ws.rs.*;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,8 +61,9 @@ public class Wunderbaren
 	}
 
 	@GET
+	@ManagedAsync
 	@ApiOperation(value = "Gets all items of the same category")
-	public Response getItems(@HeaderParam("hash") int hash, @QueryParam("category") String category) throws Exception
+	public void getItems(@Suspended final AsyncResponse asyncResponse, @HeaderParam("hash")int hash, @QueryParam("category") String category) throws Exception
 	{
 		int newHash = hash;
 		int attempts = 0;
@@ -74,7 +78,7 @@ public class Wunderbaren
 				Thread.sleep(100);
 			attempts++;
 		}
-		return Response.ok(items).header("hash", "" + getItemHash(items)).build();
+		asyncResponse.resume(Response.ok(items).header("hash", "" + getItemHash(items)).build());
 	}
 
 	private int getItemHash(List items)
