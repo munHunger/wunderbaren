@@ -16,7 +16,7 @@ public class ApiOriginFilter implements javax.servlet.Filter
 		HttpServletResponse res = (HttpServletResponse) response;
 		res.addHeader("Access-Control-Allow-Origin", "*");
 		res.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
-		res.addHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization");
+		res.addHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, hash");
 		chain.doFilter(request, response);
 	}
 
