@@ -76,7 +76,7 @@ public class Wunderbaren
 
 	@GET
 	@Path("/update")
-	@ApiOperation(value = "Gets all items of the same category if the hash does not equal. plain 200 OK otherwise")
+	@ApiOperation(value = "Gets all items of the same category if the hash does not equal. Empty list otherwise")
 	public Response getUpdate(@HeaderParam("hash")int hash, @QueryParam("category") String category) throws Exception
 	{
 		int newHash = hash;
@@ -93,7 +93,7 @@ public class Wunderbaren
 			attempts++;
 		}
 		if(newHash == hash)
-			return Response.ok().build();
+			return Response.ok(new ArrayList<>()).build();
 		return Response.ok(items).header("hash", "" + getItemHash(items)).build();
 	}
 

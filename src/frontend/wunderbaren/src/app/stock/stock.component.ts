@@ -23,7 +23,9 @@ export class StockComponent {
   public update()
   {
       this.service.getCategoryUpdate("beer", this.beerListHash).subscribe(items => {
-        this.beerList = items.json();
+        var newList = items.json();
+        if(newList.length > 0)
+          this.beerList = items.json();
         this.beerListHash = items.headers.get('hash');
         this.update();
       });
