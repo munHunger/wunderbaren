@@ -1,5 +1,5 @@
-<div *ngIf="!userService.isLoggedIn || userService.requestLogin" class="overlay w3-animate-opacity" (click)="userService.requestLogin = false"></div>
-<div *ngIf="!userService.isLoggedIn || userService.requestLogin" class="login">
+<div *ngIf="userService.requestLogin" class="overlay w3-animate-opacity" (click)="userService.requestLogin = false"></div>
+<div *ngIf="userService.requestLogin" class="login">
   <div class="w3-card w3-animate-bottom">
     <header class="w3-container w3-padding w3-light-gray">
       <span *ngIf="!newUser" class="w3-animate-opacity">

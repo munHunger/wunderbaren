@@ -13,11 +13,16 @@
 </div>
 
 <div class="w3-container w3-padding w3-light-gray footer">
-  Om du inte vill prata med bartendern så går det bra att beställa i mobilen om du först loggar in
-  <small>
-    (beställningen hämtas i baren)
-  </small>
-  <button (click)="userService.requestLogin = true" class="w3-btn w3-blue-grey" style="float:right">Logga in</button>
+  <div *ngIf="!userService.isLoggedIn">
+    Om du inte vill prata med bartendern så går det bra att beställa i mobilen om du först loggar in
+    <small>
+      (beställningen hämtas i baren)
+    </small>
+    <button (click)="userService.requestLogin = true" class="w3-btn w3-blue-grey" style="float:right">Logga in</button>
+  </div>
+  <div *ngIf="userService.isLoggedIn">
+    Du är inloggad med koden: {{userService.code}}
+  </div>
 </div>
 
 <login></login>
