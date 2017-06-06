@@ -9,6 +9,8 @@ import {StockComponent} from "./stock/stock.component";
 import {WunderbarService} from "./wunderbar.service";
 import {ItemComponent} from "./stock/item/item.component";
 import {LoginComponent} from "./login/login.component";
+import {CookieService} from "angular2-cookie/core";
+import {UserService} from "./user.service";
 
 @NgModule({
   declarations: [
@@ -23,7 +25,7 @@ import {LoginComponent} from "./login/login.component";
     FormsModule,
     HttpModule
   ],
-  providers: [WunderbarService],
+  providers: [WunderbarService, CookieService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
