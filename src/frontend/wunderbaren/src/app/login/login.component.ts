@@ -14,7 +14,7 @@ export class LoginComponent {
   constructor(@Inject(DOCUMENT) private document: any, private cookieService:CookieService, private userService: UserService) {
     if(this.hasToken())
     {
-      userService.code = "" + this.cookieService.get("token");
+      userService.setCode("" + this.cookieService.get("token"));
       userService.isLoggedIn = true;
     }
     let location = this.document.location.href;
