@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {Http, Headers, Response, URLSearchParams} from "@angular/http";
 import {Observable} from "rxjs";
 import {Item} from "./item.model";
+import {CookieService} from "angular2-cookie/core";
 
 @Injectable()
 export class WunderbarService
@@ -9,7 +10,7 @@ export class WunderbarService
   private baseURL: string = "https://wunderbaren.se/api/wunderbaren";
   private headers: any;
 
-  constructor(private http: Http)
+  constructor(private http: Http, private cookieService:CookieService)
   {
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -53,19 +54,13 @@ export class WunderbarService
     }).subscribe();
   }
 
-  private handleError(error: Response | any)
+  handleError(error:Response | any)
   {
-    // In a real world app, you might use a remote logging infrastructure
-    let errMsg: string;
-    if (error instanceof Response)
+    let errMsg:string;
+    errMsg = `${error.status} - ${error.statusText || ''}`;
+    if (error.status == 401)
     {
-      const body = error.json() || '';
-      const err = JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-    }
-    else
-    {
-      errMsg = error.message ? error.message : error.toString();
+      this.cookieService.remove("token");
     }
     console.error(errMsg);
     return Observable.throw(errMsg);

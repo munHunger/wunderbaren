@@ -20,7 +20,7 @@ export class LoginComponent {
     let location = this.document.location.href;
     if(location.indexOf("code=") != -1)
     {
-      userService.code = location.substr(location.indexOf("code=") + "code=".length);
+      userService.setCode(location.substr(location.indexOf("code=") + "code=".length));
       this.cookieService.put("token", userService.code);
       this.document.location.href = "https://wunderbaren.se";
     }

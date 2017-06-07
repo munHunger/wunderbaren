@@ -21,7 +21,7 @@
     <button (click)="userService.requestLogin = true" class="w3-btn w3-blue-grey" style="float:right">Logga in</button>
   </div>
   <div *ngIf="userService.isLoggedIn">
-    Du är inloggad med koden: {{userService.code}}
+    {{userService.userData ? 'Inloggad som: ' + userService.userData.username : ''}}
   </div>
 </div>
 
