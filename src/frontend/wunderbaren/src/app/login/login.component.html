@@ -10,7 +10,7 @@
       </span>
     </header>
     <div class="w3-container w3-white">
-      <form #userform method="POST" action="https://wunderbaren.se/api/oauth/authz" name="userform" id="form">
+      <form #userform method="POST" action="{{newUser?'https://wunderbaren.se/api/oauth/user':'https://wunderbaren.se/api/oauth/authz'}}" name="userform" id="form">
         <input class="w3-check w3-margin" [checked]="newUser" (change)="newUser = !newUser" type="checkbox"><label>Ny användare</label><br />
         <input type="hidden" name="client_id" id="client_id" value="wunderbarenrml59a10ad6ab0jubpe5c">
         <input type="hidden" name="redirect_uri" id="redirect_uri" value="https://wunderbaren.se">
