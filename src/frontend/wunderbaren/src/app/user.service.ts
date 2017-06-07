@@ -10,7 +10,7 @@ export class UserService
   public requestLogin: boolean = false;
   public code: string;
 
-  private baseURL: string = "https://wunderbaren.se/api/oauth";
+  private baseURL: string = "/api/oauth";
   private headers: any;
 
   public userData: any;

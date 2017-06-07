@@ -7,7 +7,7 @@ import {CookieService} from "angular2-cookie/core";
 @Injectable()
 export class WunderbarService
 {
-  private baseURL: string = "https://wunderbaren.se/api/wunderbaren";
+  private baseURL: string = "/api/wunderbaren";
   private headers: any;
 
   constructor(private http: Http, private cookieService:CookieService)
