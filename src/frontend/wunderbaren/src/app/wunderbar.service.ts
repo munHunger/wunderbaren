@@ -7,14 +7,14 @@ import {CookieService} from "angular2-cookie/core";
 @Injectable()
 export class WunderbarService
 {
-  private baseURL: string = "/api/wunderbaren";
+  private baseURL: string = "https://wunderbaren.se/api/wunderbaren";
   private headers: any;
 
   constructor(private http: Http, private cookieService:CookieService)
   {
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    this.headers.append('Access-Control-Allow-Headers', '*');
+    //this.headers.append('Access-Control-Allow-Headers', '*');
   }
 
   public getCategory(category: string): Observable<any>

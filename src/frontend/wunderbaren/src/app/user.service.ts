@@ -10,16 +10,19 @@ export class UserService
   public requestLogin: boolean = false;
   public code: string;
 
-  private baseURL: string = "/api/oauth";
+  private baseURL: string = "https://wunderbaren.se/api/oauth";
   private headers: any;
+
+  public static cookieService:CookieService;
 
   public userData: any;
 
-  constructor(private http: Http, private cookieService:CookieService)
+  constructor(private http: Http, public cookieService:CookieService)
   {
+    UserService.cookieService = cookieService;
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    this.headers.append('Access-Control-Allow-Headers', '*');
+    //this.headers.append('Access-Control-Allow-Headers', '*');
   }
 
   public setCode(code: string)
@@ -37,7 +40,8 @@ export class UserService
     errMsg = `${error.status} - ${error.statusText || ''}`;
     if (error.status == 401)
     {
-      this.cookieService.remove("token");
+      console.log("removing token as user is unauthorized");
+      UserService.cookieService.removeAll();
     }
     console.error(errMsg);
     return Observable.throw(errMsg);

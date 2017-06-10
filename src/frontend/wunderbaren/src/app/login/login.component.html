@@ -16,15 +16,15 @@
         <input type="hidden" name="redirect_uri" id="redirect_uri" value="https://wunderbaren.se">
         <input type="hidden" name="response_type" id="response_type" value="code">
         <div *ngIf="!newUser" class="w3-animate-opacity">
-          <input class="w3-input w3-animate-input" style="width: 50%;" type="text" name="username" id="username" placeholder="Namn Namnsson"><br />
-          <input class="w3-input w3-animate-input" style="width: 50%;" type="password" name="password" id="password" placeholder="Lösenord"><br />
+          <input class="w3-input w3-animate-input" style="width: 50%;" type="text" name="username" [(ngModel)]="username" id="username" placeholder="Namn Namnsson"><br />
+          <input class="w3-input w3-animate-input" style="width: 50%;" type="password" name="password" [(ngModel)]="password" id="password" placeholder="Lösenord"><br />
         </div>
         <div *ngIf="newUser" class="w3-animate-opacity">
-          <input class="w3-input w3-animate-input" style="width: 50%;" type="text" name="username" id="username" placeholder="Namn Namnsson"><br />
-          <input class="w3-input w3-animate-input" style="width: 50%;" type="number" name="number" id="number" placeholder="070 xxx xxxx"><br />
-          <input class="w3-input w3-animate-input" style="width: 50%;" type="password" name="password" id="password" placeholder="Lösenord"><br />
+          <input class="w3-input w3-animate-input" style="width: 50%;" type="text" name="username" [(ngModel)]="username" id="username" placeholder="Namn Namnsson"><br />
+          <input class="w3-input w3-animate-input" style="width: 50%;" type="number" name="number" [(ngModel)]="number" id="number" placeholder="070 xxx xxxx"><br />
+          <input class="w3-input w3-animate-input" style="width: 50%;" type="password" name="password" [(ngModel)]="password" id="password" placeholder="Lösenord"><br />
         </div>
-        <button type="submit" form="form" value="Submit" (click)="userform.submit()" class="w3-btn w3-blue-grey w3-margin">{{newUser?"Registrera":"Logga in"}}</button>
+        <button type="submit" [disabled]="!isValid()"  form="form" value="Submit" (click)="userform.submit()" class="w3-btn w3-blue-grey w3-margin">{{newUser?"Registrera":"Logga in"}}</button>
       </form>
     </div>
     <footer *ngIf="newUser" class="w3-container w3-padding w3-light-gray">
