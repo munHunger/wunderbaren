@@ -8,14 +8,23 @@ export class UserService
 {
   public isLoggedIn: boolean = false;
   public requestLogin: boolean = false;
-  public code: string;
+  public static code: string;
 
-  private baseURL: string = "https://wunderbaren.se/api/oauth";
+  private baseURL: string = "http://localhost/api";
   private headers: any;
 
   public static cookieService:CookieService;
 
   public userData: any;
+
+  public inRole(role:string):boolean
+  {
+    if(this.userData && this.userData.roles)
+      for(let i = 0; i < this.userData.roles.length; i++)
+        if(role === this.userData.roles[i])
+          return true;
+    return false;
+  }
 
   constructor(private http: Http, public cookieService:CookieService)
   {
@@ -25,11 +34,22 @@ export class UserService
     //this.headers.append('Access-Control-Allow-Headers', '*');
   }
 
+  public getBalance()
+  {
+    this.headers.append("Authorization", "Bearer " + UserService.code);
+    this.http.get(this.baseURL + "/wunderbaren/balance" + this.userData.balance ? ("?balance=" + this.userData.balance) : "", {
+      headers : this.headers
+    }).subscribe(res => {
+      this.userData.balance = res;
+      this.getBalance();
+    });
+  }
+
   public setCode(code: string)
   {
-    this.code = code;
-    this.headers.append("Authorization", "Bearer " + this.code);
-    this.http.get(this.baseURL + "/user", {
+    UserService.code = code;
+    this.headers.append("Authorization", "Bearer " + UserService.code);
+    this.http.get(this.baseURL + "/oauth/user", {
       headers : this.headers
     }).map(res => res.json()).catch(this.handleError).subscribe(res => {this.userData = res});
   }

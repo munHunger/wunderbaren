@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {WunderbarService} from "../../wunderbar.service";
 import {Item} from "../../item.model";
+import {UserService} from "../../user.service";
 
 @Component({
   selector: 'item',
@@ -11,7 +12,7 @@ export class ItemComponent {
   @Input()
   public item: Item;
   private isMouseOver: boolean = false;
-  constructor(private service: WunderbarService)
+  constructor(private service: WunderbarService, private user: UserService)
   {
   }
 

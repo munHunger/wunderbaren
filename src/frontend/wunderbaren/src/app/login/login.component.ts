@@ -3,7 +3,6 @@ import { DOCUMENT } from '@angular/platform-browser';
 import {CookieService} from "angular2-cookie/core";
 import {UserService} from "../user.service";
 import {isNullOrUndefined} from "util";
-import {isNull} from "util";
 
 @Component({
   selector: 'login',
@@ -17,6 +16,9 @@ export class LoginComponent {
   private password:string;
   private phonenumber:string;
 
+  private authURL:string = "http://localhost/api/oauth"
+  private baseURL:string = "http://localhost:5000";
+
   constructor(@Inject(DOCUMENT) private document: any, private cookieService:CookieService, private userService: UserService) {
     if(this.hasToken())
     {
@@ -28,7 +30,7 @@ export class LoginComponent {
     {
       userService.setCode(location.substr(location.indexOf("code=") + "code=".length));
       this.cookieService.put("token", userService.code);
-      this.document.location.href = "https://wunderbaren.se";
+      this.document.location.href = this.baseURL;
     }
   }
 

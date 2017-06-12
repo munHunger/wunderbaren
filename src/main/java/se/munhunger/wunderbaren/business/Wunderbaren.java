@@ -5,18 +5,23 @@ import io.swagger.annotations.ApiOperation;
 import jersey.repackaged.com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.glassfish.jersey.process.JerseyProcessingUncaughtExceptionHandler;
 import org.springframework.stereotype.Component;
+import se.munhunger.oauth.business.UserBean;
+import se.munhunger.oauth.model.error.ErrorMessage;
+import se.munhunger.oauth.model.user.UserData;
 import se.munhunger.wunderbaren.model.Item;
+import se.munhunger.wunderbaren.model.Message;
+import se.munhunger.wunderbaren.model.Transaction;
 import se.munhunger.wunderbaren.util.database.jpa.Database;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.*;
 
 /**
@@ -77,12 +82,15 @@ public class Wunderbaren
 	@GET
 	@Path("/update")
 	@ApiOperation(value = "Gets all items of the same category if the hash does not equal. Empty list otherwise")
-	public Response getUpdate(@HeaderParam("hash")int hash, @QueryParam("category") String category) throws Exception
+	public Response getUpdate(@QueryParam("hash") String hash, @QueryParam("category") String category) throws Exception
 	{
-		int newHash = hash;
+		int intHash = -1;
+		if(!"null".equals(hash) && hash != null)
+			intHash = Integer.parseInt(hash);
+		int newHash = intHash;
 		int attempts = 0;
 		List items = new ArrayList<>();
-		while (newHash == hash && attempts < 300)
+		while (newHash == intHash && attempts < 300)
 		{
 			Map<String, Object> param = new HashMap<>();
 			param.put("category", category);
@@ -92,9 +100,105 @@ public class Wunderbaren
 				Thread.sleep(100);
 			attempts++;
 		}
-		if(newHash == hash)
-			return Response.ok(new ArrayList<>()).build();
-		return Response.ok(items).header("hash", "" + getItemHash(items)).build();
+		Map<String, Object> result = new HashMap<>();
+		result.put("hash", newHash);
+		if(newHash == intHash)
+			result.put("list", new ArrayList<>());
+		else
+			result.put("list", items);
+		return Response.ok(result).build();
+	}
+
+	@GET
+	@Path("/message")
+	@ApiOperation(value = "Gets all messages sent")
+	@RolesAllowed({"USER"})
+	public Response getMessages(@HeaderParam("Authorization") String accessToken) throws Exception
+	{
+		UserData userData = (UserData)new UserBean().getUserData(accessToken).getEntity();
+		if("admin".equals(userData.username))
+		{
+			Map<String, Object> param = new HashMap<>();
+			param.put("user", userData.username);
+			return Response.ok(Database.getObjects("from Message", param)).build();
+		}
+		else
+		{
+			Map<String, Object> param = new HashMap<>();
+			param.put("user", userData.username);
+			return Response.ok(Database.getObjects("from Message WHERE username = 'admin' OR username = :user", param)).build();
+		}
+	}
+
+	@POST
+	@Path("/message")
+	@ApiOperation(value = "send message")
+	@RolesAllowed({"USER"})
+	public Response sendMessage(@HeaderParam("Authorization") String accessToken, @FormParam("message") String message) throws Exception
+	{
+		UserData userData = (UserData)new UserBean().getUserData(accessToken).getEntity();
+		Database.saveObject(new Message(userData.username, message));
+		return Response.ok().build();
+	}
+
+	@POST
+	@Path("/buy")
+	@ApiOperation(value = "buy an item")
+	@RolesAllowed({"USER"})
+	public Response buyItem(@HeaderParam("Authorization") String accessToken, @QueryParam("item") String item) throws Exception
+	{
+		UserData userData = (UserData)new UserBean().getUserData(accessToken).getEntity();
+		Integer balance = (Integer)this.getBalance(accessToken, "99999").getEntity();
+		Map<String, Object> params = new HashMap<>();
+		params.put("name", item);
+		List items = Database.getObjects("from Item WHERE name = :name", params);
+		if(items.isEmpty())
+			return Response.status(HttpServletResponse.SC_NOT_FOUND).entity(new ErrorMessage("could not complete", "Could not find item")).build();
+		Item i = (Item)items.get(0);
+		if(i.amount < 1 || balance < i.price)
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST).build();
+		i.amount--;
+		Transaction t = new Transaction(userData.username, -i.price, "buy " + item);
+		Message m = new Message(userData.username, "----- Köpte en " + item + " -----");
+		Database.saveObjects(Arrays.asList(i, t, m));
+		return Response.status(HttpServletResponse.SC_OK).build();
+	}
+
+	@POST
+	@Path("/swish")
+	@ApiOperation(value = "top of a user")
+	@RolesAllowed({"ADMIN"})
+	public Response swish(@HeaderParam("Authorization") String accessToken, @QueryParam("user") String user, @QueryParam("amount") int amount) throws Exception
+	{
+		Transaction t = new Transaction(user, amount, "swish " + amount);
+		Database.saveObject(t);
+		return Response.status(HttpServletResponse.SC_OK).build();
+	}
+
+	@GET
+	@Path("/balance")
+	@ApiOperation(value = "Gets the balance of the currently logged in user")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response getBalance(
+			@HeaderParam("Authorization")
+					String accessToken, @QueryParam("balance") String balance) throws Exception
+	{
+		UserData userData = (UserData)new UserBean().getUserData(accessToken).getEntity();
+		int oldBalance = balance != null && !"null".equals(balance) ? Integer.parseInt(balance) : 0;
+		int newBalance = oldBalance;
+		int attempts = 0;
+		while(oldBalance == newBalance && attempts < 300)
+		{
+			int intBalance = 0;
+			Map<String, Object> params = new HashMap<>();
+			params.put("user", userData.username);
+			for(Object o : Database.getObjects("from Transaction WHERE user = :user", params))
+				intBalance += ((Transaction) o).amount;
+			newBalance = intBalance;
+			Thread.sleep(100);
+			attempts++;
+		}
+		return Response.ok(new Integer(newBalance)).build();
 	}
 
 	private int getItemHash(List items)

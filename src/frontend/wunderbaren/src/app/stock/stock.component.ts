@@ -44,11 +44,11 @@ export class StockComponent {
   public updateBeer()
   {
     this.service.getCategoryUpdate("beer", this.beerListHash).subscribe(items => {
-      var newList = items.json();
+      var newList = items.json().list;
       if(newList.length > 0)
       {
-        this.beerList = items.json();
-        this.beerListHash = items.headers.get('hash');
+        this.beerList = items.json().list;
+        this.beerListHash = items.json().hash;
       }
       this.updateBeer();
     });
@@ -56,11 +56,11 @@ export class StockComponent {
   public updateCider()
   {
     this.service.getCategoryUpdate("cider", this.ciderListHash).subscribe(items => {
-      var newList = items.json();
+      var newList = items.json().list;
       if(newList.length > 0)
       {
         this.ciderList = items.json();
-        this.ciderListHash = items.headers.get('hash');
+        this.ciderListHash = items.json().hash;
       }
       this.updateCider();
     });
@@ -68,11 +68,11 @@ export class StockComponent {
   public updateWine()
   {
     this.service.getCategoryUpdate("wine", this.wineListHash).subscribe(items => {
-      var newList = items.json();
+      var newList = items.json().list;
       if(newList.length > 0)
       {
         this.wineList = items.json();
-        this.wineListHash = items.headers.get('hash');
+        this.wineListHash = items.json().hash;
       }
       this.updateWine();
     });
@@ -80,11 +80,11 @@ export class StockComponent {
   public updateDrink()
   {
     this.service.getCategoryUpdate("drink", this.drinkListHash).subscribe(items => {
-      var newList = items.json();
+      var newList = items.json().list;
       if(newList.length > 0)
       {
         this.drinkList = items.json();
-        this.drinkListHash = items.headers.get('hash');
+        this.drinkListHash = items.json().hash;
       }
       this.updateDrink();
     });

@@ -6,7 +6,7 @@
     {{item.price}}
     <span class="small-text">kr</span>
   </span>
-  <span *ngIf="isMouseOver" class="w3-display-right">
+  <span *ngIf="isMouseOver && user.inRole('admin')" class="w3-display-right">
     <span class="decrease" (click)="decrease()">-</span>
     <span class="decrease" (click)="increase()">+</span>
   </span>
