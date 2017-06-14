@@ -36,11 +36,14 @@ export class UserService
 
   public getBalance()
   {
-    this.headers.append("Authorization", "Bearer " + UserService.code);
-    this.http.get(this.baseURL + "/wunderbaren/balance" + this.userData.balance ? ("?balance=" + this.userData.balance) : "", {
+    let url = this.baseURL + "/wunderbaren/balance";
+    if(this.userData && this.userData.balance)
+      url += "?balance=" + this.userData.balance;
+    this.http.get(url, {
       headers : this.headers
     }).subscribe(res => {
-      this.userData.balance = res;
+      if(this.userData)
+        this.userData.balance = res.json().balance;
       this.getBalance();
     });
   }
@@ -51,7 +54,10 @@ export class UserService
     this.headers.append("Authorization", "Bearer " + UserService.code);
     this.http.get(this.baseURL + "/oauth/user", {
       headers : this.headers
-    }).map(res => res.json()).catch(this.handleError).subscribe(res => {this.userData = res});
+    }).map(res => res.json()).catch(this.handleError).subscribe(res => {
+      this.userData = res;
+      this.getBalance();
+    });
   }
 
   handleError(error:Response | any)

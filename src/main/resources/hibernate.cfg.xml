@@ -25,6 +25,8 @@
 
         <!-- List of XML mapping files -->
         <mapping class="se.munhunger.wunderbaren.model.Item"/>
+        <mapping class="se.munhunger.wunderbaren.model.Message"/>
+        <mapping class="se.munhunger.wunderbaren.model.Transaction"/>
         <mapping class="se.munhunger.oauth.model.client.RegisteredClient"/>
         <mapping class="se.munhunger.oauth.model.client.ClientURL"/>
         <mapping class="se.munhunger.oauth.model.user.User"/>

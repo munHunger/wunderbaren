@@ -8,7 +8,7 @@ import {UserService} from "./user.service";
 @Injectable()
 export class WunderbarService
 {
-  private baseURL: string = "http://localhost/api/wunderbaren";
+  private baseURL: string = "https://wunderbaren.se/api/wunderbaren";
   private headers: any;
 
   constructor(private http: Http, private cookieService:CookieService)
@@ -32,8 +32,8 @@ export class WunderbarService
   public buyItem(item: string)
   {
     var headers = new Headers();
-    headers.append('Authorization', UserService.code);
-    this.http.post(this.baseURL + "/buy?item=" + item, {
+    headers.append("Authorization", "Bearer " + UserService.code);
+    this.http.post(this.baseURL + "/buy?item=" + item, "", {
       headers : headers
     }).subscribe();
   }

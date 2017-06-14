@@ -47,7 +47,7 @@ export class StockComponent {
       var newList = items.json().list;
       if(newList.length > 0)
       {
-        this.beerList = items.json().list;
+        this.beerList = newList;
         this.beerListHash = items.json().hash;
       }
       this.updateBeer();
@@ -59,7 +59,7 @@ export class StockComponent {
       var newList = items.json().list;
       if(newList.length > 0)
       {
-        this.ciderList = items.json();
+        this.ciderList = newList;
         this.ciderListHash = items.json().hash;
       }
       this.updateCider();
@@ -71,7 +71,7 @@ export class StockComponent {
       var newList = items.json().list;
       if(newList.length > 0)
       {
-        this.wineList = items.json();
+        this.wineList = newList;
         this.wineListHash = items.json().hash;
       }
       this.updateWine();
@@ -83,7 +83,7 @@ export class StockComponent {
       var newList = items.json().list;
       if(newList.length > 0)
       {
-        this.drinkList = items.json();
+        this.drinkList = newList;
         this.drinkListHash = items.json().hash;
       }
       this.updateDrink();

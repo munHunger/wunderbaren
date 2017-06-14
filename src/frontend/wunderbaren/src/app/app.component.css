@@ -15,4 +15,13 @@
   position: fixed;
   width:100%;
   bottom: 0px;
+  height: 50px;
+}
+
+.message-dialog{
+  bottom:50px;
+  padding: 5px;
+  right: 5px;
+  width: 200px;
+  height: 325px;
 }

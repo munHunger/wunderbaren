@@ -32,6 +32,23 @@ CREATE TABLE `wunderbaren`.`user` (
   PRIMARY KEY (`username`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC));
 
+CREATE TABLE `wunderbaren`.`message` (
+  `id` INT,
+  `sender` VARCHAR(64) NOT NULL,
+  `message` VARCHAR(2048) NOT NULL,
+  `read` INT,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC));
+
+CREATE TABLE `wunderbaren`.`transaction` (
+  `id` INT,
+  `user` VARCHAR(64) NOT NULL,
+  `amount` INT,
+  `reason` VARCHAR(128) NOT NULL,
+  `date` VARCHAR(32) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC));
+
 CREATE TABLE `wunderbaren`.`roles` (
   `username` VARCHAR(64) NOT NULL,
   `role` VARCHAR(32) NOT NULL,

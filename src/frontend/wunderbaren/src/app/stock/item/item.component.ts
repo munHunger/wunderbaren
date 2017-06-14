@@ -12,8 +12,16 @@ export class ItemComponent {
   @Input()
   public item: Item;
   private isMouseOver: boolean = false;
+
+  private showStockEditor: boolean = window.location.search.length > 0 && window.location.search.indexOf("admin") != -1;
   constructor(private service: WunderbarService, private user: UserService)
   {
+  }
+
+  public order()
+  {
+    this.item.amount--;
+    this.service.buyItem(this.item.name);
   }
 
   public decrease()

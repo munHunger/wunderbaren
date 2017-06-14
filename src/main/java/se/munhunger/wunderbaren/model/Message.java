@@ -11,6 +11,7 @@ public class Message
 {
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
+	@Column(name = "id")
 	private int id;
 	@Column(name = "sender")
 	public String sender;
@@ -25,4 +26,6 @@ public class Message
 		this.sender = sender;
 		this.message = message;
 	}
+
+	public Message(){}
 }

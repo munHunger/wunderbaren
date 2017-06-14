@@ -20,6 +20,7 @@ export class LoginComponent {
   private baseURL:string = "http://localhost:5000";
 
   constructor(@Inject(DOCUMENT) private document: any, private cookieService:CookieService, private userService: UserService) {
+    /*
     if(this.hasToken())
     {
       userService.setCode("" + this.cookieService.get("token"));
@@ -29,9 +30,10 @@ export class LoginComponent {
     if(location.indexOf("code=") != -1)
     {
       userService.setCode(location.substr(location.indexOf("code=") + "code=".length));
-      this.cookieService.put("token", userService.code);
+      this.cookieService.put("token", UserService.code);
       this.document.location.href = this.baseURL;
     }
+    */
   }
 
   public isValid():boolean

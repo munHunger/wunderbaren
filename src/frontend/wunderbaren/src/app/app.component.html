@@ -1,6 +1,6 @@
 <div class="w3-panel w3-light-gray header">
   <img src="/assets/logo.png" class="w-loggo">
-  <span class="w3-lobster w3-xxxlarge w3-opacity title">Wunderbaren</span><span class="w3-text-red"><!--(under construction)--></span>
+  <span class="w3-lobster w3-xxxlarge w3-opacity title">Wunderbaren</span>
 </div>
 
 <div class="center">
@@ -11,7 +11,7 @@
     <event></event>
   </div>
 </div>
-
+<!--
 <div class="w3-container w3-padding w3-light-gray footer">
   <div *ngIf="!userService.isLoggedIn">
     Om du inte vill prata med bartendern så går det bra att beställa i mobilen om du först loggar in
@@ -21,8 +21,14 @@
     <button (click)="userService.requestLogin = true" class="w3-btn w3-blue-grey" style="float:right">Logga in</button>
   </div>
   <div *ngIf="userService.isLoggedIn">
-    {{userService.userData ? 'Inloggad som: ' + userService.userData.username : ''}}
+    <div>
+      {{userService.userData ? 'Inloggad som: ' + userService.userData.username + '  ' + userService.userData.balance + 'kr laddat' : ''}}
+    </div>
   </div>
+</div>
+<div class="footer message-dialog w3-leftbar w3-light-gray w3-animate-bottom">
+  <i>Skriv något olämpligt till bartendern</i>
 </div>
 
 <login></login>
+-->

@@ -12,6 +12,9 @@ import se.munhunger.wunderbaren.model.Item;
 import se.munhunger.wunderbaren.model.Message;
 import se.munhunger.wunderbaren.model.Transaction;
 import se.munhunger.wunderbaren.util.database.jpa.Database;
+import java.lang.reflect.Type;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
@@ -148,7 +151,9 @@ public class Wunderbaren
 	public Response buyItem(@HeaderParam("Authorization") String accessToken, @QueryParam("item") String item) throws Exception
 	{
 		UserData userData = (UserData)new UserBean().getUserData(accessToken).getEntity();
-		Integer balance = (Integer)this.getBalance(accessToken, "99999").getEntity();
+		Type type = new TypeToken<Map<String, String>>() {}.getType();
+		Map<String, String> balanceMap = new Gson().fromJson((String)this.getBalance(accessToken, "99999").getEntity(), type);
+		Integer balance = Integer.parseInt(balanceMap.get("balance"));
 		Map<String, Object> params = new HashMap<>();
 		params.put("name", item);
 		List items = Database.getObjects("from Item WHERE name = :name", params);
@@ -178,7 +183,6 @@ public class Wunderbaren
 	@GET
 	@Path("/balance")
 	@ApiOperation(value = "Gets the balance of the currently logged in user")
-	@Produces(MediaType.TEXT_PLAIN)
 	public Response getBalance(
 			@HeaderParam("Authorization")
 					String accessToken, @QueryParam("balance") String balance) throws Exception
@@ -198,7 +202,7 @@ public class Wunderbaren
 			Thread.sleep(100);
 			attempts++;
 		}
-		return Response.ok(new Integer(newBalance)).build();
+		return Response.ok("{\"balance\":" + newBalance + "}").build();
 	}
 
 	private int getItemHash(List items)

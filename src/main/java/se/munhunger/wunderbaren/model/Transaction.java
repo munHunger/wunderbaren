@@ -13,6 +13,7 @@ public class Transaction
 {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "id")
 	private int id;
 	@Column(name = "user")
 	public String user;
@@ -30,4 +31,6 @@ public class Transaction
 		this.reason = reason;
 		date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 	}
+
+	public Transaction(){}
 }
