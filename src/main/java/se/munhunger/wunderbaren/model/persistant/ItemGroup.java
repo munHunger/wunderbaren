@@ -1,9 +1,10 @@
-package se.munhunger.wunderbaren.model;
+package se.munhunger.wunderbaren.model.persistant;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import se.munhunger.wunderbaren.model.persistant.Item;
 
 import javax.persistence.*;
 import java.util.ArrayList;
