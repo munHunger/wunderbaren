@@ -28,6 +28,36 @@ public class Stock
         return Response.ok(stockService.getAll()).build();
     }
 
+    @PUT
+    @Path("/increase")
+    @ApiOperation(value = "Increase the stock of an item by one")
+    @ApiResponses({@ApiResponse(code = HttpServletResponse.SC_NO_CONTENT, message = "The item was increased by one"), @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "The item was not found", response = ErrorMessage.class)})
+    public Response increaseItem(@ApiParam(value = "The barcode of an item") @FormParam("barcode") String barcode) {
+        try
+        {
+            stockService.alterBy(barcode, 1);
+        } catch (NotInDatabaseException e)
+        {
+            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessage("Could not alter stock of item", "Could not find the item noted by the supplied barcode")).build();
+        }
+        return Response.noContent().build();
+    }
+
+    @PUT
+    @Path("/decrease")
+    @ApiOperation(value = "Decreases the stock of an item by one")
+    @ApiResponses({@ApiResponse(code = HttpServletResponse.SC_NO_CONTENT, message = "The item was decreased by one"), @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND, message = "The item was not found", response = ErrorMessage.class)})
+    public Response decreaseItem(@ApiParam(value = "The barcode of an item") @FormParam("barcode") String barcode) {
+        try
+        {
+            stockService.alterBy(barcode, -1);
+        } catch (NotInDatabaseException e)
+        {
+            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessage("Could not alter stock of item", "Could not find the item noted by the supplied barcode")).build();
+        }
+        return Response.noContent().build();
+    }
+
     @POST
     @Path("/{group}/item")
     @Consumes(MediaType.APPLICATION_JSON)

@@ -21,7 +21,6 @@ public class Item implements Serializable
     @Id
     public String barcode;
     @ApiModelProperty(value = "The name of the item")
-    @Id
     @Column(length = 128)
     public String title;
     @ApiModelProperty(value = "The description of the item")
