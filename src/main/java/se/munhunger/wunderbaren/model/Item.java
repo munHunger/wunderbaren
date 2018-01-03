@@ -13,7 +13,7 @@ public class Item
 {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "group")
+    @JoinColumn(name = "parent_group")
     public ItemGroup group;
 
     @ApiModelProperty(value = "The name of the item")

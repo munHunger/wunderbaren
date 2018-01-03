@@ -29,5 +29,7 @@
             true
         </property>
 
+        <mapping class="se.munhunger.wunderbaren.model.ItemGroup" />
+        <mapping class="se.munhunger.wunderbaren.model.Item" />
     </session-factory>
 </hibernate-configuration>

@@ -10,7 +10,7 @@
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>
                 io.swagger.jaxrs.listing,
-                se.munhunger.wunderbaren.business
+                se.munhunger.wunderbaren.rest
             </param-value>
         </init-param>
         <init-param>
