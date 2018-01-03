@@ -5,7 +5,7 @@
 <hibernate-configuration>
     <session-factory name="localConnection">
         <property name="hibernate.dialect">
-            org.hibernate.dialect.MySQLDialect
+            org.hibernate.dialect.MySQL57Dialect
         </property>
         <property name="hibernate.connection.driver_class">
             com.mysql.jdbc.Driver
@@ -20,18 +20,14 @@
             root
         </property>
         <property name="hibernate.connection.password">
-            warthog
+            password
+        </property>
+        <property name="hibernate.hbm2ddl.auto">
+            update
+        </property>
+        <property name="show_sql">
+            true
         </property>
 
-        <!-- List of XML mapping files -->
-        <mapping class="se.munhunger.wunderbaren.model.Item"/>
-        <mapping class="se.munhunger.wunderbaren.model.Message"/>
-        <mapping class="se.munhunger.wunderbaren.model.Transaction"/>
-        <mapping class="se.munhunger.oauth.model.client.RegisteredClient"/>
-        <mapping class="se.munhunger.oauth.model.client.ClientURL"/>
-        <mapping class="se.munhunger.oauth.model.user.User"/>
-        <mapping class="se.munhunger.oauth.model.user.UserRoles"/>
-        <mapping class="se.munhunger.oauth.model.token.AuthenticationToken"/>
-        <mapping class="se.munhunger.oauth.model.token.NonceToken"/>
     </session-factory>
 </hibernate-configuration>
