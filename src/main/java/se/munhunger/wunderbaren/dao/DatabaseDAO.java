@@ -6,7 +6,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-public class DatabaseDAO {
+public abstract class DatabaseDAO {
 
     protected static SessionFactory sessionFactory;
 
