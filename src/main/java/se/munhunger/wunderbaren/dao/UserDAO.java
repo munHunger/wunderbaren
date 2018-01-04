@@ -31,7 +31,7 @@ public class UserDAO extends DatabaseDAO
         try (Session session = sessionFactory.openSession())
         {
             session.beginTransaction();
-            session.save(user);
+            session.update(user);
             session.getTransaction().commit();
         }
     }
