@@ -14,7 +14,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
-@Api
+@Api(value = "user")
 @Path("/user")
 public class User
 {
