@@ -31,5 +31,7 @@
 
         <mapping class="se.munhunger.wunderbaren.model.persistant.ItemGroup" />
         <mapping class="se.munhunger.wunderbaren.model.persistant.Item" />
+        <mapping class="se.munhunger.wunderbaren.model.persistant.Transaction" />
+        <mapping class="se.munhunger.wunderbaren.model.persistant.User" />
     </session-factory>
 </hibernate-configuration>
