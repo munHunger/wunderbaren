@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { SplashComponent } from './components/splash/splash.component';
 import { CategoryComponent } from './components/category/category.component';
 import { AppComponent } from './app.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 import { WunderbarService } from './service/wunderbaren.service';
 
@@ -13,7 +14,8 @@ import { WunderbarService } from './service/wunderbaren.service';
   declarations: [
     AppComponent,
     SplashComponent,
-    CategoryComponent
+    CategoryComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
