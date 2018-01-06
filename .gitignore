@@ -6,6 +6,8 @@
 /out-tsc
 /build
 /gradle
+/out
+/.gradle
 
 # dependencies
 /node_modules
