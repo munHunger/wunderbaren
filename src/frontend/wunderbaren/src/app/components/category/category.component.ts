@@ -15,6 +15,5 @@ export class CategoryComponent {
 
   select(group: Group) {
     this.router.navigate(['item', group.name]);
-    console.log(group.name);
   }
 }
