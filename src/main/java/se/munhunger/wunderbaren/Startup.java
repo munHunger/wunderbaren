@@ -7,6 +7,6 @@ public class Startup extends ResourceConfig
 {
     public Startup() {
         register(new Binder());
-        packages(true, "se.nucleus.junction");
+        packages(true, "se.munhunger.wunderbaren");
     }
 }

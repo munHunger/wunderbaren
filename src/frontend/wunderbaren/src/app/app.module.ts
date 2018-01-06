@@ -7,6 +7,8 @@ import { SplashComponent } from './components/splash/splash.component';
 import { CategoryComponent } from './components/category/category.component';
 import { AppComponent } from './app.component';
 
+import { WunderbarService } from './service/wunderbaren.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +20,7 @@ import { AppComponent } from './app.component';
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [WunderbarService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
