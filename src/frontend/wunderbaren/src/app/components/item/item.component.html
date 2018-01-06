@@ -5,7 +5,8 @@
                 <div class="card-body">
                     <h4 class="card-title">{{item.title}}</h4>
                     <h6 class="text-muted card-subtitle mb-2">Ale </h6>
-                    <p class="card-text">{{item.description}}</p><a class="card-link" href="#">Instructions </a><a class="card-link" href="#">Add </a></div>
+                    <p class="card-text">{{item.description}}</p><a class="card-link" style="color:white">Instructions </a>
+                    <a class="card-link" style="color:white" (click)="addItem(item)">Add </a></div>
             </div>
         </div>
     </div>

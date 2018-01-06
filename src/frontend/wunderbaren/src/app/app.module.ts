@@ -8,9 +8,11 @@ import { CategoryComponent } from './components/category/category.component';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ItemComponent } from './components/item/item.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 import { WunderbarService } from './service/wunderbaren.service';
 import { RouterModule, Routes } from '@angular/router';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 const appRoutes: Routes = [
   { path: 'category', component: CategoryComponent },
@@ -28,7 +30,8 @@ const appRoutes: Routes = [
     SplashComponent,
     CategoryComponent,
     NavbarComponent,
-    ItemComponent
+    ItemComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,7 @@ const appRoutes: Routes = [
       appRoutes
     )
   ],
-  providers: [WunderbarService],
+  providers: [WunderbarService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

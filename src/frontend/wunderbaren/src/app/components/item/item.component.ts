@@ -5,6 +5,7 @@ import { ActivatedRoute } from "@angular/router";
 import { OnInit } from "@angular/core";
 import { ParamMap } from "@angular/router";
 import { Item } from "app/model/item.model";
+import {CookieService} from "angular2-cookie/core";
 
 @Component({
   selector: 'item',
@@ -13,7 +14,7 @@ import { Item } from "app/model/item.model";
 export class ItemComponent implements OnInit{
     private category: String;
     private groups: Group[] = [];
-    constructor(private service: WunderbarService, private activeRoute: ActivatedRoute) {
+    constructor(private service: WunderbarService, private activeRoute: ActivatedRoute, private cookieService:CookieService) {
         service.getStock().subscribe(res => this.groups = res);
     }
     
@@ -29,5 +30,10 @@ export class ItemComponent implements OnInit{
             if(this.groups[i].name.toLocaleLowerCase() == this.category.toLocaleLowerCase())
                 return this.groups[i].items;
         return [];
+    }
+
+    private addItem(item: Item) {
+        this.service.order.push(item);
+        this.cookieService.put("order", JSON.stringify(this.service.order));
     }
 }
