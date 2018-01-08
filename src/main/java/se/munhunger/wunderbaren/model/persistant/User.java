@@ -20,4 +20,10 @@ public class User
     @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
     @LazyCollection(LazyCollectionOption.FALSE)
     public List<Transaction> transactions = new ArrayList<>();
+
+    public User() {}
+
+    public User(String id) {
+        this.userId = id;
+    }
 }
