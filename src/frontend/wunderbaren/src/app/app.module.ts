@@ -3,29 +3,45 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { SplashComponent } from './components/splash/splash.component';
+import { CategoryComponent } from './components/category/category.component';
 import { AppComponent } from './app.component';
-import {EventComponent} from "./event/event.component";
-import {StockComponent} from "./stock/stock.component";
-import {WunderbarService} from "./wunderbar.service";
-import {ItemComponent} from "./stock/item/item.component";
-import {LoginComponent} from "./login/login.component";
-import {CookieService} from "angular2-cookie/core";
-import {UserService} from "./user.service";
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { ItemComponent } from './components/item/item.component';
+import { FooterComponent } from './components/footer/footer.component';
+
+import { WunderbarService } from './service/wunderbaren.service';
+import { RouterModule, Routes } from '@angular/router';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
+
+const appRoutes: Routes = [
+  { path: 'category', component: CategoryComponent },
+  { path: 'item/:category',      component: ItemComponent },
+  { path: '',
+    redirectTo: '/category',
+    pathMatch: 'full'
+  },
+  { path: '**', component: SplashComponent }
+];
 
 @NgModule({
   declarations: [
-    EventComponent,
-    StockComponent,
+    AppComponent,
+    SplashComponent,
+    CategoryComponent,
+    NavbarComponent,
     ItemComponent,
-    LoginComponent,
-    AppComponent
+    FooterComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule, 
+    RouterModule.forRoot(
+      appRoutes
+    )
   ],
-  providers: [WunderbarService, CookieService, UserService],
+  providers: [WunderbarService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
