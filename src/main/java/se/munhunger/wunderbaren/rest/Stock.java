@@ -1,6 +1,8 @@
 package se.munhunger.wunderbaren.rest;
 
 import io.swagger.annotations.*;
+import se.munhunger.wunderbaren.annotations.IgnoreAuth;
+import se.munhunger.wunderbaren.annotations.UserAuth;
 import se.munhunger.wunderbaren.model.ErrorMessage;
 import se.munhunger.wunderbaren.model.persistant.Item;
 import se.munhunger.wunderbaren.model.persistant.ItemGroup;
@@ -15,6 +17,7 @@ import javax.ws.rs.core.Response;
 
 @Api
 @Path("/stock")
+@UserAuth
 public class Stock
 {
     @Inject
@@ -23,6 +26,7 @@ public class Stock
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Get current stock")
+    @IgnoreAuth
     @ApiResponses({@ApiResponse(code = HttpServletResponse.SC_OK, message = "A list of current stock", responseContainer = "array", response = ItemGroup.class)})
     public Response getCurrentStock() {
         return Response.ok(stockService.getAll()).build();
