@@ -45,7 +45,7 @@ public class Auth {
                     .build();
         }
         return Response.noContent()
-                .header("jwt: ", "Bearer " + jwt)
+                .header("jwt: ", jwt)
                 .build();
     }
 }
