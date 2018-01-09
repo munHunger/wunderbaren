@@ -15,7 +15,6 @@ import java.util.concurrent.TimeUnit;
 public class AuthService {
 
     private static int addcache(int key) {
-        System.out.println("Adding Cache");
         return key;
     }
 
@@ -44,7 +43,6 @@ public class AuthService {
     }
 
     public String complete(int pin, String rfid) throws ExecutionException, UnauthorizedException, UnsupportedEncodingException {
-        String check = cache.get(pin);
         if(cache.get(pin).equals("none"))
             cache.put(pin, rfid);
         else if(!cache.get(pin).equals(rfid))
