@@ -45,7 +45,7 @@ public class Auth {
                     .build();
         }
         return Response.noContent()
-                .header("jwt: ", jwt)
+                .header("access_token", jwt)
                 .build();
     }
 }

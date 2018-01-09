@@ -38,7 +38,7 @@ public class StockService
     public void alterBy(String barcode, int amount) throws NotInDatabaseException
     {
         Item item = itemDAO.getByBarcode(barcode).orElseThrow(NotInDatabaseException::new);
-        item.cost += amount;
+        item.stock += amount;
         itemDAO.insert(item);
     }
 }

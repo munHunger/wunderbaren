@@ -31,13 +31,13 @@ public class AuthService {
         complete(pin, "proper");
     }
 
-    private static final String SECRET = "SECRET";
+    //private static final String SECRET = "SECRET";
 
     private static String makeToken() throws UnsupportedEncodingException {
         String jwt = Jwts.builder()
                 .setSubject("wunder")
                 .claim("bar", "bar")
-                .signWith(SignatureAlgorithm.HS512, SECRET.getBytes("UTF-8"))
+                .signWith(SignatureAlgorithm.HS256, "SECRET".getBytes("UTF-8"))
                 .compact();
         return jwt;
     }
