@@ -31,16 +31,21 @@ public class Auth {
     @POST
     @Path("/complete")
     @ApiOperation(value = "Authenticates the user", notes = "Returns a jwt token")
-    @ApiResponses({@ApiResponse(code = HttpServletResponse.SC_OK, message = "Here is the jwt")})
-    public Response complete(@ApiParam(value = "The verification code") @QueryParam("pin") int pin, @ApiParam(value = "The rfid") @QueryParam("rfid") String rfid) throws ExecutionException, UnsupportedEncodingException {
+    @ApiResponses({@ApiResponse(code = HttpServletResponse.SC_NO_CONTENT, message = "Here is the jwt"),
+            @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "You are either too drunk or not authorized")})
+    public Response complete(@ApiParam(value = "The verification code") @QueryParam("pin") int pin,
+                             @ApiParam(value = "The rfid") @QueryParam("rfid") String rfid) throws ExecutionException, UnsupportedEncodingException {
+        String jwt;
         try {
-            String jwt = authservice.complete(pin, rfid);
+            jwt = authservice.complete(pin, rfid);
         }
         catch (UnauthorizedException e) {
             return Response.status(Response.Status.UNAUTHORIZED)
                     .entity("message: Not authorized")
                     .build();
         }
-        return Response.ok().build();
+        return Response.noContent()
+                .header("jwt: ", "Bearer " + jwt)
+                .build();
     }
 }
