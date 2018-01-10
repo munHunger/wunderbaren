@@ -15,7 +15,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Api(value = "stock")
+@Api(value = "stock", authorizations = @Authorization(
+        value="JWT_AUTHORIZATION"))
 @Path("/stock")
 @UserAuth
 public class Stock
