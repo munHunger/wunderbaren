@@ -7,7 +7,6 @@ import se.munhunger.wunderbaren.annotations.UserAuth;
 
 import javax.annotation.Priority;
 import javax.ws.rs.Priorities;
-import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
@@ -38,8 +37,6 @@ public class AuthFilter implements ContainerRequestFilter {
                         .build());
                 return;
             }
-
-            //This line will throw an exception if it is not a signed JWS (as expected)
             try {
                 Claims claims = Jwts.parser()
                         .setSigningKey("SECRET".getBytes("UTF-8"))
