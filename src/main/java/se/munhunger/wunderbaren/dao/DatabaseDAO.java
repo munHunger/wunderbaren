@@ -22,9 +22,7 @@ public abstract class DatabaseDAO {
         MetadataSources mds = new MetadataSources(registry);
         Metadata md = mds.buildMetadata();
         sessionFactory = md.buildSessionFactory();
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            StandardServiceRegistryBuilder.destroy(registry);
-        }));
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> StandardServiceRegistryBuilder.destroy(registry)));
     }
 
     static {

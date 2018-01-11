@@ -2,7 +2,6 @@ package se.munhunger.wunderbaren.dao;
 
 import org.hibernate.Session;
 import se.munhunger.wunderbaren.model.persistant.Item;
-import se.munhunger.wunderbaren.model.persistant.ItemGroup;
 
 import java.util.Optional;
 
