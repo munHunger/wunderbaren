@@ -21,6 +21,7 @@ public class Transaction
     @OneToMany
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     public Item product;
+    public int amount;
 
     public Transaction() {
         this.id = UUID.randomUUID().toString();

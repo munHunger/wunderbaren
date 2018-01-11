@@ -16,6 +16,7 @@ public class User
     @Id
     @Column(length = 64)
     public String userId;
+
     public int wallet;
     @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
     @LazyCollection(LazyCollectionOption.FALSE)
