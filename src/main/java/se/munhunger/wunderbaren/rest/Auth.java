@@ -1,6 +1,5 @@
 package se.munhunger.wunderbaren.rest;
 
-
 import io.swagger.annotations.*;
 import se.munhunger.wunderbaren.service.AuthService;
 import se.munhunger.wunderbaren.util.exception.UnauthorizedException;
@@ -12,7 +11,7 @@ import javax.ws.rs.core.Response;
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.ExecutionException;
 
-@Api
+@Api(value = "authentication")
 @Path("/auth")
 public class Auth {
 
@@ -35,17 +34,18 @@ public class Auth {
             @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = "You are either too drunk or not authorized")})
     public Response complete(@ApiParam(value = "The verification code") @QueryParam("pin") int pin,
                              @ApiParam(value = "The rfid") @QueryParam("rfid") String rfid) throws ExecutionException, UnsupportedEncodingException {
-        String jwt;
+
         try {
-            jwt = authservice.complete(pin, rfid);
+            String jwt = authservice.complete(pin, rfid);
+            return Response.noContent()
+                    .header("access_token", jwt)
+                    .build();
         }
         catch (UnauthorizedException e) {
             return Response.status(Response.Status.UNAUTHORIZED)
                     .entity("message: Not authorized")
                     .build();
         }
-        return Response.noContent()
-                .header("access_token", jwt)
-                .build();
+
     }
 }

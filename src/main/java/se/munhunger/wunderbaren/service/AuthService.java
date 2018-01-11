@@ -14,16 +14,12 @@ import java.util.concurrent.TimeUnit;
 
 public class AuthService {
 
-    private static int addcache(int key) {
-        return key;
-    }
-
     //change duration for pins to live longer
     private static LoadingCache<Integer,String> cache = CacheBuilder.newBuilder().refreshAfterWrite(30,TimeUnit.SECONDS).
             build(new CacheLoader<Integer, String>() {
                 @Override
                 public String load(Integer key) throws Exception {
-                    return Integer.toString(addcache(key));
+                    return Integer.toString(key);
                 }
             });
 
