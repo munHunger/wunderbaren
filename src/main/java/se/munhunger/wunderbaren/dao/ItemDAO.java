@@ -2,6 +2,7 @@ package se.munhunger.wunderbaren.dao;
 
 import org.hibernate.Session;
 import se.munhunger.wunderbaren.model.persistant.Item;
+import se.munhunger.wunderbaren.util.exception.NotInDatabaseException;
 
 import java.util.Optional;
 

@@ -7,6 +7,7 @@ import se.munhunger.wunderbaren.rest.Auth;
 import se.munhunger.wunderbaren.service.AuthService;
 import se.munhunger.wunderbaren.dao.TransactionDAO;
 import se.munhunger.wunderbaren.dao.UserDAO;
+import se.munhunger.wunderbaren.service.PurchaseService;
 import se.munhunger.wunderbaren.service.StockService;
 import se.munhunger.wunderbaren.service.UserService;
 
@@ -22,5 +23,6 @@ public class Binder extends AbstractBinder
         bind(UserService.class).to(UserService.class);
         bind(UserDAO.class).to(UserDAO.class);
         bind(TransactionDAO.class).to(TransactionDAO.class);
+        bind(PurchaseService.class).to(PurchaseService.class);
     }
 }
