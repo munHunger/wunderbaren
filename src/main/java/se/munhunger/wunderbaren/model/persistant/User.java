@@ -18,9 +18,6 @@ public class User
     public String userId;
 
     public int wallet;
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
-    @LazyCollection(LazyCollectionOption.FALSE)
-    public List<Transaction> transactions = new ArrayList<>();
 
     public User() {}
 

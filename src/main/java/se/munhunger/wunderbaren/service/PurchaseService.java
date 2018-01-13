@@ -10,6 +10,7 @@ import se.munhunger.wunderbaren.util.exception.InsufficientFundsException;
 import se.munhunger.wunderbaren.util.exception.NotInDatabaseException;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,4 +49,7 @@ public class PurchaseService {
         }
     }
 
+    public List<Transaction> getTransactionsByUser(String rfid) throws NotInDatabaseException {
+        return transactionDAO.getTransactions(rfid);
+    }
 }

@@ -3,9 +3,9 @@ package se.munhunger.wunderbaren.dao;
 import org.hibernate.Session;
 import se.munhunger.wunderbaren.model.persistant.Transaction;
 
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
-import java.util.Optional;
 
 public class TransactionDAO extends DatabaseDAO
 {
@@ -17,15 +17,17 @@ public class TransactionDAO extends DatabaseDAO
             session.getTransaction().commit();
         }
     }
+    @PersistenceContext
+    public List<Transaction> getTransactions(String user) {
 
-    public List<Optional<Transaction>> getByUser(String user) {
-        try (Session session = sessionFactory.openSession())
-        {
-            String hql = "from Transaction where user = ?";
+        try (Session session = sessionFactory.openSession()) {
+            String hql = "from Transaction";
             Query query = session.createQuery(hql);
-            query.setParameter(1, user);
+            //query.setParameter(1, user);
             return query.getResultList();
-        }
 
+        }
     }
+
 }
+
