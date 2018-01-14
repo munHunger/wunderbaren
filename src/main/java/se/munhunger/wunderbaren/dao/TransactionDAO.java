@@ -18,16 +18,15 @@ public class TransactionDAO extends DatabaseDAO
         }
     }
     @PersistenceContext
-    public List<Transaction> getTransactions(String user) {
+    public List<Transaction> getTransactions(String userID) {
 
         try (Session session = sessionFactory.openSession()) {
-            String hql = "from Transaction";
+            String hql = "from Transaction where user = ?1";
             Query query = session.createQuery(hql);
-            //query.setParameter(1, user);
+            query.setParameter(1, userID);
             return query.getResultList();
 
         }
     }
-
 }
 
