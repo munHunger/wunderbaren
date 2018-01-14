@@ -21,7 +21,7 @@ public class TransactionDAO extends DatabaseDAO
     public List<Transaction> getTransactions(String userID) {
 
         try (Session session = sessionFactory.openSession()) {
-            String hql = "from Transaction where user = ?1";
+            String hql = "from Transaction where user.userId = ?1";
             Query query = session.createQuery(hql);
             query.setParameter(1, userID);
             return query.getResultList();
