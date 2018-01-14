@@ -1,0 +1,8 @@
+version: '2'
+services:
+  wunderbaren-frontend:
+    image: munhunger/wunderbaren-frontend
+    build: ./wunderbaren
+    container_name: "wunderbaren-frontend"
+    ports:
+      - "80:80"
