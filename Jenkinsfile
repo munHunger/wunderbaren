@@ -3,20 +3,19 @@ pipeline {
     stages {
         stage('build war') {
             agent {
-                docker { image 'gradle:latest' }
+                node {
+                    docker { image 'gradle:latest' }   
+                    customWorkspace '/root/.jenkins/workspace/Wunderbaren'
+                }
             }
             steps {
-                script {
-                    dir("${env.WORKSPACE}/backend/") {
-                        sh 'gradle war -b backend/build.gradle'
-                    }
-                }
+                sh 'gradle war -b backend/build.gradle'
             }
         }
         stage('build dockerimage') {
             steps {
                 script {
-                    dir("${env.WORKSPACE}/backend/") {
+                    dir("/root/.jenkins/workspace/Wunderbaren/backend/") {
                         def image = docker.build("munhunger/wunderbaren")
                         
                         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
