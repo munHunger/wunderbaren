@@ -3,8 +3,8 @@ pipeline {
     stages {
         stage('build war') {
             agent {
-                node {
-                    docker { image 'gradle:latest' }   
+                docker { 
+                    image 'gradle:latest'
                     customWorkspace '/root/.jenkins/workspace/Wunderbaren'
                 }
             }
