@@ -4,10 +4,13 @@ pipeline {
         stage('build war') {
             agent {
                 docker { image 'gradle:latest' }
-                dir "${env.WORKSPACE}/backend/"
             }
             steps {
-                sh 'gradle war -b backend/build.gradle'
+                script {
+                    dir("${env.WORKSPACE}/backend/") {
+                        sh 'gradle war -b backend/build.gradle'
+                    }
+                }
             }
         }
         stage('build dockerimage') {
