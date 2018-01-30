@@ -24,6 +24,10 @@ public class UserDAO extends DatabaseDAO
             User user = session.get(User.class, id);
             return user != null ? Optional.of(user) : Optional.empty();
         }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void saveUser(User user)

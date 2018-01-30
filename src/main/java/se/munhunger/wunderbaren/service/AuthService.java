@@ -6,6 +6,7 @@ import com.google.common.cache.LoadingCache;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+import se.munhunger.wunderbaren.dao.UserDAO;
 import se.munhunger.wunderbaren.util.exception.UnauthorizedException;
 
 import java.io.UnsupportedEncodingException;
@@ -24,24 +25,23 @@ public class AuthService {
             });
 
     public void initiate(int pin) throws UnauthorizedException, ExecutionException, UnsupportedEncodingException {
-        cache.put(pin, "none");
-        complete(pin, "proper");
+        cache.put(pin, "000000");
     }
 
-    private static String makeToken() throws UnsupportedEncodingException {
+    private static String makeToken(String rfid) throws UnsupportedEncodingException {
         String jwt = Jwts.builder()
                 .setSubject("wunder")
-                .claim("bar", "bar")
+                .claim("user", rfid)
                 .signWith(SignatureAlgorithm.HS256, "SECRET".getBytes("UTF-8"))
                 .compact();
         return jwt;
     }
 
     public String complete(int pin, String rfid) throws ExecutionException, UnauthorizedException, UnsupportedEncodingException {
-        if(cache.get(pin).equals("none"))
+        if(cache.get(pin).equals("000000") && new UserDAO().getUser(rfid) != null) {
             cache.put(pin, rfid);
-        else if(!cache.get(pin).equals(rfid))
-            throw new UnauthorizedException();
-        return makeToken();
+            return makeToken(rfid);
+        }
+        throw new UnauthorizedException();
     }
 }
