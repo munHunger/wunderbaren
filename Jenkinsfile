@@ -13,7 +13,6 @@ pipeline {
             steps {
                 script {
                     dir('./') {
-                        ls build
                         def image = docker.build("munhunger/wunderbaren")
                         
                         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
