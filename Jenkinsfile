@@ -5,7 +5,7 @@ pipeline {
             agent {
                 docker { 
                     image 'gradle:latest'
-                    customWorkspace '/root/.jenkins/workspace/Wunderbaren'
+                    reuseNode true
                 }
             }
             steps {
@@ -15,7 +15,7 @@ pipeline {
         stage('build dockerimage') {
             steps {
                 script {
-                    dir("/root/.jenkins/workspace/Wunderbaren/backend/") {
+                    dir("backend/") {
                         def image = docker.build("munhunger/wunderbaren")
                         
                         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
