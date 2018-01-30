@@ -6,13 +6,13 @@ pipeline {
                 docker { image 'gradle:latest' }
             }
             steps {
-                sh 'gradle war'
+                sh 'gradle war -b backend/build.gradle'
             }
         }
         stage('build dockerimage') {
             steps {
                 script {
-                    dir('./') {
+                    dir('backend/') {
                         def image = docker.build("munhunger/wunderbaren")
                         
                         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
