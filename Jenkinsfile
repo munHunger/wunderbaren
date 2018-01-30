@@ -9,14 +9,16 @@ pipeline {
                 sh 'gradle war'
             }
         }
-        stage('build backend dockerimage') {
+        stage('build dockerimage') {
             steps {
                 script {
-                    def image = docker.build("munhunger/wunderbaren")
-                    
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-                        image.push("${env.BUILD_NUMBER}")
-                        image.push("latest")
+                    dir('./') {
+                        def image = docker.build("munhunger/wunderbaren")
+                        
+                        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                            image.push("${env.BUILD_NUMBER}")
+                            image.push("latest")
+                        }
                     }
                 }
             }
