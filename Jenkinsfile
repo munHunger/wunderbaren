@@ -12,7 +12,7 @@ pipeline {
         stage('build dockerimage') {
             steps {
                 script {
-                    dir('backend/') {
+                    dir("${env.WORKSPACE}/backend/") {
                         def image = docker.build("munhunger/wunderbaren")
                         
                         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
