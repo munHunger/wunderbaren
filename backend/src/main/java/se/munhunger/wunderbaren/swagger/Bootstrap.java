@@ -25,7 +25,7 @@ public class Bootstrap extends HttpServlet
         BeanConfig beanConfig = new BeanConfig();
         beanConfig.setVersion("1.0.0");
         beanConfig.setSchemes(new String[]{"http", "https"});
-        beanConfig.setBasePath("/api");
+        beanConfig.setBasePath("/wunderbaren/api");
         beanConfig.setResourcePackage("se.munhunger.wunderbaren");
         beanConfig.setScan(true);
     }

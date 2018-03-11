@@ -41,6 +41,7 @@ public class PurchaseService {
             userDAO.saveUser(user);
             for(Item item : items) {
                 item.stock--;
+                itemDAO.saveItem(item);
                 transactionDAO.create(new Transaction(user, item, item.cost));
             }
         }

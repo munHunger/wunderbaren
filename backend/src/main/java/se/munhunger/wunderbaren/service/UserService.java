@@ -11,6 +11,11 @@ public class UserService
     @Inject
     private UserDAO userDAO;
 
+    public User getUser(String id) throws NotInDatabaseException
+    {
+        return userDAO.getUser(id).orElseThrow(NotInDatabaseException::new);
+    }
+
     public void createUser(String id)
     {
         userDAO.createUser(id);
