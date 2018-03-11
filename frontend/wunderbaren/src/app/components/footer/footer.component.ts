@@ -10,4 +10,8 @@ import { Item } from "app/model/item.model";
 export class FooterComponent {
     constructor(private service: WunderbarService, private router: Router) {
     }
+
+    private pay(): void {
+        this.router.navigate(["payment"]);
+    }
 }

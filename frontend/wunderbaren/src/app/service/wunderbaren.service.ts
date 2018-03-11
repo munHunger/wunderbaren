@@ -9,7 +9,7 @@ import { CookieService } from "angular2-cookie/services/cookies.service";
 export class WunderbarService
 {
     public order: Item[] = [];
-    private baseURL: string = "http://localhost:80/wunderbaren/api";
+    private baseURL: string = "http://192.168.0.136:80/wunderbaren/api";
     private headers: any;
 
     constructor(private http: Http, private cookieService: CookieService)

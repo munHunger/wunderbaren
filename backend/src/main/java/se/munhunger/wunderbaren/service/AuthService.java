@@ -70,4 +70,8 @@ public class AuthService {
         }
         throw new UnauthorizedException();
     }
+
+    String getCode(String jwt) {
+        return Jwts.parser().parseClaimsJwt(jwt).getBody().get("user", String.class);
+    }
 }

@@ -10,6 +10,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ItemComponent } from './components/item/item.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
+import { PaymentComponent } from './components/payment/payment.component';
 
 import { WunderbarService } from './service/wunderbaren.service';
 import { RouterModule, Routes } from '@angular/router';
@@ -23,6 +24,7 @@ const appRoutes: Routes = [
     redirectTo: '/category',
     pathMatch: 'full'
   },
+  { path: 'payment', component: PaymentComponent },
   { path: 'splash', component: SplashComponent },
   { path: '**', component: SplashComponent }
 ];
@@ -35,7 +37,8 @@ const appRoutes: Routes = [
     NavbarComponent,
     ItemComponent,
     FooterComponent,
-    LoginComponent
+    LoginComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
