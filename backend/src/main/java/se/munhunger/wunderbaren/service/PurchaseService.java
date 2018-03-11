@@ -10,9 +10,7 @@ import se.munhunger.wunderbaren.util.exception.InsufficientFundsException;
 import se.munhunger.wunderbaren.util.exception.NotInDatabaseException;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class PurchaseService {
@@ -25,6 +23,7 @@ public class PurchaseService {
 
     @Inject
     TransactionDAO transactionDAO;
+
     public void createTransaction(String rfid, List<String> barcodes) throws NotInDatabaseException, InsufficientFundsException {
 
         User user = userDAO.getUser(rfid).orElseThrow(NotInDatabaseException::new);
@@ -39,10 +38,13 @@ public class PurchaseService {
         if(wallet > cost) {
             user.wallet -= cost;
             userDAO.saveUser(user);
+            Map<String, Item> itemMap = new HashMap<>();
             for(Item item : items) {
+                item = itemMap.getOrDefault(item.barcode, item);
                 item.stock--;
                 itemDAO.saveItem(item);
                 transactionDAO.create(new Transaction(user, item, item.cost));
+                itemMap.put(item.barcode, item);
             }
         }
         else {

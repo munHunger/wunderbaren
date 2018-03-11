@@ -9,7 +9,7 @@ import { CookieService } from "angular2-cookie/services/cookies.service";
 export class WunderbarService
 {
     public order: Item[] = [];
-    private baseURL: string = "http://localhost:8080/api";
+    private baseURL: string = "http://localhost:80/wunderbaren/api";
     private headers: any;
 
     constructor(private http: Http, private cookieService: CookieService)
@@ -25,6 +25,11 @@ export class WunderbarService
     public getStock(): Observable<Group[]>
     {
         return this.http.get(this.baseURL + "/stock").map(res => res.json()).catch(this.handleError);
+    }
+
+    public initLogin(pin: string): Observable<any>
+    {
+        return this.http.post(this.baseURL + "/auth/initiate?pin=" + pin, null);
     }
 
     handleError(error:Response | any)

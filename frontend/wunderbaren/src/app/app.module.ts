@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ItemComponent } from './components/item/item.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { LoginComponent } from './components/login/login.component';
 
 import { WunderbarService } from './service/wunderbaren.service';
 import { RouterModule, Routes } from '@angular/router';
@@ -17,10 +18,12 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
 const appRoutes: Routes = [
   { path: 'category', component: CategoryComponent },
   { path: 'item/:category',      component: ItemComponent },
+  { path: "login", component: LoginComponent },
   { path: '',
     redirectTo: '/category',
     pathMatch: 'full'
   },
+  { path: 'splash', component: SplashComponent },
   { path: '**', component: SplashComponent }
 ];
 
@@ -31,7 +34,8 @@ const appRoutes: Routes = [
     CategoryComponent,
     NavbarComponent,
     ItemComponent,
-    FooterComponent
+    FooterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

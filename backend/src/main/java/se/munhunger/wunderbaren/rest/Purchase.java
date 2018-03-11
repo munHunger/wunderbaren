@@ -31,7 +31,7 @@ public class Purchase {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Make a purchase")
     @ApiResponses({@ApiResponse(code = HttpServletResponse.SC_OK, message = "A transaction is made", responseContainer = "array", response = ItemGroup.class)})
-    public Response purchase(@ApiParam(value = "user rfid and list of barcodes") @FormParam("rfid") String rfid, @FormParam("List of barcodes") List<String> barcodes) {
+    public Response purchase(@ApiParam(value = "user rfid") @FormParam("rfid") String rfid, @FormParam("List of barcodes") List<String> barcodes) {
         try {
             purchaseService.createTransaction(rfid, barcodes);
         }
