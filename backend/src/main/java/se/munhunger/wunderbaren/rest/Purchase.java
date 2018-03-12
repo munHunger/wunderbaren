@@ -39,11 +39,11 @@ public class Purchase {
         try {
             purchaseService.initiatePayment(barcodes, jwt);
         } catch (PaymentNotCompletedException e) {
-            return Response.status(Stat)
+            return Response.status(Response.Status.REQUEST_TIMEOUT).entity(new ErrorMessage("Could not purchase", "The server timed out waiting for purchase completion")).build();
         } catch (InsufficientFundsException e) {
-            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorMessage("Could not purchase", "insufficient funds")).build();
         } catch (NotInDatabaseException e) {
-            e.printStackTrace();
+            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessage("Could not purchase", "could not find barcode in database")).build();
         }
         return Response.noContent().build();
     }
