@@ -64,7 +64,7 @@ public class PurchaseService {
     private static Map<String, List<String>> orders = new HashMap<>();
     private static Map<String, Semaphore> initiatedOrders = new HashMap<>();
 
-    public void initiatePayment(List<String> barcodes, String jwt) throws PaymentNotCompletedException, InsufficientFundsException, NotInDatabaseException {
+    public void initiatePayment(List<String> barcodes, String jwt) throws PaymentNotCompletedException {
         String rfid = authService.getCode(jwt);
         orders.put(rfid, barcodes);
         initiatedOrders.put(jwt, new Semaphore(0));
@@ -74,10 +74,20 @@ public class PurchaseService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        createTransaction(rfid, barcodes);
     }
 
-    public void completePayment(String jwt) {
-        initiatedOrders.get(authService.getCode(jwt)).release();
+    public void completePayment(String jwt, String userID) throws InsufficientFundsException, NotInDatabaseException {
+        String rfid = authService.getCode(jwt);
+        initiatedOrders.get(rfid).release();
+        List<String> barcodes = orders.get(rfid);
+        createTransaction(userID, barcodes);
+    }
+
+    public List<Item> getInitiatedPayment(String jwt) {
+        String rfid = authService.getCode(jwt);
+        List<String> barcodes = orders.get(rfid);
+        if(barcodes == null)
+            return null;
+        return barcodes.stream().map(b -> itemDAO.getByBarcode(b)).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList());
     }
 }

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.logging.Logger;
 
 @Api(value = "stock", authorizations = @Authorization(
         value="JWT_AUTHORIZATION"))
@@ -21,6 +22,8 @@ import javax.ws.rs.core.Response;
 @UserAuth
 public class Stock
 {
+    private static final Logger LOG = Logger.getLogger(Stock.class.getName());
+
     @Inject
     private StockService stockService;
 
@@ -30,6 +33,7 @@ public class Stock
     @IgnoreAuth
     @ApiResponses({@ApiResponse(code = HttpServletResponse.SC_OK, message = "A list of current stock", responseContainer = "array", response = ItemGroup.class)})
     public Response getCurrentStock() {
+        LOG.info(() -> "Getting current stock");
         return Response.ok(stockService.getAll()).build();
     }
 

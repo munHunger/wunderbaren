@@ -1,6 +1,7 @@
 package se.munhunger.wunderbaren.rest;
 
 import io.swagger.annotations.*;
+import se.munhunger.wunderbaren.annotations.IgnoreAuth;
 import se.munhunger.wunderbaren.annotations.UserAuth;
 import se.munhunger.wunderbaren.model.ErrorMessage;
 import se.munhunger.wunderbaren.service.UserService;
@@ -22,6 +23,7 @@ public class User {
     @POST
     @ApiOperation(value = "Creates a new user")
     @ApiResponses({@ApiResponse(code = HttpServletResponse.SC_NO_CONTENT, message = "The user was created")})
+    @IgnoreAuth
     public Response createUser(@ApiParam(value = "The RFID id of the user") @FormParam("id") String id) {
         userService.createUser(id);
         return Response.noContent().build();

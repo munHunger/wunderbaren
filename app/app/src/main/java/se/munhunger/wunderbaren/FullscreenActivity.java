@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.nfc.NdefMessage;
@@ -22,12 +23,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -46,13 +49,18 @@ public class FullscreenActivity extends AppCompatActivity {
     private NfcAdapter mAdapter;
     private PendingIntent mPendingIntent;
 
+    private String pin;
+
     private List<Tag> mTags = new ArrayList<>();
 
     private View mContentView;
     private WunderbarenService service = new WunderbarenService();
 
+    public static Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        context = this;
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_fullscreen);
@@ -125,8 +133,18 @@ public class FullscreenActivity extends AppCompatActivity {
                 || NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             long decId = toDec(tag.getId());
-            User user = service.getUser(decId);
-            Toast.makeText(this, "remaining:" + user.wallet, Toast.LENGTH_SHORT).show();
+            Context context = this;
+            new Thread(() -> {
+                if(pin != null) {
+                    service.login(pin, "" + decId);
+                    pin = null;
+                }
+                else {
+                    User user = service.getUser(decId);
+                    if (user != null)
+                        Toast.makeText(context, "remaining:" + user.wallet, Toast.LENGTH_SHORT).show();
+                }
+            }).start();
         }
     }
 
@@ -155,32 +173,69 @@ public class FullscreenActivity extends AppCompatActivity {
             return true;
         }
         return false;
-        /*
-        switch (item.getItemId()) {
-            case R.id.menu_main_clear:
-                clearTags();
-                return true;
-            case R.id.menu_copy_hex:
-                copyIds(getIdsHex());
-                return true;
-            case R.id.menu_copy_reversed_hex:
-                copyIds(getIdsReversedHex());
-                return true;
-            case R.id.menu_copy_dec:
-                copyIds(getIdsDec());
-                return true;
-            case R.id.menu_copy_reversed_dec:
-                copyIds(getIdsReversedDec());
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-        */
     }
 
     @Override
     public void onNewIntent(Intent intent) {
         //setIntent(intent);
         resolveIntent(intent);
+    }
+
+    public void login(View view) {
+
+        mContentView = findViewById(R.id.fullscreen_content);
+
+        mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+
+        if(!service.jwt.isEmpty())
+            return;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter PIN code presented at bar");
+
+        // Set up the input
+        final EditText input = new EditText(this);
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(input);
+
+        // Set up the buttons
+        Context context = this;
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                pin = input.getText().toString();
+                mContentView = findViewById(R.id.fullscreen_content);
+
+                mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+                Toast.makeText(context, "Scan your card now", Toast.LENGTH_LONG).show();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mContentView = findViewById(R.id.fullscreen_content);
+
+                mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 }

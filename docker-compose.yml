@@ -1,5 +1,101 @@
 version: '3'
 services:
-  wunderbaren:
-    image: "munhunger/wunderbaren"
-    build: ./
+    influx:
+        image: tutum/influxdb
+        environment:
+            - PRE_CREATE_DB="wunderbaren"
+            - ADMIN_USER="admin"
+            - INFLUXDB_INIT_PWD="admin"
+        volumes:
+            - influx-storage:/var/lib/influxdb
+        ports:
+            - 8086:8086
+
+    grafana-ui:
+        image: grafana/grafana
+        ports:
+            - 3000:3000
+        environment:
+            - GF_SECURITY_ADMIN_PASSWORD=admin
+        volumes:
+            - grafana-storage:/var/lib/grafana
+        links:
+            - influx:influx
+
+    mongo:
+        image: mongo:3
+        volumes:
+            - mongo_data:/data/db
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:5.6.6
+        environment:
+            - http.host=0.0.0.0
+            - xpack.security.enabled=false
+            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+        volumes:
+            - es_data:/usr/share/elasticsearch/data
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
+    graylog:
+        image: graylog/graylog:2.4.3-1
+        environment:
+            - GRAYLOG_PASSWORD_SECRET=s3cr3ts3cr3ts3cr3t
+            # Password: admin
+            - GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
+            - GRAYLOG_WEB_ENDPOINT_URI=http://127.0.0.1:9000/api
+        volumes:
+            - graylog_journal:/usr/share/graylog/data/journal
+        links:
+            - mongo
+            - elasticsearch
+        ports:
+            - 9000:9000
+
+    db:
+        image: "mysql"
+        environment:
+            MYSQL_ROOT_PASSWORD: "password"
+            MYSQL_USER: "root"
+            MYSQL_DATABASE: "wunderbaren"
+        volumes:
+        - db-storage:/var/lib/mysql
+
+    wunderbaren-backend:
+        image: "munhunger/wunderbaren-backend"
+        build: ./backend
+        environment:
+            DB_URL: "mysql://db:3306/wunderbaren?useSSL=false"
+            DB_USER: "root"
+            DB_PASS: "password"
+            INFLUX_URL: "http://influx:8086"
+            INFLUX_USER: "admin"
+            INFLUX_PASS: "admin"
+            INFLUX_DATABASE: "wunderbaren"
+        links:
+            - influx:influx
+            - db:db
+            - graylog:graylog
+        ports:
+            - 8085:8080
+
+    wunderbaren-frontend:
+        image: "munhunger/wunderbaren-frontend"
+        build: ./frontend/wunderbaren
+        ports:
+            - 4201:4200
+
+volumes:
+    db-storage:
+        driver: local
+    mongo_data:
+        driver: local
+    es_data:
+        driver: local
+    graylog_journal:
+        driver: local
+    grafana-storage:
+        driver: local
+    influx-storage:
+        driver: local

@@ -4,6 +4,7 @@ import io.swagger.annotations.*;
 import se.munhunger.wunderbaren.annotations.IgnoreAuth;
 import se.munhunger.wunderbaren.annotations.UserAuth;
 import se.munhunger.wunderbaren.model.ErrorMessage;
+import se.munhunger.wunderbaren.model.persistant.Item;
 import se.munhunger.wunderbaren.model.persistant.ItemGroup;
 import se.munhunger.wunderbaren.model.persistant.Transaction;
 import se.munhunger.wunderbaren.service.PurchaseService;
@@ -13,6 +14,7 @@ import se.munhunger.wunderbaren.util.exception.PaymentNotCompletedException;
 
 import javax.inject.Inject;
 import javax.print.attribute.standard.Media;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -33,13 +35,25 @@ public class Purchase {
     @Path("/initiatePayment")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Initiate a purchase")
-    @ApiResponses({@ApiResponse(code = HttpServletResponse.SC_OK, message = "A transaction is made"),
+    @ApiResponses({@ApiResponse(code = HttpServletResponse.SC_NO_CONTENT, message = "A transaction is made"),
                           @ApiResponse(code = HttpServletResponse.SC_REQUEST_TIMEOUT, message = "The payment was not finished on the app side", response = ErrorMessage.class)})
-    public Response initiatePayment(@FormParam("List of barcodes") List<String> barcodes, @HeaderParam("access_token") String jwt) {
+    public Response initiatePayment(@FormParam("barcodes") List<String> barcodes, @HeaderParam("access_token") String jwt) {
         try {
             purchaseService.initiatePayment(barcodes, jwt);
         } catch (PaymentNotCompletedException e) {
             return Response.status(Response.Status.REQUEST_TIMEOUT).entity(new ErrorMessage("Could not purchase", "The server timed out waiting for purchase completion")).build();
+        }
+        return Response.noContent().build();
+    }
+
+    @POST
+    @Path("/completePayment")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Completes a purchase")
+    @ApiResponses({@ApiResponse(code = HttpServletResponse.SC_OK, message = "A transaction is made")})
+    public Response completePayment(@FormParam("user") String userID, @HeaderParam("access_token") String jwt) {
+        try {
+            purchaseService.completePayment(jwt, userID);
         } catch (InsufficientFundsException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorMessage("Could not purchase", "insufficient funds")).build();
         } catch (NotInDatabaseException e) {
@@ -48,6 +62,18 @@ public class Purchase {
         return Response.noContent().build();
     }
 
+    @GET
+    @Path("/initiated")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Returns the current in progress payment")
+    @ApiResponses({@ApiResponse(code = HttpServletResponse.SC_OK, message = "The currently initiated request"),
+                   @ApiResponse(code = HttpServletResponse.SC_NO_CONTENT, message = "There is no initiated request")})
+    public Response getInitiated(@HeaderParam("access_token") String jwt) {
+        List<Item> items = purchaseService.getInitiatedPayment(jwt);
+        if(items == null)
+            return Response.noContent().build();
+        return Response.ok(items).build();
+    }
 
     @POST
     @Path("/buy")

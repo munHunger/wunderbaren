@@ -22,13 +22,14 @@ export class LoginComponent {
         this.pin = Math.floor(Math.random() * 89999999 + 10000000);
         this.service.initLogin("" + this.pin).catch(this.handleError).subscribe(res => {
             this.cookieService.put("access_token", res.headers.get("access_token"));
+            this.service.login(res.headers.get("access_token"));
             this.router.navigate(['category']);
         });
     }
 
     private handleError(error:Response | any)
     {
-        LoginComponent.singleton.login();
+        setTimeout(() => LoginComponent.singleton.login(), 1000);
         return Observable.throw("");
     }
 
