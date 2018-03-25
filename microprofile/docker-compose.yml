@@ -1,0 +1,7 @@
+version: '3'
+services:
+  builder:
+    image: maven
+    volumes:
+      - ./:/tmp
+    command: [ 'mvn', '-f', '/tmp/pom.xml', 'clean', 'install', 'payara-micro:bundle']
