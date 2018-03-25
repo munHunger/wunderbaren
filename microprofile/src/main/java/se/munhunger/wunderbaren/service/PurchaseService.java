@@ -30,7 +30,10 @@ public class PurchaseService {
     private AuthService authService;
 
     @Inject
-    TransactionDAO transactionDAO;
+    private TransactionDAO transactionDAO;
+
+    private static Map<String, List<String>> orders = new HashMap<>();
+    private static Map<String, Semaphore> initiatedOrders = new HashMap<>();
 
     public void createTransaction(String rfid, List<String> barcodes) throws NotInDatabaseException, InsufficientFundsException {
         User user = userDAO.getUser(rfid).orElseThrow(NotInDatabaseException::new);
@@ -62,9 +65,6 @@ public class PurchaseService {
     public List<Transaction> getTransactionsByUser(String rfid) throws NotInDatabaseException {
         return transactionDAO.getTransactions(rfid);
     }
-
-    private static Map<String, List<String>> orders = new HashMap<>();
-    private static Map<String, Semaphore> initiatedOrders = new HashMap<>();
 
     public void initiatePayment(List<String> barcodes, String jwt) throws PaymentNotCompletedException {
         String rfid = authService.getCode(jwt);

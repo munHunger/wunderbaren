@@ -9,6 +9,7 @@ import se.munhunger.wunderbaren.model.persistant.ItemGroup;
 import se.munhunger.wunderbaren.service.StockService;
 import se.munhunger.wunderbaren.util.exception.NotInDatabaseException;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -19,6 +20,7 @@ import java.util.logging.Logger;
         value="JWT_AUTHORIZATION"))
 @Path("/stock")
 @UserAuth
+@ApplicationScoped
 public class Stock
 {
     private static final Logger LOG = Logger.getLogger(Stock.class.getName());

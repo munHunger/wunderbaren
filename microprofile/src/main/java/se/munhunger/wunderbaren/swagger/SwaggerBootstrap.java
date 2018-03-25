@@ -8,7 +8,7 @@ import io.swagger.models.auth.In;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Startup;
-import javax.inject.Singleton;
+import javax.ejb.Singleton;
 
 @Startup
 @Singleton
@@ -25,7 +25,7 @@ public class SwaggerBootstrap
         BeanConfig beanConfig = new BeanConfig();
         beanConfig.setVersion("1.0.0");
         beanConfig.setSchemes(new String[]{"http", "https"});
-        beanConfig.setBasePath("/wunderbaren/api");
+        beanConfig.setBasePath("/wunderbaren-3.0/api");
         beanConfig.setResourcePackage("se.munhunger.wunderbaren");
         beanConfig.setScan(true);
     }

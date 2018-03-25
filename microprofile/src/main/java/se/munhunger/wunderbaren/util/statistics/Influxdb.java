@@ -12,6 +12,9 @@ import se.munhunger.wunderbaren.model.persistant.ItemGroup;
 import se.munhunger.wunderbaren.model.persistant.Transaction;
 import se.munhunger.wunderbaren.service.StockService;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Timer;
@@ -19,16 +22,19 @@ import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
+@Startup
+@Singleton
 public class Influxdb {
     private static final Logger logger = Logger.getLogger(Influxdb.class.getName());
 
+    @PostConstruct
     public static void init() {
         String url = System.getenv("INFLUX_URL");
         String user = System.getenv("INFLUX_USER");
         String pass = System.getenv("INFLUX_PASS");
         String namespace = System.getenv("INFLUX_DATABASE");
         if(url == null)
-            url = "http://localhost:8086";
+            return;
         if(user == null)
             user = "admin";
         if(pass == null)

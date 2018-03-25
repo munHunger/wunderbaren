@@ -6,7 +6,7 @@
 
     <groupId>se.munhunger</groupId>
     <artifactId>wunderbaren</artifactId>
-    <version>1.0</version>
+    <version>3.0</version>
     <packaging>war</packaging>
     <properties>
         <failOnMissingWebXml>false</failOnMissingWebXml>

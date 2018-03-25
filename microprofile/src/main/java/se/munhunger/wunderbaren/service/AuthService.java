@@ -22,14 +22,13 @@ import java.util.concurrent.TimeUnit;
 @Singleton
 public class AuthService {
 
-    @Inject
-    private UserDAO userDAO;
+    @Inject private UserDAO userDAO;
 
     private static Map<Integer, Semaphore> waitingAuth = new HashMap<>();
     private static Map<Integer, String> jwtMap = new HashMap<>();
 
     //change duration for pins to live longer
-    private static LoadingCache<Integer,String> cache = CacheBuilder.newBuilder().refreshAfterWrite(30,TimeUnit.SECONDS).
+    private static LoadingCache<Integer, String> cache = CacheBuilder.newBuilder().refreshAfterWrite(30, TimeUnit.SECONDS).
             build(new CacheLoader<Integer, String>() {
                 @Override
                 public String load(Integer key) throws Exception {
@@ -41,7 +40,7 @@ public class AuthService {
         cache.put(pin, "000000");
         waitingAuth.put(pin, new Semaphore(0));
         try {
-            if(!waitingAuth.get(pin).tryAcquire(30, TimeUnit.SECONDS)) {
+            if (!waitingAuth.get(pin).tryAcquire(30, TimeUnit.SECONDS)) {
                 throw new PaymentNotCompletedException();
             }
         } catch (InterruptedException e) {
@@ -51,20 +50,16 @@ public class AuthService {
     }
 
     private static String makeToken(String rfid) throws UnsupportedEncodingException {
-        String jwt = Jwts.builder()
-                .setSubject("wunder")
-                .claim("user", rfid)
-                .signWith(SignatureAlgorithm.HS256, "SECRET".getBytes("UTF-8"))
-                .compact();
+        String jwt = Jwts.builder().setSubject("wunder").claim("user", rfid).signWith(SignatureAlgorithm.HS256, "SECRET".getBytes("UTF-8")).compact();
         return jwt;
     }
 
     public String complete(int pin, String rfid) throws ExecutionException, UnauthorizedException, UnsupportedEncodingException {
-        if(cache.get(pin).equals("000000") && userDAO.getUser(rfid).isPresent()) {
+        if (cache.get(pin).equals("000000") && userDAO.getUser(rfid).isPresent()) {
             cache.put(pin, rfid);
             String jwt = makeToken(rfid);
             jwtMap.put(pin, jwt);
-            if(waitingAuth.get(pin) != null) {
+            if (waitingAuth.get(pin) != null) {
                 waitingAuth.get(pin).release();
                 waitingAuth.remove(pin);
             }
@@ -74,6 +69,11 @@ public class AuthService {
     }
 
     String getCode(String jwt) {
-        return Jwts.parser().parseClaimsJwt(jwt).getBody().get("user", String.class);
+        try {
+            return Jwts.parser().setSigningKey("SECRET".getBytes("UTF-8")).parseClaimsJws(jwt).getBody().get("user", String.class);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

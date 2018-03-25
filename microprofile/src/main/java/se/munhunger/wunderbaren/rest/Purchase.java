@@ -10,6 +10,7 @@ import se.munhunger.wunderbaren.util.exception.InsufficientFundsException;
 import se.munhunger.wunderbaren.util.exception.NotInDatabaseException;
 import se.munhunger.wunderbaren.util.exception.PaymentNotCompletedException;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -21,10 +22,11 @@ import java.util.List;
         value="JWT_AUTHORIZATION"))
 @UserAuth
 @Path("/purchase")
+@ApplicationScoped
 public class Purchase {
 
     @Inject
-    public PurchaseService purchaseService;
+    private PurchaseService purchaseService;
 
     @POST
     @Path("/initiatePayment")

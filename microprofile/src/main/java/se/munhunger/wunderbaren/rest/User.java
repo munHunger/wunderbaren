@@ -7,6 +7,7 @@ import se.munhunger.wunderbaren.model.ErrorMessage;
 import se.munhunger.wunderbaren.service.UserService;
 import se.munhunger.wunderbaren.util.exception.NotInDatabaseException;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.Response;
         value = "JWT_AUTHORIZATION"))
 @Path("/user")
 @UserAuth
+@ApplicationScoped
 public class User {
     @Inject
     private UserService userService;

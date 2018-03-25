@@ -19,6 +19,8 @@ public class HeaderFilter implements ContainerResponseFilter
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException
     {
         String origin = requestContext.getHeaders().getFirst("origin");
-        responseContext.getHeaders().add("Access-Control-Allow-Origin", "*");
+        responseContext.getHeaders().add("Access-Control-Allow-Origin", origin);
+        responseContext.getHeaders().add("Access-Control-Allow-Headers", "Access-Control-Allow-Origin, Access-Control-Allow-Headers, access_token");
+        responseContext.getHeaders().add("Access-Control-Expose-Headers", "access_token");
     }
 }

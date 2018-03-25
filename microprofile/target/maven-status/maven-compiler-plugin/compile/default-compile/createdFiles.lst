@@ -13,6 +13,7 @@ se\munhunger\wunderbaren\model\ErrorMessage.class
 se\munhunger\wunderbaren\model\persistant\Item.class
 se\munhunger\wunderbaren\annotations\UserAuth.class
 se\munhunger\wunderbaren\dao\ItemDAO.class
+se\munhunger\wunderbaren\rest\RestApplication.class
 se\munhunger\wunderbaren\service\StockService.class
 se\munhunger\wunderbaren\util\exception\InsufficientFundsException.class
 se\munhunger\wunderbaren\service\AuthService.class

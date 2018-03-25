@@ -6,6 +6,7 @@ import se.munhunger.wunderbaren.service.AuthService;
 import se.munhunger.wunderbaren.util.exception.PaymentNotCompletedException;
 import se.munhunger.wunderbaren.util.exception.UnauthorizedException;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -16,6 +17,7 @@ import java.util.concurrent.ExecutionException;
 
 @Api(value = "authentication")
 @Path("/auth")
+@ApplicationScoped
 public class Auth {
 
     @Inject private AuthService authservice;
