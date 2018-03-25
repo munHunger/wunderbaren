@@ -139,6 +139,9 @@ public class FullscreenActivity extends AppCompatActivity {
                     service.login(pin, "" + decId);
                     pin = null;
                 }
+                else if(WunderbarenService.hasOrder) {
+                    service.completePayment(decId);
+                }
                 else {
                     User user = service.getUser(decId);
                     if (user != null)

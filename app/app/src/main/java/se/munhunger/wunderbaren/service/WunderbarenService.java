@@ -40,9 +40,11 @@ import se.munhunger.wunderbaren.model.User;
 
 public class WunderbarenService {
 
-    private static final String BASE_URL = "http://192.168.0.196:8085/wunderbaren/api";
+    private static final String BASE_URL = "http://192.168.0.196:8080/wunderbaren-3.0/api";
 
     public static String jwt = "";
+
+    public static boolean hasOrder = false;
 
     public WunderbarenService() {}
 
@@ -53,7 +55,7 @@ public class WunderbarenService {
         try {
             HttpResponse response = client.execute(get);
             String json = IOUtils.toString(response.getEntity().getContent());
-            if (response.getStatusLine().getStatusCode() > 401) {
+            if (response.getStatusLine().getStatusCode() >= 401) {
                 createUser(id);
                 return getUser(id);
             }
@@ -62,11 +64,13 @@ public class WunderbarenService {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
 
-    private void createUser(long id) {
+    private void createUser(long id) throws Exception {
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost(BASE_URL + "/user");
         List<NameValuePair> body = new ArrayList<>();
@@ -78,8 +82,35 @@ public class WunderbarenService {
         }
         try {
             HttpResponse response = client.execute(post);
-            if(response.getStatusLine().getStatusCode() != 204)
+            if(response.getStatusLine().getStatusCode() != 204) {
                 Log.e("Creating user", "Got error code from server:" + response.getStatusLine().getStatusCode());
+                throw new Exception("Already created"); //Too generic but fuck it
+            }
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void completePayment(long id) {
+        HttpClient client = new DefaultHttpClient();
+        HttpPost post = new HttpPost(BASE_URL + "/purchase/completePayment");
+        post.addHeader("access_token", jwt);
+        List<NameValuePair> body = new ArrayList<>();
+        body.add(new BasicNameValuePair("user", "" + id));
+        try {
+            post.setEntity(new UrlEncodedFormEntity(body));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        try {
+            HttpResponse response = client.execute(post);
+            if(response.getStatusLine().getStatusCode() != 204) {
+                Log.e("Creating user", "Got error code from server:" + response.getStatusLine().getStatusCode());
+                return;
+            }
+            hasOrder = true;
         } catch (ClientProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -100,12 +131,12 @@ public class WunderbarenService {
                 @Override
                 public void run() {
                     HttpClient client = new DefaultHttpClient();
-                    HttpPost get = new HttpPost(BASE_URL + "/purchase/initiated");
+                    HttpGet get = new HttpGet(BASE_URL + "/purchase/initiated");
                     get.addHeader("access_token", jwt);
                     try {
                         HttpResponse response = client.execute(get);
-                        String json = IOUtils.toString(response.getEntity().getContent());
                         if (response.getStatusLine().getStatusCode() == 200) {
+                            String json = IOUtils.toString(response.getEntity().getContent());
                             Type type = new TypeToken<ArrayList<Item>>(){}.getType();
                             List<Item> items = new Gson().fromJson(json, type);
 
@@ -118,6 +149,7 @@ public class WunderbarenService {
                             mainHandler.post(() -> {
                                 Toast.makeText(FullscreenActivity.context, "Scan card now for payment of " + finalCost, Toast.LENGTH_LONG).show();
                             });
+                            hasOrder = true;
                         }
                     } catch (ClientProtocolException e) {
                         e.printStackTrace();

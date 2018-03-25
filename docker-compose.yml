@@ -64,7 +64,7 @@ services:
 
     wunderbaren-backend:
         image: "munhunger/wunderbaren-backend"
-        build: ./backend
+        build: ./microprofile
         environment:
             DB_URL: "mysql://db:3306/wunderbaren?useSSL=false"
             DB_USER: "root"

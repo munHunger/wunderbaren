@@ -24,15 +24,13 @@ public class CORSFilter implements Filter {
             }
         } else {
             // This is a cross-domain request, add headers allowing access
-            httpResp.setHeader("Access-Control-Allow-Origin", origin);
+            if(!httpResp.containsHeader("Access-Control-Allow-Origin"))
+                httpResp.setHeader("Access-Control-Allow-Origin", origin);
             httpResp.setHeader("Access-Control-Allow-Methods", VALID_METHODS);
 
             String headers = httpReq.getHeader("Access-Control-Request-Headers");
             if (headers != null)
                 httpResp.setHeader("Access-Control-Allow-Headers", headers);
-
-            // Allow caching cross-domain permission
-            httpResp.setHeader("Access-Control-Max-Age", "3600");
         }
         // Pass request down the chain, except for OPTIONS
         if (!"OPTIONS".equalsIgnoreCase(httpReq.getMethod())) {

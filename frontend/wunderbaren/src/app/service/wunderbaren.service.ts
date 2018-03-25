@@ -9,7 +9,7 @@ import { CookieService } from "angular2-cookie/services/cookies.service";
 export class WunderbarService
 {
     public order: Item[] = [];
-    private baseURL: string = "http://localhost:8085/wunderbaren/api";
+    private baseURL: string = "http://munhunger.se:8083/wunderbaren-3.0/api";
     public headers: any;
 
     constructor(private http: Http, private cookieService: CookieService)
@@ -46,8 +46,11 @@ export class WunderbarService
     public initiatePayment(): Observable<any>
     {
         let body = new URLSearchParams();
+        var items = "";
         for(let item of this.order)
-            body.set('barcodes', item.barcode);
+            items += item.barcode + ",";
+        items = items.substr(0, items.length - 1);
+        body.set('barcodes', items);
         return this.http.post(this.baseURL + "/purchase/initiatePayment", body, { headers: this.headers });
     }
 

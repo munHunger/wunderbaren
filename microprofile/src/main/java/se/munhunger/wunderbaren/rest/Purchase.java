@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -34,9 +35,9 @@ public class Purchase {
     @ApiOperation(value = "Initiate a purchase")
     @ApiResponses({@ApiResponse(code = 204, message = "A transaction is made"),
                           @ApiResponse(code = 408, message = "The payment was not finished on the app side", response = ErrorMessage.class)})
-    public Response initiatePayment(@FormParam("barcodes") List<String> barcodes, @HeaderParam("access_token") String jwt) {
+    public Response initiatePayment(@FormParam("barcodes") String barcodes, @HeaderParam("access_token") String jwt) {
         try {
-            purchaseService.initiatePayment(barcodes, jwt);
+            purchaseService.initiatePayment(Arrays.asList(barcodes.split(",")), jwt);
         } catch (PaymentNotCompletedException e) {
             return Response.status(Response.Status.REQUEST_TIMEOUT).entity(new ErrorMessage("Could not purchase", "The server timed out waiting for purchase completion")).build();
         }
@@ -47,7 +48,7 @@ public class Purchase {
     @Path("/completePayment")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Completes a purchase")
-    @ApiResponses({@ApiResponse(code = 200, message = "A transaction is made")})
+    @ApiResponses({@ApiResponse(code = 204, message = "A transaction is made")})
     public Response completePayment(@FormParam("user") String userID, @HeaderParam("access_token") String jwt) {
         try {
             purchaseService.completePayment(jwt, userID);

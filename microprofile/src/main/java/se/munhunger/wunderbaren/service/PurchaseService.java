@@ -69,9 +69,9 @@ public class PurchaseService {
     public void initiatePayment(List<String> barcodes, String jwt) throws PaymentNotCompletedException {
         String rfid = authService.getCode(jwt);
         orders.put(rfid, barcodes);
-        initiatedOrders.put(jwt, new Semaphore(0));
+        initiatedOrders.put(rfid, new Semaphore(0));
         try {
-            if(!initiatedOrders.get(jwt).tryAcquire(30, TimeUnit.SECONDS))
+            if(!initiatedOrders.get(rfid).tryAcquire(30, TimeUnit.SECONDS))
                 throw new PaymentNotCompletedException();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -80,8 +80,8 @@ public class PurchaseService {
 
     public void completePayment(String jwt, String userID) throws InsufficientFundsException, NotInDatabaseException {
         String rfid = authService.getCode(jwt);
+        List<String> barcodes = orders.remove(rfid);
         initiatedOrders.get(rfid).release();
-        List<String> barcodes = orders.get(rfid);
         createTransaction(userID, barcodes);
     }
 
