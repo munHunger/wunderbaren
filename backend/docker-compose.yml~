@@ -1,0 +1,7 @@
+version: "2"
+services:
+	gradle:
+		image: gradle
+		volumes:
+			- ./:/tmp/wunderbaren
+		command: [ "gradle", "war", "-b", "/tmp/wunderbaren/build.gradle" ]
