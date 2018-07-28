@@ -5,28 +5,27 @@
 <hibernate-configuration>
     <session-factory name="localConnection">
         <property name="hibernate.dialect">
-            org.hibernate.dialect.MySQL57Dialect
+            org.hibernate.dialect.PostgreSQL95Dialect
         </property>
         <property name="hibernate.connection.driver_class">
-            com.mysql.jdbc.Driver
+            org.postgresql.Driver
         </property>
 
-        <!-- Assume test is the database name -->
         <property
                 name="hibernate.connection.url">
-            jdbc:mysql://localhost:3306/wunderbaren?useSSL=false
+            jdbc:postgresql://localhost:5433/profile
         </property>
         <property name="hibernate.connection.username">
-            root
+            postgres
         </property>
         <property name="hibernate.connection.password">
-            password
+            postgres
         </property>
         <property name="hibernate.hbm2ddl.auto">
             update
         </property>
         <property name="show_sql">
-            true
+            false
         </property>
 
         <mapping class="se.munhunger.wunderbaren.model.persistant.ItemGroup" />

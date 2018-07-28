@@ -1,5 +1,8 @@
 package se.munhunger.wunderbaren.util.filter;
 
+import javax.annotation.Priority;
+import javax.enterprise.context.ApplicationScoped;
+import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
@@ -10,17 +13,14 @@ import java.io.IOException;
 
 
 @Provider
-public class HeaderFilter implements ContainerResponseFilter
-{
-    @Context
-    private ResourceInfo resourceInfo;
-
+@Priority(Priorities.HEADER_DECORATOR)
+@ApplicationScoped
+public class HeaderFilter implements ContainerResponseFilter {
     @Override
-    public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException
-    {
-        String origin = requestContext.getHeaders().getFirst("origin");
-        responseContext.getHeaders().add("Access-Control-Allow-Origin", origin);
-        responseContext.getHeaders().add("Access-Control-Allow-Headers", "Access-Control-Allow-Origin, Access-Control-Allow-Headers, access_token");
-        responseContext.getHeaders().add("Access-Control-Expose-Headers", "access_token");
+    public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws
+            IOException {
+        responseContext.getHeaders().add("Access-Control-Allow-Origin", "*");
+        responseContext.getHeaders().add("Access-Control-Allow-Headers", "*");
+        responseContext.getHeaders().add("Access-Control-Expose-Headers", "*");
     }
 }

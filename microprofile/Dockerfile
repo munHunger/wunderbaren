@@ -1,6 +1,10 @@
-FROM openjdk:8-jre-alpine
+FROM anapsix/alpine-java
 
-COPY ./target/wunderbaren-microbundle.jar /opt/wunderbaren-microbundle.jar
+RUN apk add postgresql
+
+ADD target/*.jar /opt/wunderbaren-microbundle.jar
+ADD wait-for-postgres.sh /opt/wait-for-postgres.sh
+RUN chmod +x /opt/wait-for-postgres.sh
 
 EXPOSE 8080
 

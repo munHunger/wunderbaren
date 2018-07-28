@@ -54,21 +54,23 @@ services:
             - 9000:9000
 
     db:
-        image: "mysql"
+        build: ./postgres
         environment:
-            MYSQL_ROOT_PASSWORD: "password"
-            MYSQL_USER: "root"
-            MYSQL_DATABASE: "wunderbaren"
+        - "POSTGRES_PASSWORD=postgres"
+        - "PGPASSWORD=postgres"
+        ports:
+        - "5433:5432"
         volumes:
-        - db-storage:/var/lib/mysql
+        - db-storage:/var/lib/postgresql/data
 
     wunderbaren-backend:
         image: "munhunger/wunderbaren-backend"
         build: ./microprofile
+        command: [ "/opt/wait-for-postgres.sh", "db" ]
         environment:
-            DB_URL: "mysql://db:3306/wunderbaren?useSSL=false"
-            DB_USER: "root"
-            DB_PASS: "password"
+            DB_URL: "postgresql://db:5432/wunderbaren"
+            DB_USER: "postgres"
+            DB_PASS: "postgres"
             INFLUX_URL: "http://influx:8086"
             INFLUX_USER: "admin"
             INFLUX_PASS: "admin"

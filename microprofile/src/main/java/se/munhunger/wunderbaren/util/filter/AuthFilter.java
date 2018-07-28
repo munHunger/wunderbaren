@@ -5,6 +5,9 @@ import io.jsonwebtoken.Jwts;
 import se.munhunger.wunderbaren.annotations.IgnoreAuth;
 import se.munhunger.wunderbaren.annotations.UserAuth;
 
+import javax.annotation.Priority;
+import javax.enterprise.context.ApplicationScoped;
+import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
@@ -16,6 +19,8 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 @Provider
+@Priority(Priorities.AUTHENTICATION)
+@ApplicationScoped
 public class AuthFilter implements ContainerRequestFilter {
 
     @Context
