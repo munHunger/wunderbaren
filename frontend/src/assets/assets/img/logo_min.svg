@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg>
+    <rect width="500" height="200" style="fill:rgb(255,255,255)" />
+
+    <g transform="translate(60,20) scale(2)">
+    <path
+       style="fill:#999;fill-opacity:1"
+       d="L 15,0 75,0 115,45 145,15 175,15 115,75 60,15 15,15 z"/>
+    <path
+       style="fill:#888;fill-opacity:1"
+       d="L 15,0 60,45 100,0 160,0 175,15 115,15 60,75 0,15 z"/>
+  </g>
+</svg>
