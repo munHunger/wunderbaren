@@ -1,0 +1,38 @@
+.card-title {
+    font-size: 20px;
+}
+
+.card-title small {
+    font-size: 11px;
+}
+
+.rfid {
+    opacity: 0.0;
+}
+
+.alert {
+    position: fixed;
+    bottom: 15px;
+    left: 15px;
+    border-radius: 5px;
+    background-color: #52585f;
+    padding: 20px;
+    animation: alert 5s;
+    opacity: 0.0;
+}
+
+@keyframes alert {
+    0% {
+        opacity: 1.0;
+        bottom: -40px;
+    }
+    10% {
+        bottom: 15px;
+    }
+    95% {
+        opacity: 1.0;
+    }
+    100% {
+        opacity: 0.0;
+    }
+}

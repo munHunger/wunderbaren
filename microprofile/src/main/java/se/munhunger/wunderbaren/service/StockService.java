@@ -24,23 +24,22 @@ public class StockService
         return itemGroupDAO.getAll();
     }
 
-    public void createGroup(String name)
+    public void createGroup(ItemGroup itemGroup)
     {
-        ItemGroup group = new ItemGroup(name);
-        itemGroupDAO.insert(group);
+        itemGroupDAO.insert(itemGroup);
     }
 
     public void createItem(Item item, String groupName) throws NotInDatabaseException
     {
         Optional<ItemGroup> itemGroup = itemGroupDAO.getGroupByName(groupName);
-        item.group = itemGroup.orElseThrow(NotInDatabaseException::new);
+        item.setGroup(itemGroup.orElseThrow(NotInDatabaseException::new));
         itemDAO.insert(item);
     }
 
     public void alterBy(String barcode, int amount) throws NotInDatabaseException
     {
         Item item = itemDAO.getByBarcode(barcode).orElseThrow(NotInDatabaseException::new);
-        item.stock += amount;
+        item.setStock(item.getStock()+amount);
         itemDAO.insert(item);
     }
 }

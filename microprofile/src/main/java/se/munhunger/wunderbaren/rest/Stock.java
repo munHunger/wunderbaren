@@ -86,10 +86,11 @@ public class Stock
 
     @POST
     @Path("/group")
+    @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Creates a new item group")
     @ApiResponses({@ApiResponse(code = 204, message = "A group was created")})
-    public Response createGroup(@ApiParam(value = "The name of the new group") @FormParam("name") String name) {
-        stockService.createGroup(name);
+    public Response createGroup(@ApiParam(value = "The group to be created") ItemGroup itemGroup) {
+        stockService.createGroup(itemGroup);
         return Response.noContent().build();
     }
 }

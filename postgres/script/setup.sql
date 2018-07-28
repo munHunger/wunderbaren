@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS wunderbaren;
+-- DROP DATABASE IF EXISTS wunderbaren;
 
-DROP ROLE IF EXISTS wunderbaren;
+-- DROP ROLE IF EXISTS wunderbaren;
 
 /* Create roles and users */
 CREATE ROLE wunderbaren WITH LOGIN PASSWORD 'wunderbaren';

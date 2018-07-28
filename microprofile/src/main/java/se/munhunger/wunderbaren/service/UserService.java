@@ -20,7 +20,8 @@ public class UserService
 
     public void createUser(String id)
     {
-        userDAO.createUser(id);
+        if(!userDAO.getUser(id).isPresent())
+            userDAO.createUser(id);
     }
 
     public User increaseWallet(String id, int amount) throws NotInDatabaseException

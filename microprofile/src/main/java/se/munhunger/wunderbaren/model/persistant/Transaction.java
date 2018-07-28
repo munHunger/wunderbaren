@@ -16,7 +16,7 @@ public class Transaction
     @Column(length = 64)
     public String id;
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "payer")
     public User user;
     public Date date;
     @OneToMany

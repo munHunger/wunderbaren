@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-8">
                 <p>Scan a card to pay with it.</p>
-                <button class="btn btn-success" type="button" style="margin-bottom:30px;">Pay with swish</button>
+                <button class="btn btn-success" type="button" style="margin-bottom:30px;" (click)="completePaymentSwish()">Pay with swish</button>
             </div>
             <div class="col-md-4">
                 <ul>
@@ -17,3 +17,4 @@
         </div>
     </div>
 </div>
+<input class="rfid" type="text" name="rfid" [(ngModel)]="rfid" (keyup.enter)="completePayment()" onblur="this.focus()" autocomplete="off" autofocus #rfidInput>

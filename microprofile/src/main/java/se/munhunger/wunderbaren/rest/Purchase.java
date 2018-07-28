@@ -60,6 +60,16 @@ public class Purchase {
         return Response.noContent().build();
     }
 
+    @POST
+    @Path("/completePayment/swish")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ApiOperation(value = "Completes a purchase without a user(swish)")
+    @ApiResponses({@ApiResponse(code = 204, message = "A purchase is skipped")})
+    public Response completePayment(@HeaderParam("access_token") String jwt) {
+        purchaseService.completePaymentSwish(jwt);
+        return Response.noContent().build();
+    }
+
     @GET
     @Path("/initiated")
     @Produces(MediaType.APPLICATION_JSON)

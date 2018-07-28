@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, ElementRef, ViewChild, AfterViewInit} from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { OnInit } from "@angular/core";
 import { ParamMap } from "@angular/router";
@@ -9,13 +9,24 @@ import { WunderbarService } from "../../service/wunderbaren.service";
 
 @Component({
   selector: 'item',
-  templateUrl: './item.component.html'
+  templateUrl: './item.component.html',
+  styleUrls: ['./item.component.css']
 })
-export class ItemComponent implements OnInit{
+export class ItemComponent implements OnInit, AfterViewInit {
     private category: String;
     private groups: Group[] = [];
+
+    private rfid: string;
+
+    private wallet: string;
+    
+    @ViewChild('rfidInput') rfidElement: ElementRef;
+
     constructor(private service: WunderbarService, private activeRoute: ActivatedRoute, private cookieService:CookieService) {
-        service.getStock().subscribe(res => this.groups = res);
+        service.getStock().subscribe(res => this.groups = res as Group[]);
+    }
+    ngAfterViewInit() {
+          this.rfidElement.nativeElement.focus();
     }
     
     ngOnInit(): void {
@@ -36,4 +47,15 @@ export class ItemComponent implements OnInit{
         this.service.order.push(item);
         this.cookieService.put("order", JSON.stringify(this.service.order));
     }
+    
+  private getUser() {
+    this.wallet = undefined;
+    this.service.getUser(this.rfid).subscribe(res => {
+      this.wallet = res.wallet;
+      setTimeout(() => {
+        this.wallet = undefined;
+      }, 5000);
+    });
+    this.rfid = "";
+  }
 }

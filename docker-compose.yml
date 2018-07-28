@@ -82,11 +82,11 @@ services:
         ports:
             - 8085:8080
 
-    wunderbaren-frontend:
-        image: "munhunger/wunderbaren-frontend"
-        build: ./frontend/wunderbaren
-        ports:
-            - 4201:4200
+    # wunderbaren-frontend:
+    #     image: "munhunger/wunderbaren-frontend"
+    #     build: ./frontend/wunderbaren
+    #     ports:
+    #         - 4201:4200
 
 volumes:
     db-storage:

@@ -21,6 +21,7 @@ public class HeaderFilter implements ContainerResponseFilter {
             IOException {
         responseContext.getHeaders().add("Access-Control-Allow-Origin", "*");
         responseContext.getHeaders().add("Access-Control-Allow-Headers", "*");
+        responseContext.getHeaders().add("Access-Control-Allow-Methods", "*");
         responseContext.getHeaders().add("Access-Control-Expose-Headers", "*");
     }
 }

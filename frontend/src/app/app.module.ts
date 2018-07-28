@@ -11,10 +11,12 @@ import { ItemComponent } from './components/item/item.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
 import { PaymentComponent } from './components/payment/payment.component';
+import { SwishComponent } from './components/swish/swish.component';
 
 import { WunderbarService } from './service/wunderbaren.service';
 import { RouterModule, Routes } from '@angular/router';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { HttpClientModule } from '@angular/common/http';
 
 const appRoutes: Routes = [
   { path: 'category', component: CategoryComponent },
@@ -26,6 +28,7 @@ const appRoutes: Routes = [
   },
   { path: 'payment', component: PaymentComponent },
   { path: 'splash', component: SplashComponent },
+  { path: 'swish', component: SwishComponent },
   { path: '**', component: SplashComponent }
 ];
 
@@ -38,12 +41,13 @@ const appRoutes: Routes = [
     ItemComponent,
     FooterComponent,
     LoginComponent,
-    PaymentComponent
+    PaymentComponent,
+    SwishComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule, 
+    HttpClientModule,
     RouterModule.forRoot(
       appRoutes
     )

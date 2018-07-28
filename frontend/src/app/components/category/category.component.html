@@ -4,12 +4,18 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">{{group.name}}</h4>
-                    <h6 class="text-muted card-subtitle mb-2">Amber gold</h6>
-                    <p class="card-text">Cheap beer from Finland.</p>
+                    <h6 class="text-muted card-subtitle mb-2">{{group.title}}</h6>
+                    <p class="card-text">{{group.subtitle}}</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div *ngIf="wallet != undefined" class="alert">
+    User has {{wallet}} kr in wallet
+</div>
+
+<input class="rfid" type="text" name="rfid" [(ngModel)]="rfid" (keyup.enter)="getUser()" onblur="this.focus()" autocomplete="off" autofocus #rfidInput>
 
 <payment-footer></payment-footer>

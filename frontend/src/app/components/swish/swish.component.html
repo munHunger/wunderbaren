@@ -1,0 +1,57 @@
+<div class="container" *ngIf="!initated">
+    <div class="row">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 offset-0 offset-lg-0" style="margin-top:15px;" (click)="initiateSwish(200)">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">200kr</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 offset-0 offset-lg-0" style="margin-top:15px;" (click)="initiateSwish(100)">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">100kr</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 offset-0 offset-lg-0" style="margin-top:15px;" (click)="initiateSwish(50)">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">50kr</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 offset-0 offset-lg-0" style="margin-top:15px;" (click)="initiateSwish(20)">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">20kr</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-5" *ngIf="initated">
+    <div class="row">
+        <div class="col">
+            <div class="jumbotron">
+                <p class="text-center">Scan a card to fill it with {{amount}}kr</p>
+                <div class="row mt-5">
+                    <div class="col-auto align-self-end m-auto">
+                        <div class="loading-dots">
+                        <div class="dot-container">
+                            <div class="dot first"></div>
+                        </div>
+                        <div class="dot-container">
+                            <div class="dot second"></div>
+                        </div>
+                        <div class="dot-container">
+                            <div class="dot third"></div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input class="rfid" type="text" name="rfid" [(ngModel)]="rfid" (keyup.enter)="completeSwish()" onblur="this.focus()" autocomplete="off" autofocus #rfidInput>

@@ -40,8 +40,9 @@ public class ItemGroupDAO extends DatabaseDAO {
         {
             String hql = "from ItemGroup";
             LOG.info(() -> "Creating query from HQL: " + hql);
-            Query query = session.createQuery(hql);
-            return query.getResultList();
+            List<ItemGroup> result = session.createQuery(hql, ItemGroup.class).list();
+            result.forEach(itemGroup -> itemGroup.items.forEach(item -> item.setGroup(null)));
+            return result;
         }
         catch (Exception e)
         {

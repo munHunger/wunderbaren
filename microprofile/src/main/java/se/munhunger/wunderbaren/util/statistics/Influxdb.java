@@ -70,14 +70,14 @@ public class Influxdb {
                     int total = 0;
                     int value = 0;
                     for(Item item : group.items) {
-                        total += item.stock;
-                        value += item.stock * item.cost;
+                        total += item.getStock();
+                        value += item.getStock() * item.getCost();
                     }
                     stockBuilder = stockBuilder.addField(group.name, total);
                     valueBuilder = valueBuilder.addField(group.name, value);
                 }
-                int totalStock = stock.stream().mapToInt(group -> group.items.stream().mapToInt(item -> item.stock).sum()).sum();
-                int totalValue = stock.stream().mapToInt(group -> group.items.stream().mapToInt(item -> item.stock*item.cost).sum()).sum();
+                int totalStock = stock.stream().mapToInt(group -> group.items.stream().mapToInt(Item::getStock).sum()).sum();
+                int totalValue = stock.stream().mapToInt(group -> group.items.stream().mapToInt(item -> item.getStock()*item.getCost()).sum()).sum();
                 stockBuilder.addField("total", totalStock);
                 valueBuilder.addField("total", totalValue);
 
@@ -96,6 +96,6 @@ public class Influxdb {
         //running timer task as daemon thread
         Timer timer = new Timer(true);
         logger.info(() -> "Starting timertask");
-        timer.scheduleAtFixedRate(timerTask, 0, 1000);
+        timer.scheduleAtFixedRate(timerTask, 0, 10000);
     }
 }

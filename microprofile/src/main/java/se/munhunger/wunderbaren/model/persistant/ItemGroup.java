@@ -20,7 +20,14 @@ public class ItemGroup
     @ApiModelProperty(value = "Name of the group, such as beer or wine")
     public String name;
 
-    @OneToMany(mappedBy = "group", cascade = {CascadeType.ALL})
+    @Column(length = 64)
+    @ApiModelProperty(value = "A short title for the group")
+    public String title;
+    @Column(length = 256)
+    @ApiModelProperty(value = "A subtitle for the group")
+    public String subtitle;
+
+    @OneToMany(mappedBy = "group", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     @ApiModelProperty(value = "A list of items in the group")
     public List<Item> items = new ArrayList<>();

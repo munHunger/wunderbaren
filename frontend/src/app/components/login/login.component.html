@@ -1,10 +1,10 @@
-<div class="container" style="margin-top:30px;">
+<div class="container mt-5">
     <div class="row">
         <div class="col">
             <div class="jumbotron">
                 <h1 class="text-center">{{getPin()}}</h1>
-                <p class="text-center">Open the app, enter this pin code and scan your card to login</p>
-                <div class="row" style="margin-top:30px;">
+                <p class="text-center">Open the app, enter this pin code and scan your card to login, or if connected, scan your card directly on the connected reader</p>
+                <div class="row mt-5">
                     <div class="col-auto align-self-end m-auto">
                         <div class="loading-dots">
                         <div class="dot-container">
@@ -23,3 +23,4 @@
         </div>
     </div>
 </div>
+<input class="rfid" type="text" name="rfid" [(ngModel)]="rfid" (keyup.enter)="loginRFID()" onblur="this.focus()" autocomplete="off" autofocus #rfidInput>

@@ -14,22 +14,25 @@ public class Item implements Serializable
 {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "parent_group")
-    public ItemGroup group;
+    @JoinColumn(name = "parentGroup")
+    private ItemGroup group;
 
     @ApiModelProperty(value = "The value from scanning a barcode")
     @Id
-    public String barcode;
+    private String barcode;
     @ApiModelProperty(value = "The name of the item")
     @Column(length = 128)
-    public String title;
+    private String title;
+    @ApiModelProperty(value = "The type of the item")
+    @Column(length = 64)
+    private String type;
     @ApiModelProperty(value = "The description of the item")
     @Column(length = 2048)
-    public String description;
+    private String description;
     @ApiModelProperty(value = "A non negative integer representing the cost of one item in SEK")
-    public int cost;
+    private int cost;
     @ApiModelProperty(value = "The amount remaining")
-    public int stock;
+    private int stock;
 
     public Item(){}
 
@@ -38,5 +41,62 @@ public class Item implements Serializable
         this.title = title;
         this.description = description;
         this.cost = cost;
+    }
+
+    @JsonIgnore
+    public ItemGroup getGroup() {
+        return this.group;
+    }
+
+    public int getStock() {
+        return this.stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public int getCost() {
+        return this.cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setGroup(ItemGroup group) {
+        this.group = group;
+    }
+
+    public String getBarcode() {
+        return this.barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return this.type;
     }
 }

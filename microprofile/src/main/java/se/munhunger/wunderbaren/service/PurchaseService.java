@@ -42,7 +42,7 @@ public class PurchaseService {
             throw new NotInDatabaseException();
         int cost = 0;
         for(Item item : items) {
-            cost += item.cost;
+            cost += item.getCost();
         }
         int wallet = user.wallet;
         if(wallet > cost) {
@@ -50,11 +50,11 @@ public class PurchaseService {
             userDAO.saveUser(user);
             Map<String, Item> itemMap = new HashMap<>();
             for(Item item : items) {
-                item = itemMap.getOrDefault(item.barcode, item);
-                item.stock--;
+                item = itemMap.getOrDefault(item.getBarcode(), item);
+                item.setStock(item.getStock()-1);
                 itemDAO.saveItem(item);
-                transactionDAO.create(new Transaction(user, item, item.cost));
-                itemMap.put(item.barcode, item);
+                transactionDAO.create(new Transaction(user, item, item.getCost()));
+                itemMap.put(item.getBarcode(), item);
             }
         }
         else {
@@ -81,8 +81,22 @@ public class PurchaseService {
     public void completePayment(String jwt, String userID) throws InsufficientFundsException, NotInDatabaseException {
         String rfid = authService.getCode(jwt);
         List<String> barcodes = orders.remove(rfid);
-        initiatedOrders.get(rfid).release();
         createTransaction(userID, barcodes);
+        initiatedOrders.get(rfid).release();
+    }
+
+    public void completePaymentSwish(String jwt) {
+        String rfid = authService.getCode(jwt);
+        List<String> barcodes = orders.remove(rfid);
+        List<Item> items = barcodes.stream().map(b -> itemDAO.getByBarcode(b)).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList());
+        Map<String, Item> itemMap = new HashMap<>();
+        for(Item item : items) {
+            item = itemMap.getOrDefault(item.getBarcode(), item);
+            item.setStock(item.getStock()-1);
+            itemDAO.saveItem(item);
+            itemMap.put(item.getBarcode(), item);
+        }
+        initiatedOrders.get(rfid).release();
     }
 
     public List<Item> getInitiatedPayment(String jwt) {
