@@ -64,6 +64,25 @@ union() {
     translate([600,0,0])
     desk();
 }
+
+module logo(width) {
+    thickness = 40;
+    module part() {
+        cube([width / 3, thickness, 20]);
+
+        rotate([0,0,45])
+        cube([width / 2, thickness, 20]);
+
+        rotate([0,0,-45])
+        translate([0,width / 2 - thickness,0])
+        cube([width / 2 - thickness, thickness, 20]);
+    }
+    part();
+    translate([width - thickness,0,20])
+    mirror([1,0,0])
+    part();
+}
+
 module desk() {
     //a();
     deskHeight = 750;
@@ -153,6 +172,18 @@ module desk() {
     backPlate((openWidth - profileSize) / 2);
     translate([profileSize + openWidth / 2, 0, 0])
     backPlate((openWidth - profileSize) / 2);
+
+    // logoWidth = (openWidth / 3) * 2;
+    // color([0.5,0.5,0.5])
+    // translate([openWidth / 2 - logoWidth / 2 + profileSize,-40, deskHeight + (fullHeight - deskHeight) / 2])
+    // rotate([-90,0,0])
+    // logo(logoWidth);
+
+    logoWidth = (openWidth) / 2 + 2 * profileSize;
+    color([0.5,0.5,0.5])
+    translate([openWidth / 2 + 15,-40, deskHeight + (fullHeight - deskHeight) / 2])
+    rotate([-90,0,0])
+    logo(logoWidth);
 }
 
 module oak(width, height) {
