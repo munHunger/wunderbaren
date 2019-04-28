@@ -58,6 +58,108 @@ union() {
     }
 }
 
+!union() {
+    //space();
+    c();
+    translate([600,0,0])
+    desk();
+}
+module desk() {
+    //a();
+    deskHeight = 750;
+    fullHeight = 1350;
+    depth = 650;
+    openWidth = 800;
+    shelfDepth = 300;
+    profileSize = 20;
+
+    grooveDepth = 70;
+
+    module side() {
+        squareProfile(fullHeight);
+        translate([0,shelfDepth - profileSize,deskHeight])
+        squareProfile(fullHeight - deskHeight);
+
+        translate([0,profileSize,fullHeight])
+        rotate([-90,0,0])
+        squareProfile(shelfDepth - profileSize * 2);
+
+        translate([0,depth - profileSize,0])
+        squareProfile(deskHeight);
+        translate([0,profileSize, floorClearing + profileSize])
+        rotate([-90,0,0])
+        squareProfile(depth - 2 * profileSize);
+        translate([0,profileSize, deskHeight])
+        rotate([-90,0,0])
+        squareProfile(depth - 2 * profileSize);
+    }
+    color([0.2, 0.2, 0.2]) {
+        side();
+        translate([width - profileSize, 0, 0])
+        side();
+        translate([openWidth, 0, 0])
+        side();
+
+        translate([openWidth / 2, 0, 0])
+        squareProfile(fullHeight);
+    }
+    translate([0,shelfDepth,deskHeight])
+    oak(width, depth - shelfDepth);
+
+    translate([0,0,fullHeight])
+    oak(width, shelfDepth);
+    translate([profileSize,profileSize + grooveDepth,deskHeight])
+    oak(width - profileSize * 2, shelfDepth - profileSize * 2 - grooveDepth);
+
+    module sidePanel() {
+        translate([profileSize, profileSize, deskHeight])
+        rotate([0,-90,0])
+        panel(fullHeight - deskHeight - profileSize, shelfDepth - 2 * profileSize);
+
+        translate([profileSize, profileSize, floorClearing + profileSize])
+        rotate([0,-90,0])
+        panel(deskHeight - floorClearing - 2 * profileSize, depth - 2 * profileSize);
+    }
+    sidePanel();
+    translate([width, 0, 0])
+    mirror([1,0,0])
+    sidePanel();
+
+    module backPlate(width) {
+        translate([0,profileSize,floorClearing + profileSize])
+        rotate([90,0,0])
+        panel(width, deskHeight - floorClearing - 2 * profileSize);
+
+        translate([0,profileSize,deskHeight])
+        rotate([90,0,0])
+        panel(width, fullHeight - deskHeight - profileSize);
+
+        color([0.2,0.2,0.2]) {
+            translate([0,0,floorClearing + profileSize])
+            rotate([0,90,0])
+            squareProfile(width);
+            translate([0,0,fullHeight])
+            rotate([0,90,0])
+            squareProfile(width);
+            translate([0,0,deskHeight])
+            rotate([0,90,0])
+            squareProfile(width);
+        }
+    }
+    translate([openWidth + profileSize, 0, 0])
+    backPlate(width - openWidth - 2 * profileSize);
+
+    translate([profileSize, 0, 0])
+    backPlate((openWidth - profileSize) / 2);
+    translate([profileSize + openWidth / 2, 0, 0])
+    backPlate((openWidth - profileSize) / 2);
+}
+
+module oak(width, height) {
+    echo ("oak", width, height);
+    cube([width, height, 20]);
+}
+
 module dimensions(size = [1000, 1000, 1000]) {
     thickness = 30;
     cube([thickness * 3, thickness * 3, thickness * 3], center = true);
@@ -113,8 +215,55 @@ module printer() {
     }
 }
 
-module panel(width = 500, height = 500, connectSides = [false, false, false, false], spacing = 500) {
-    cube([width, height, woodThickness]);
+module panel(width = 500, height = 500) {
+    profileSize = 20;
+    profileThickness = 2;
+    color([0.2,0.2,0.2]) {
+        translate([0,0, profileSize])
+        rotate([-90,0,0])
+        panelAngle(height);
+
+        translate([width,0, profileSize])
+        mirror([1,0,0])
+        rotate([-90,0,0])
+        panelAngle(height);
+
+        translate([0,0, profileSize])
+        mirror([0,0,1])
+        rotate([90,0,0])
+        rotate([0,90,0])
+        panelAngle(width);
+
+        translate([0,height, profileSize])
+        rotate([-90,0,0])
+        rotate([0,90,0])
+        panelAngle(width);
+    }
+
+    echo("panel", width, height);
+    translate([profileThickness, profileThickness, 0])
+    cube([width - 2 * profileThickness, height - 2 * profileThickness, 18]);
+}
+
+module panelAngle(length) {
+    echo("angle", length);
+    difference() {
+        cube([20, 20, length]);
+        translate([2,2,-1])
+        cube([20, 20, length + 2]);
+        rotate([0,0,45])
+        translate([-18, -10, -1])
+        cube([20, 20, length + 2]);
+
+        translate([0,0,length])
+        rotate([90,50,0])
+        translate([0, 0, -21])
+        cube([40, 20, 22]);
+
+        rotate([90,-50,0])
+        translate([0, -20, -21])
+        cube([40, 20, 22]);
+    }
 }
 
 module plyPanel(width = 500, height = 500) {
@@ -154,17 +303,6 @@ module c() {
     depth = 600;
     width = 900;
     shelfHeight = 1050;
-    color([0,1,0])
-    translate([50,-5,floorClearing+20])
-    cube([30,30,shelfHeight-floorClearing-40]);
-    color([0,0,1])
-    translate([50,-5,shelfHeight])
-    cube([30,30,height - shelfHeight]);
-    echo(str("length = ", shelfHeight-floorClearing-40));
-    echo(str("length = ", height - shelfHeight));
-    color([1,0,0])
-    translate([-5,20,floorClearing+20])
-    cube([30,420,height - shelfHeight]);
     $t = 2;
     color([0.1,0.1,0.1]) {
         for(i = [0:1:min(2, $t*10)]) {
@@ -406,7 +544,6 @@ module c() {
             translate([x*110 + 70, y*110 + 70, shelfHeight])
             cylinder(r=50, h = 140); //Glasses
 }
-!c();
 
 module sawGuide() {
     height = 5;
@@ -689,6 +826,7 @@ module bentAngle(connectWidth = 20, width = 47, thickness = 3, screwRadius = 3, 
 
 //https://www.bauhaus.se/ror-fyrkantigt-aluminium-20x20x1-5mm-2m-1.html
 module squareProfile(length = 10, width = 20) {
+    echo ("squareProfile", length);
     difference() {
         cube([width, width, length]);
         translate([1.5,1.5,-1])
