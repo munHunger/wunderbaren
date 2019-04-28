@@ -1,0 +1,24 @@
+{
+  "name": "materialCalc",
+  "version": "1.0.0",
+  "description": "Calculator of material cost",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "author": "munHunger",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "eslint": "^4.12.1",
+    "jasmine": "^2.8.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1"
+  }
+}

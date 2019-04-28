@@ -60,7 +60,7 @@ union() {
 
 !union() {
     //space();
-    c();
+    //c();
     translate([600,0,0])
     desk();
 }
@@ -88,7 +88,7 @@ module desk() {
     deskHeight = 750;
     fullHeight = 1350;
     depth = 650;
-    openWidth = 800;
+    openWidth = 750;
     shelfDepth = 300;
     profileSize = 20;
 
@@ -121,6 +121,25 @@ module desk() {
 
         translate([openWidth / 2, 0, 0])
         squareProfile(fullHeight);
+
+        translate([openWidth + profileSize, depth - profileSize, floorClearing + profileSize])
+        rotate([0,90,0])
+        squareProfile(width - openWidth - 2 * profileSize);
+        translate([openWidth + profileSize, depth - profileSize, deskHeight])
+        rotate([0,90,0])
+        squareProfile(width - openWidth - 2 * profileSize);
+
+        translate([profileSize, depth - profileSize, deskHeight])
+        rotate([0,90,0])
+        squareProfile(openWidth - profileSize);
+
+        translate([profileSize, shelfDepth - profileSize, fullHeight])
+        rotate([0,90,0])
+        squareProfile(openWidth - profileSize);
+
+        translate([openWidth + profileSize, shelfDepth - profileSize, fullHeight])
+        rotate([0,90,0])
+        squareProfile(width - openWidth - 2 * profileSize);
     }
     translate([0,shelfDepth,deskHeight])
     oak(width, depth - shelfDepth);
@@ -128,7 +147,9 @@ module desk() {
     translate([0,0,fullHeight])
     oak(width, shelfDepth);
     translate([profileSize,profileSize + grooveDepth,deskHeight])
-    oak(width - profileSize * 2, shelfDepth - profileSize * 2 - grooveDepth);
+    oak(openWidth - profileSize, shelfDepth - profileSize * 2 - grooveDepth);
+    translate([openWidth + profileSize,profileSize + grooveDepth,deskHeight])
+    oak(width - openWidth - 2 * profileSize, shelfDepth - profileSize * 2 - grooveDepth);
 
     module sidePanel() {
         translate([profileSize, profileSize, deskHeight])
@@ -173,17 +194,44 @@ module desk() {
     translate([profileSize + openWidth / 2, 0, 0])
     backPlate((openWidth - profileSize) / 2);
 
-    // logoWidth = (openWidth / 3) * 2;
-    // color([0.5,0.5,0.5])
-    // translate([openWidth / 2 - logoWidth / 2 + profileSize,-40, deskHeight + (fullHeight - deskHeight) / 2])
-    // rotate([-90,0,0])
-    // logo(logoWidth);
+    translate([openWidth + profileSize, profileSize, deskHeight])
+    rotate([0,-90,0])
+    panel(fullHeight - deskHeight, shelfDepth - 2 * profileSize);
+
+    translate([openWidth + profileSize, profileSize, floorClearing + profileSize])
+    rotate([0,-90,0])
+    panel(deskHeight - floorClearing - profileSize * 2, depth - 2 * profileSize);
+
+    translate([openWidth + profileSize,profileSize,floorClearing + profileSize])
+    mirror([0,0,1])
+    panel(width - openWidth - 2 * profileSize, depth - 2 * profileSize);
 
     logoWidth = (openWidth) / 2 + 2 * profileSize;
     color([0.5,0.5,0.5])
     translate([openWidth / 2 + 15,-40, deskHeight + (fullHeight - deskHeight) / 2])
     rotate([-90,0,0])
     logo(logoWidth);
+
+    translate([75,shelfDepth, deskHeight + 20])
+    rotate([0,0,-25])
+    laptop();
+
+    translate([80,30, deskHeight + 80])
+    monitor();
+
+    translate([openWidth + profileSize + 20,300, deskHeight + 20])
+    rotate([0,0,-90])
+    sonosPlay5();
+}
+
+module monitor() {
+    color([0.1,0.1,0.1])
+    cube([660, 50, 400]);
+}
+
+module sonosPlay5() {
+    color([0.2,0.2,0.2])
+    cube([203, 364, 154]);
 }
 
 module oak(width, height) {
