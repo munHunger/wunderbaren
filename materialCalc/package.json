@@ -4,7 +4,8 @@
   "description": "Calculator of material cost",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "jasmine",
+    "calc": "node index.js"
   },
   "author": "munHunger",
   "license": "MIT",

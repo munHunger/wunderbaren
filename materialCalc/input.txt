@@ -1,59 +1,5 @@
+Parsing design (AST generation)...
 Compiling design (CSG Tree generation)...
-ECHO: "angle", 170
-ECHO: "angle", 170
-ECHO: "angle", 670
-ECHO: "angle", 670
-ECHO: "panel", 670, 170
-ECHO: "angle", 220
-ECHO: "angle", 220
-ECHO: "angle", 410
-ECHO: "angle", 410
-ECHO: "panel", 410, 220
-ECHO: "angle", 310
-ECHO: "angle", 310
-ECHO: "angle", 1120
-ECHO: "angle", 1120
-ECHO: "panel", 1120, 310
-ECHO: "angle", 570
-ECHO: "angle", 570
-ECHO: "angle", 570
-ECHO: "angle", 570
-ECHO: "panel", 570, 570
-ECHO: "squareProfile", 1350
-ECHO: "squareProfile", 1350
-ECHO: "squareProfile", 1350
-ECHO: "squareProfile", 1350
-ECHO: "squareProfile", 1350
-ECHO: "squareProfile", 1350
-ECHO: "squareProfile", 560
-ECHO: "squareProfile", 560
-ECHO: "squareProfile", 560
-ECHO: "squareProfile", 560
-ECHO: "squareProfile", 560
-ECHO: "squareProfile", 560
-ECHO: "squareProfile", 560
-ECHO: "squareProfile", 560
-ECHO: "squareProfile", 560
-ECHO: "squareProfile", 420
-ECHO: "squareProfile", 420
-ECHO: "squareProfile", 420
-ECHO: "squareProfile", 420
-ECHO: "squareProfile", 420
-ECHO: "squareProfile", 420
-ECHO: "squareProfile", 420
-ECHO: "squareProfile", 420
-ECHO: "squareProfile", 420
-ECHO: "squareProfile", 420
-ECHO: "squareProfile", 420
-ECHO: "squareProfile", 420
-ECHO: "squareProfile", 280
-ECHO: "squareProfile", 280
-ECHO: "squareProfile", 520
-ECHO: "squareProfile", 520
-ECHO: "squareProfile", 910
-ECHO: "squareProfile", 910
-ECHO: "squareProfile", 520
-ECHO: "squareProfile", 520
 ECHO: "squareProfile", 1350
 ECHO: "squareProfile", 600
 ECHO: "squareProfile", 260
@@ -156,12 +102,203 @@ ECHO: "angle", 610
 ECHO: "angle", 410
 ECHO: "angle", 410
 ECHO: "panel", 410, 610
-Compiling design (CSG Products generation)...
-Geometries in cache: 114
-Geometry cache size in bytes: 95776
-CGAL Polyhedrons in cache: 0
-CGAL cache size in bytes: 0
-Compiling design (CSG Products normalization)...
-Normalized CSG tree has 353 elements
-Compile and preview finished.
-Total rendering time: 0 hours, 0 minutes, 0 seconds
+Rendering Polygon Mesh using CGAL...
+WARNING: Scaling a 2D object with 0 - removing object
+WARNING: Scaling a 2D object with 0 - removing object
+WARNING: Scaling a 2D object with 0 - removing object
+CGAL Cache insert: difference(){cube(size=[20,20,1350],cent (22224 bytes)
+CGAL Cache insert: difference(){cube(size=[20,20,600],cente (22224 bytes)
+CGAL Cache insert: difference(){cube(size=[20,20,260],cente (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,0,1,0],[0,-1,0, (22224 bytes)
+CGAL Cache insert: difference(){cube(size=[20,20,750],cente (22224 bytes)
+CGAL Cache insert: difference(){cube(size=[20,20,610],cente (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,0,1,0],[0,-1,0, (22224 bytes)
+CGAL Cache hit: multmatrix([[1,0,0,0],[0,0,1,0],[0,-1,0, (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,280],[0,0,1 (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,20],[0,0,1, (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,630],[0,0,1 (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,20],[0,0,1, (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,20],[0,0,1, (22224 bytes)
+CGAL Cache hit: difference(){cube(size=[20,20,1350],cent (22224 bytes)
+CGAL Cache hit: multmatrix([[1,0,0,0],[0,1,0,280],[0,0,1 (22224 bytes)
+CGAL Cache hit: multmatrix([[1,0,0,0],[0,1,0,20],[0,0,1, (22224 bytes)
+CGAL Cache hit: multmatrix([[1,0,0,0],[0,1,0,630],[0,0,1 (22224 bytes)
+CGAL Cache hit: multmatrix([[1,0,0,0],[0,1,0,20],[0,0,1, (22224 bytes)
+CGAL Cache hit: multmatrix([[1,0,0,0],[0,1,0,20],[0,0,1, (22224 bytes)
+CGAL Cache insert: group(){difference(){cube(size=[20,20,13 (115744 bytes)
+CGAL Cache hit: group(){difference(){cube(size=[20,20,13 (115744 bytes)
+CGAL Cache hit: difference(){cube(size=[20,20,1350],cent (22224 bytes)
+CGAL Cache insert: difference(){cube(size=[20,20,410],cente (22224 bytes)
+CGAL Cache insert: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (22224 bytes)
+CGAL Cache hit: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (22224 bytes)
+CGAL Cache insert: difference(){cube(size=[20,20,730],cente (22224 bytes)
+CGAL Cache insert: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (22224 bytes)
+CGAL Cache hit: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (22224 bytes)
+CGAL Cache hit: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,1180],[0,1,0,0],[0,0, (115744 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,750],[0,1,0,0],[0,0,1 (115744 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,375],[0,1,0,0],[0,0,1 (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,770],[0,1,0,630],[0,0 (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,770],[0,1,0,630],[0,0 (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,20],[0,1,0,630],[0,0, (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,20],[0,1,0,280],[0,0, (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,770],[0,1,0,280],[0,0 (22224 bytes)
+CGAL Cache insert: difference(){cube(size=[20,20,260],cente (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,0,1,0],[0,-1,0, (19408 bytes)
+CGAL Cache hit: multmatrix([[1,0,0,0],[0,0,1,0],[0,-1,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[-1,0,0,0],[0,1,0,0],[0,0,1, (19408 bytes)
+CGAL Cache insert: difference(){cube(size=[20,20,580],cente (19408 bytes)
+CGAL Cache insert: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,0,-1,0],[0,1,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,-1, (19408 bytes)
+CGAL Cache hit: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,0,1,0],[0,-1,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,1,2 (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,580],[0,1,0,0],[0,0,1 (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,1,2 (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,260],[0,0,1 (19408 bytes)
+CGAL Cache insert: color([0.2,0.2,0.2,1]){multmatrix([[1,0, (75008 bytes)
+CGAL Cache insert: group(){color([0.2,0.2,0.2,1]){multmatri (84368 bytes)
+CGAL Cache insert: multmatrix([[0,0,-1,0],[0,1,0,0],[1,0,0, (84368 bytes)
+CGAL Cache insert: difference(){cube(size=[20,20,610],cente (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,0,1,0],[0,-1,0, (19408 bytes)
+CGAL Cache hit: multmatrix([[1,0,0,0],[0,0,1,0],[0,-1,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[-1,0,0,0],[0,1,0,0],[0,0,1, (19408 bytes)
+CGAL Cache hit: difference(){cube(size=[20,20,610],cente (19408 bytes)
+CGAL Cache insert: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,0,-1,0],[0,1,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,-1, (19408 bytes)
+CGAL Cache hit: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,0,1,0],[0,-1,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,1,2 (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,610],[0,1,0,0],[0,0,1 (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,1,2 (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,610],[0,0,1 (19408 bytes)
+CGAL Cache insert: color([0.2,0.2,0.2,1]){multmatrix([[1,0, (75008 bytes)
+CGAL Cache insert: group(){color([0.2,0.2,0.2,1]){multmatri (84368 bytes)
+CGAL Cache insert: multmatrix([[0,0,-1,0],[0,1,0,0],[1,0,0, (84368 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,20],[0,1,0,20],[0,0,1 (84368 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,20],[0,1,0,20],[0,0,1 (84368 bytes)
+CGAL Cache hit: multmatrix([[1,0,0,20],[0,1,0,20],[0,0,1 (84368 bytes)
+CGAL Cache hit: multmatrix([[1,0,0,20],[0,1,0,20],[0,0,1 (84368 bytes)
+CGAL Cache insert: group(){multmatrix([[1,0,0,20],[0,1,0,20 (168640 bytes)
+CGAL Cache insert: multmatrix([[-1,0,0,0],[0,1,0,0],[0,0,1, (168640 bytes)
+CGAL Cache hit: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,1,2 (19408 bytes)
+CGAL Cache hit: multmatrix([[-1,0,0,0],[0,1,0,0],[0,0,1, (19408 bytes)
+CGAL Cache insert: difference(){cube(size=[20,20,410],cente (19408 bytes)
+CGAL Cache insert: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,0,-1,0],[0,1,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,-1, (19408 bytes)
+CGAL Cache hit: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,0,1,0],[0,-1,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,410],[0,1,0,0],[0,0,1 (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,1,2 (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,610],[0,0,1 (19408 bytes)
+CGAL Cache insert: color([0.2,0.2,0.2,1]){multmatrix([[1,0, (75008 bytes)
+CGAL Cache insert: group(){color([0.2,0.2,0.2,1]){multmatri (84368 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,0,-1,0],[0,1,0, (84368 bytes)
+CGAL Cache hit: difference(){cube(size=[20,20,580],cente (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,0,1,0],[0,-1,0, (19408 bytes)
+CGAL Cache hit: multmatrix([[1,0,0,0],[0,0,1,0],[0,-1,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[-1,0,0,0],[0,1,0,0],[0,0,1, (19408 bytes)
+CGAL Cache hit: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,1,2 (19408 bytes)
+CGAL Cache hit: multmatrix([[1,0,0,0],[0,0,1,0],[0,-1,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,1,2 (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,410],[0,1,0,0],[0,0,1 (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,580],[0,0,1 (19408 bytes)
+CGAL Cache insert: color([0.2,0.2,0.2,1]){multmatrix([[1,0, (75008 bytes)
+CGAL Cache insert: group(){color([0.2,0.2,0.2,1]){multmatri (84368 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,0,-1,0],[0,1,0, (84368 bytes)
+CGAL Cache hit: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (22224 bytes)
+CGAL Cache hit: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (22224 bytes)
+CGAL Cache hit: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,1,1 (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,1,1 (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,1,7 (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,20],[0,0,1, (84368 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,20],[0,0,1, (84368 bytes)
+CGAL Cache insert: color([0.2,0.2,0.2,1]){multmatrix([[1,0, (66480 bytes)
+CGAL Cache insert: group(){multmatrix([[1,0,0,0],[0,1,0,20] (225552 bytes)
+CGAL Cache hit: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,1,2 (19408 bytes)
+CGAL Cache hit: multmatrix([[-1,0,0,0],[0,1,0,0],[0,0,1, (19408 bytes)
+CGAL Cache insert: difference(){cube(size=[20,20,365],cente (19408 bytes)
+CGAL Cache insert: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,0,-1,0],[0,1,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,-1, (19408 bytes)
+CGAL Cache hit: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,0,1,0],[0,-1,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,365],[0,1,0,0],[0,0,1 (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,1,2 (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,610],[0,0,1 (19408 bytes)
+CGAL Cache insert: color([0.2,0.2,0.2,1]){multmatrix([[1,0, (75008 bytes)
+CGAL Cache insert: group(){color([0.2,0.2,0.2,1]){multmatri (84368 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,0,-1,0],[0,1,0, (84368 bytes)
+CGAL Cache hit: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,1,2 (19408 bytes)
+CGAL Cache hit: multmatrix([[-1,0,0,0],[0,1,0,0],[0,0,1, (19408 bytes)
+CGAL Cache hit: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,1,2 (19408 bytes)
+CGAL Cache hit: multmatrix([[1,0,0,0],[0,0,1,0],[0,-1,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,365],[0,1,0,0],[0,0,1 (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,580],[0,0,1 (19408 bytes)
+CGAL Cache insert: color([0.2,0.2,0.2,1]){multmatrix([[1,0, (75008 bytes)
+CGAL Cache insert: group(){color([0.2,0.2,0.2,1]){multmatri (84368 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,0,-1,0],[0,1,0, (84368 bytes)
+CGAL Cache insert: difference(){cube(size=[20,20,365],cente (22224 bytes)
+CGAL Cache insert: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (22224 bytes)
+CGAL Cache hit: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (22224 bytes)
+CGAL Cache hit: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,1,1 (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,1,1 (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,1,7 (22224 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,20],[0,0,1, (84368 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,20],[0,0,1, (84368 bytes)
+CGAL Cache insert: color([0.2,0.2,0.2,1]){multmatrix([[1,0, (66480 bytes)
+CGAL Cache insert: group(){multmatrix([[1,0,0,0],[0,1,0,20] (225552 bytes)
+CGAL Cache hit: group(){multmatrix([[1,0,0,0],[0,1,0,20] (225552 bytes)
+CGAL Cache hit: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,1,2 (19408 bytes)
+CGAL Cache hit: multmatrix([[-1,0,0,0],[0,1,0,0],[0,0,1, (19408 bytes)
+CGAL Cache insert: difference(){cube(size=[20,20,600],cente (19408 bytes)
+CGAL Cache insert: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,0,-1,0],[0,1,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,-1, (19408 bytes)
+CGAL Cache hit: multmatrix([[0,0,1,0],[0,1,0,0],[-1,0,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,0,1,0],[0,-1,0, (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,600],[0,1,0,0],[0,0,1 (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,1,2 (19408 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,260],[0,0,1 (19408 bytes)
+CGAL Cache insert: color([0.2,0.2,0.2,1]){multmatrix([[1,0, (75008 bytes)
+CGAL Cache insert: group(){color([0.2,0.2,0.2,1]){multmatri (84368 bytes)
+CGAL Cache insert: multmatrix([[0,0,-1,0],[0,1,0,0],[1,0,0, (84368 bytes)
+CGAL Cache hit: multmatrix([[0,0,-1,0],[0,1,0,0],[1,0,0, (84368 bytes)
+CGAL Cache hit: group(){color([0.2,0.2,0.2,1]){multmatri (84368 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,1,0,0],[0,0,-1, (84368 bytes)
+CGAL Cache insert: group(){cube(size=[138.333,40,20],center (24784 bytes)
+CGAL Cache insert: multmatrix([[-1,0,0,0],[0,1,0,0],[0,0,1, (24784 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,375],[0,1,0,0],[0,0,1 (24784 bytes)
+CGAL Cache insert: group(){group(){cube(size=[138.333,40,20 (63856 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,0],[0,0,1,0],[0,-1,0, (63856 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,390],[0,1,0,-40],[0,0 (63856 bytes)
+CGAL Cache insert: color([0.5,0.5,0.5,1]){cube(size=[322,22 (22000 bytes)
+CGAL Cache insert: multmatrix([[0.906308,0.422618,0,0],[-0. (22000 bytes)
+CGAL Cache insert: color([0.2,0.2,0.2,1]){group(){differenc (452288 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,1200],[0,1,0,0],[0,0, (168640 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,770],[0,1,0,0],[0,0,1 (225552 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,20],[0,1,0,0],[0,0,1, (225552 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,395],[0,1,0,0],[0,0,1 (225552 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,770],[0,1,0,20],[0,0, (84368 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,770],[0,1,0,20],[0,0, (84368 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,770],[0,1,0,20],[0,0, (84368 bytes)
+CGAL Cache insert: color([0.5,0.5,0.5,1]){multmatrix([[1,0, (63856 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,75],[0,1,0,300],[0,0, (22000 bytes)
+CGAL Cache insert: group(){color([0.2,0.2,0.2,1]){group(){d (2027480 bytes)
+CGAL Cache insert: multmatrix([[1,0,0,600],[0,1,0,0],[0,0,1 (2027480 bytes)
+WARNING: Mixing 2D and 3D objects is not supported, in file bar2.0.scad, line 61
+CGAL Cache insert: union(){multmatrix([[1,0,0,600],[0,1,0,0 (2027480 bytes)
+WARNING: Ignoring 3D child object for 2D operation, in file bar2.0.scad, line 61
+Geometries in cache: 170
+Geometry cache size in bytes: 129592
+CGAL Polyhedrons in cache: 142
+CGAL cache size in bytes: 13309016
+Total rendering time: 0 hours, 0 minutes, 16 seconds
+Top level object is a 2D object:
+Contours: 1
+Rendering finished.

@@ -31,38 +31,103 @@ openWidth = 750;
 
 woodThickness = 18;
 
-translate([2000,150,floorClearing])
-color([0.4,0.4,0.4])
-printer();
-union() {
-    if(!barMode) {
-        translate([650, 0, 0]) {
-            a();
-            translate([0,0,750])
-            b();
-        }
-        c();
-    }
-    if(barMode) {
-        offset = 1000;
-        translate([650 + offset, 0, 0])
-        rotate([0,0,90])
-        union() {
-            a();
-            translate([0,0,750])
-            b();
-        }
-        translate([650 + offset,1200,0])
-        rotate([0,0,90])
-        c();
-    }
-}
+// translate([2000,150,floorClearing])
+// color([0.4,0.4,0.4])
+// printer();
+// union() {
+//     if(!barMode) {
+//         translate([650, 0, 0]) {
+//             a();
+//             translate([0,0,750])
+//             b();
+//         }
+//         c();
+//     }
+//     if(barMode) {
+//         offset = 1000;
+//         translate([650 + offset, 0, 0])
+//         rotate([0,0,90])
+//         union() {
+//             a();
+//             translate([0,0,750])
+//             b();
+//         }
+//         translate([650 + offset,1200,0])
+//         rotate([0,0,90])
+//         c();
+//     }
+// }
 
-!union() {
-    //space();
+union() {
+    // space();
     //c();
     translate([600,0,0])
     desk();
+    // translate([1340, 50, floorClearing + 20])
+    // printer();
+    // translate([0,2000,0])
+    // planter();
+}
+
+module foot() {
+    outer = 20.5;
+    inner = 15.5;
+    thickness = 1.5;
+    height = 10;
+    space = 2;
+    difference() {
+        cube([outer + thickness, outer + thickness, height], center = true);
+        translate([0, 0, space])
+        cube([outer, outer, height], center = true);
+    }
+    difference() {
+        cube([inner, inner, height], center = true);
+        translate([0, 0, space])
+        cube([inner - thickness, inner - thickness, height], center = true);
+    }
+}
+
+module planter() {
+    difference() {
+        union() {
+            for(i = [0:1:4])
+                translate([0,0,120 * i])
+                cube([1000, 400, 100]);
+        }
+        translate([20,20,-1])
+        cube([960,360, 800]);
+    }
+
+    color([0.2,0.2,0.2]) {
+        translate([20,200,0])
+        squareProfile(2500);
+        translate([980,200,0])
+        squareProfile(2500);
+
+        translate([0,200,0])
+        intersection() {
+            union() {
+                for(i = [0:1:40])
+                    translate([0,0,150 * i])
+                    rotate([0,45,0])
+                    cube([2000, 2, 20]);
+            }
+            cube([1000, 2,2500]);
+        }
+        translate([0,202,0])
+        intersection() {
+            union() {
+                translate([0,0,-600])
+                for(i = [0:1:40])
+                    translate([0,0,150 * i])
+                    rotate([0,-45,0])
+                    cube([2000, 2, 20]);
+            }
+            cube([1000, 2,2500]);
+        }
+        translate([0,100,2500])
+        cube([1000, 200, 200]);
+    }
 }
 
 module logo(width) {
@@ -82,9 +147,10 @@ module logo(width) {
     mirror([1,0,0])
     part();
 }
-
+!desk();
 module desk() {
     //a();
+    floorClearing = 100;
     deskHeight = 750;
     fullHeight = 1350;
     depth = 650;
@@ -93,6 +159,7 @@ module desk() {
     profileSize = 20;
 
     grooveDepth = 70;
+    width = 1200;
 
     module side() {
         squareProfile(fullHeight);
@@ -101,7 +168,7 @@ module desk() {
 
         translate([0,profileSize,fullHeight])
         rotate([-90,0,0])
-        squareProfile(shelfDepth - profileSize * 2);
+        #squareProfile(shelfDepth - profileSize * 2);
 
         translate([0,depth - profileSize,0])
         squareProfile(deskHeight);
@@ -190,9 +257,9 @@ module desk() {
     backPlate(width - openWidth - 2 * profileSize);
 
     translate([profileSize, 0, 0])
-    backPlate((openWidth - profileSize) / 2);
+    backPlate((openWidth - profileSize * 2) / 2);
     translate([profileSize + openWidth / 2, 0, 0])
-    backPlate((openWidth - profileSize) / 2);
+    backPlate((openWidth - profileSize * 2) / 2);
 
     translate([openWidth + profileSize, profileSize, deskHeight])
     rotate([0,-90,0])
@@ -279,19 +346,20 @@ module laptop() {
 }
 
 module printer() {
-    translate([0,0,700])
-    import("./top.stl");
-    translate([0,0,350])
-    for(i = [0:1:2]) {
-        rotate([0,0,120 * i])
-        translate([0,152,0])
-        import("./K8800-RI.stl");
-    }
+    cube([440, 440, 470]);
+    // translate([0,0,700])
+    // import("./top.stl");
+    // translate([0,0,350])
+    // for(i = [0:1:2]) {
+    //     rotate([0,0,120 * i])
+    //     translate([0,152,0])
+    //     import("./K8800-RI.stl");
+    // }
 
-    for(i = [0:1:2]) {
-        rotate([0,0,120 * i])
-        import("./side.stl");
-    }
+    // for(i = [0:1:2]) {
+    //     rotate([0,0,120 * i])
+    //     import("./side.stl");
+    // }
 }
 
 module panel(width = 500, height = 500) {
