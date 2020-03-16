@@ -10,23 +10,30 @@ const wsClient = new SubscriptionClient("ws://localhost:5001/graphql", {
 
 const client = new WebSocketLink(wsClient);
 
-const listeners = [];
-// wsClient
-//   .request({
-//     query: gql`
-//       subscription {
-//         onJobComplete {
-//           name
-//         }
-//       }
-//     `,
-//     variables: {}
-//   })
-//   .subscribe(data => {
-//     console.log("recieved data from server!");
-//     console.log(data);
-//     listeners.forEach(listener => listener.apply(undefined, [data.data]));
-//   });
+wsClient
+  .request({
+    query: gql`
+      subscription {
+        scannedCard {
+          code
+          scannedDate
+          amount
+        }
+      }
+    `
+  })
+  .subscribe(data => card.set(data.data.scannedCard));
+
+export function purchase(card, items) {
+  return client.request({
+    query: gql`
+      mutation Purchase($card: String!, $items: [Order!]) {
+        purchase(card: $card, items: $items)
+      }
+    `,
+    variables: { card, items }
+  });
+}
 
 export function fetchCard(id) {
   client

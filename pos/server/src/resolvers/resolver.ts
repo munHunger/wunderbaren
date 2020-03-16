@@ -49,8 +49,10 @@ const resolverMap: IResolvers = {
       return lastScanned;
     },
     fillCard(_: void, input: any): Card {
-      logger.info(`Filling card ${input.card} with ${input.amount}`);
       let card = (lastScanned || db.cards[input.card]) as Card;
+      logger.info(
+        `Filling card ${card.code || input.card} with ${input.amount}`
+      );
       if (!card) {
         logger.error(`Card was not registered`);
         throw new Error("Cannot fill unregistered card");
@@ -59,6 +61,27 @@ const resolverMap: IResolvers = {
         card.save();
       }
       return card;
+    },
+    purchase(_: void, input: any): string {
+      let card = (lastScanned || db.cards[input.card]) as Card;
+      logger.info(`Making a purchase with card ${card.code}`);
+      let amount = input.items
+        .map((item: any) => ({
+          ...db.stock[item.category].find(
+            (stock: any) => stock.name === item.name
+          ),
+          amount: item.amount
+        }))
+        .reduce((acc: number, val: any) => (acc += val.price * val.amount), 0);
+      if (card.amount >= amount) {
+        logger.info(`Card funded OK for amount ${amount}`);
+        card.amount -= amount;
+        card.save();
+        return "OK";
+      } else {
+        logger.info(`Card is not funded for amount ${amount}`);
+        return "Not enough funds";
+      }
     }
   },
   Subscription: {

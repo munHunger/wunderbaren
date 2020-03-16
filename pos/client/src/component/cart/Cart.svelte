@@ -3,7 +3,7 @@
   import Hamburger from "../hamburger/Hamburger.svelte";
   import Keypad from "../keypad/Keypad.svelte";
 
-  import { fillCard } from "../../server.js";
+  import { fillCard, fetchCard, purchase } from "../../server.js";
 
   let keypadVisible = false;
 
@@ -18,6 +18,22 @@
   function keypadSend(value) {
     fillCard($card.code, value);
     keypadVisible = false;
+  }
+
+  function pay() {
+    purchase(
+      $card.code,
+      $cart.map(item => ({
+        category: item.category,
+        name: item.name,
+        amount: item.amount
+      }))
+    ).subscribe(data => {
+      if (data.data.purchase === "OK") {
+        cart.set([]);
+      }
+      fetchCard($card.code);
+    });
   }
 </script>
 
@@ -156,7 +172,8 @@
 
 <div class="dark pay">
   <button
-    class={$cart.reduce((acc, val) => acc + val.price * val.amount, 0) <= $card.amount ? '' : 'disabled'}>
+    class={$cart.reduce((acc, val) => acc + val.price * val.amount, 0) <= $card.amount ? '' : 'disabled'}
+    on:click={pay}>
     pay
   </button>
   <span class="text alt price">

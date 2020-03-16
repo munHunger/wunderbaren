@@ -6565,22 +6565,31 @@ var app = (function () {
     });
 
     const client$1 = new WebSocketLink(wsClient);
-    // wsClient
-    //   .request({
-    //     query: gql`
-    //       subscription {
-    //         onJobComplete {
-    //           name
-    //         }
-    //       }
-    //     `,
-    //     variables: {}
-    //   })
-    //   .subscribe(data => {
-    //     console.log("recieved data from server!");
-    //     console.log(data);
-    //     listeners.forEach(listener => listener.apply(undefined, [data.data]));
-    //   });
+
+    wsClient
+      .request({
+        query: src`
+      subscription {
+        scannedCard {
+          code
+          scannedDate
+          amount
+        }
+      }
+    `
+      })
+      .subscribe(data => card.set(data.data.scannedCard));
+
+    function purchase(card, items) {
+      return client$1.request({
+        query: src`
+      mutation Purchase($card: String!, $items: [Order!]) {
+        purchase(card: $card, items: $items)
+      }
+    `,
+        variables: { card, items }
+      });
+    }
 
     function fetchCard(id) {
       client$1
@@ -6641,11 +6650,11 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[8] = list[i];
+    	child_ctx[9] = list[i];
     	return child_ctx;
     }
 
-    // (125:2) {:else}
+    // (141:2) {:else}
     function create_else_block(ctx) {
     	let div;
 
@@ -6654,7 +6663,7 @@ var app = (function () {
     			div = element("div");
     			div.textContent = "Scan card to begin";
     			attr_dev(div, "class", "code text alt svelte-1yslful");
-    			add_location(div, file$2, 125, 4, 2423);
+    			add_location(div, file$2, 141, 4, 2757);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -6671,14 +6680,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(125:2) {:else}",
+    		source: "(141:2) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (114:2) {#if $card && $card.code}
+    // (130:2) {#if $card && $card.code}
     function create_if_block(ctx) {
     	let div4;
     	let div2;
@@ -6722,16 +6731,16 @@ var app = (function () {
     			div5 = element("div");
     			create_component(keypad.$$.fragment);
     			attr_dev(div0, "class", "code text alt svelte-1yslful");
-    			add_location(div0, file$2, 116, 8, 2125);
+    			add_location(div0, file$2, 132, 8, 2459);
     			attr_dev(div1, "class", "date svelte-1yslful");
-    			add_location(div1, file$2, 117, 8, 2179);
+    			add_location(div1, file$2, 133, 8, 2513);
     			attr_dev(div2, "class", "group svelte-1yslful");
-    			add_location(div2, file$2, 115, 6, 2097);
+    			add_location(div2, file$2, 131, 6, 2431);
     			attr_dev(div3, "class", "amount text alt svelte-1yslful");
-    			add_location(div3, file$2, 119, 6, 2242);
-    			add_location(div4, file$2, 114, 4, 2035);
+    			add_location(div3, file$2, 135, 6, 2576);
+    			add_location(div4, file$2, 130, 4, 2369);
     			attr_dev(div5, "class", div5_class_value = "keypad " + (/*keypadVisible*/ ctx[0] ? "" : "hidden") + " svelte-1yslful");
-    			add_location(div5, file$2, 121, 4, 2308);
+    			add_location(div5, file$2, 137, 4, 2642);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div4, anchor);
@@ -6749,7 +6758,7 @@ var app = (function () {
     			insert_dev(target, div5, anchor);
     			mount_component(keypad, div5, null);
     			current = true;
-    			dispose = listen_dev(div4, "click", /*click_handler*/ ctx[4], false, false, false);
+    			dispose = listen_dev(div4, "click", /*click_handler*/ ctx[5], false, false, false);
     		},
     		p: function update(ctx, dirty) {
     			if ((!current || dirty & /*$card*/ 2) && t0_value !== (t0_value = /*$card*/ ctx[1].code + "")) set_data_dev(t0, t0_value);
@@ -6782,28 +6791,28 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(114:2) {#if $card && $card.code}",
+    		source: "(130:2) {#if $card && $card.code}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (131:2) {#each $cart as item}
+    // (147:2) {#each $cart as item}
     function create_each_block(ctx) {
     	let div2;
     	let t0;
     	let span0;
-    	let t1_value = /*item*/ ctx[8].name + "";
+    	let t1_value = /*item*/ ctx[9].name + "";
     	let t1;
     	let t2;
     	let span1;
     	let t3;
-    	let t4_value = /*item*/ ctx[8].amount + "";
+    	let t4_value = /*item*/ ctx[9].amount + "";
     	let t4;
     	let t5;
     	let span2;
-    	let t6_value = /*item*/ ctx[8].amount * /*item*/ ctx[8].price + "";
+    	let t6_value = /*item*/ ctx[9].amount * /*item*/ ctx[9].price + "";
     	let t6;
     	let t7;
     	let t8;
@@ -6818,17 +6827,17 @@ var app = (function () {
     	let dispose;
 
     	function func(...args) {
-    		return /*func*/ ctx[5](/*item*/ ctx[8], ...args);
+    		return /*func*/ ctx[6](/*item*/ ctx[9], ...args);
     	}
 
     	const hamburger = new Hamburger({ props: { onClick: func }, $$inline: true });
 
     	function click_handler_1(...args) {
-    		return /*click_handler_1*/ ctx[6](/*item*/ ctx[8], ...args);
+    		return /*click_handler_1*/ ctx[7](/*item*/ ctx[9], ...args);
     	}
 
     	function click_handler_2(...args) {
-    		return /*click_handler_2*/ ctx[7](/*item*/ ctx[8], ...args);
+    		return /*click_handler_2*/ ctx[8](/*item*/ ctx[9], ...args);
     	}
 
     	const block = {
@@ -6856,21 +6865,21 @@ var app = (function () {
     			span4.textContent = "remove";
     			t12 = space();
     			attr_dev(span0, "class", "text name svelte-1yslful");
-    			add_location(span0, file$2, 133, 6, 2625);
+    			add_location(span0, file$2, 149, 6, 2959);
     			attr_dev(span1, "class", "text alt amount svelte-1yslful");
-    			add_location(span1, file$2, 134, 6, 2674);
+    			add_location(span1, file$2, 150, 6, 3008);
     			attr_dev(span2, "class", "text alt price svelte-1yslful");
-    			add_location(span2, file$2, 135, 6, 2732);
+    			add_location(span2, file$2, 151, 6, 3066);
     			attr_dev(span3, "class", "link button text alt svelte-1yslful");
-    			add_location(span3, file$2, 138, 10, 2904);
+    			add_location(span3, file$2, 154, 10, 3238);
     			attr_dev(span4, "class", "link button svelte-1yslful");
-    			add_location(span4, file$2, 141, 10, 3017);
+    			add_location(span4, file$2, 157, 10, 3351);
     			attr_dev(div0, "class", "drawer dark svelte-1yslful");
-    			add_location(div0, file$2, 137, 8, 2868);
-    			attr_dev(div1, "class", div1_class_value = "drawer wrapper " + (!/*item*/ ctx[8].open ? "hidden" : "") + " svelte-1yslful");
-    			add_location(div1, file$2, 136, 6, 2802);
+    			add_location(div0, file$2, 153, 8, 3202);
+    			attr_dev(div1, "class", div1_class_value = "drawer wrapper " + (!/*item*/ ctx[9].open ? "hidden" : "") + " svelte-1yslful");
+    			add_location(div1, file$2, 152, 6, 3136);
     			attr_dev(div2, "class", "item svelte-1yslful");
-    			add_location(div2, file$2, 131, 4, 2543);
+    			add_location(div2, file$2, 147, 4, 2877);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div2, anchor);
@@ -6905,11 +6914,11 @@ var app = (function () {
     			const hamburger_changes = {};
     			if (dirty & /*$cart*/ 4) hamburger_changes.onClick = func;
     			hamburger.$set(hamburger_changes);
-    			if ((!current || dirty & /*$cart*/ 4) && t1_value !== (t1_value = /*item*/ ctx[8].name + "")) set_data_dev(t1, t1_value);
-    			if ((!current || dirty & /*$cart*/ 4) && t4_value !== (t4_value = /*item*/ ctx[8].amount + "")) set_data_dev(t4, t4_value);
-    			if ((!current || dirty & /*$cart*/ 4) && t6_value !== (t6_value = /*item*/ ctx[8].amount * /*item*/ ctx[8].price + "")) set_data_dev(t6, t6_value);
+    			if ((!current || dirty & /*$cart*/ 4) && t1_value !== (t1_value = /*item*/ ctx[9].name + "")) set_data_dev(t1, t1_value);
+    			if ((!current || dirty & /*$cart*/ 4) && t4_value !== (t4_value = /*item*/ ctx[9].amount + "")) set_data_dev(t4, t4_value);
+    			if ((!current || dirty & /*$cart*/ 4) && t6_value !== (t6_value = /*item*/ ctx[9].amount * /*item*/ ctx[9].price + "")) set_data_dev(t6, t6_value);
 
-    			if (!current || dirty & /*$cart*/ 4 && div1_class_value !== (div1_class_value = "drawer wrapper " + (!/*item*/ ctx[8].open ? "hidden" : "") + " svelte-1yslful")) {
+    			if (!current || dirty & /*$cart*/ 4 && div1_class_value !== (div1_class_value = "drawer wrapper " + (!/*item*/ ctx[9].open ? "hidden" : "") + " svelte-1yslful")) {
     				attr_dev(div1, "class", div1_class_value);
     			}
     		},
@@ -6933,7 +6942,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(131:2) {#each $cart as item}",
+    		source: "(147:2) {#each $cart as item}",
     		ctx
     	});
 
@@ -6957,6 +6966,7 @@ var app = (function () {
     	let t4;
     	let t5;
     	let current;
+    	let dispose;
     	const if_block_creators = [create_if_block, create_else_block];
     	const if_blocks = [];
 
@@ -6999,19 +7009,19 @@ var app = (function () {
     			t4 = text(t4_value);
     			t5 = text("$");
     			attr_dev(div0, "class", "dark card svelte-1yslful");
-    			add_location(div0, file$2, 112, 0, 1979);
+    			add_location(div0, file$2, 128, 0, 2313);
     			attr_dev(div1, "class", "cart list svelte-1yslful");
-    			add_location(div1, file$2, 129, 0, 2491);
+    			add_location(div1, file$2, 145, 0, 2825);
 
     			attr_dev(button, "class", button_class_value = "" + (null_to_empty(/*$cart*/ ctx[2].reduce(func_1, 0) <= /*$card*/ ctx[1].amount
     			? ""
     			: "disabled") + " svelte-1yslful"));
 
-    			add_location(button, file$2, 151, 2, 3197);
+    			add_location(button, file$2, 167, 2, 3531);
     			attr_dev(span, "class", "text alt price svelte-1yslful");
-    			add_location(span, file$2, 155, 2, 3334);
+    			add_location(span, file$2, 172, 2, 3687);
     			attr_dev(div2, "class", "dark pay svelte-1yslful");
-    			add_location(div2, file$2, 150, 0, 3172);
+    			add_location(div2, file$2, 166, 0, 3506);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -7035,6 +7045,7 @@ var app = (function () {
     			append_dev(span, t4);
     			append_dev(span, t5);
     			current = true;
+    			dispose = listen_dev(button, "click", /*pay*/ ctx[4], false, false, false);
     		},
     		p: function update(ctx, [dirty]) {
     			let previous_block_index = current_block_type_index;
@@ -7125,6 +7136,7 @@ var app = (function () {
     			destroy_each(each_blocks, detaching);
     			if (detaching) detach_dev(t1);
     			if (detaching) detach_dev(div2);
+    			dispose();
     		}
     	};
 
@@ -7164,6 +7176,20 @@ var app = (function () {
     		$$invalidate(0, keypadVisible = false);
     	}
 
+    	function pay() {
+    		purchase($card.code, $cart.map(item => ({
+    			category: item.category,
+    			name: item.name,
+    			amount: item.amount
+    		}))).subscribe(data => {
+    			if (data.data.purchase === "OK") {
+    				cart.set([]);
+    			}
+
+    			fetchCard($card.code);
+    		});
+    	}
+
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
@@ -7183,9 +7209,12 @@ var app = (function () {
     		Hamburger,
     		Keypad,
     		fillCard,
+    		fetchCard,
+    		purchase,
     		keypadVisible,
     		update: update$1,
     		keypadSend,
+    		pay,
     		$card,
     		$cart
     	});
@@ -7203,6 +7232,7 @@ var app = (function () {
     		$card,
     		$cart,
     		keypadSend,
+    		pay,
     		click_handler,
     		func,
     		click_handler_1,
