@@ -1,5 +1,6 @@
 <script>
   import { tickets } from "../../data";
+  import { slide } from "svelte/transition";
   function remove(ticket) {
     tickets.update(tickets => tickets.filter(t => t !== ticket));
   }
@@ -44,7 +45,7 @@
 
 <div class="tickets">
   {#each $tickets as ticket}
-    <div class="ticket dark" on:click={() => remove(ticket)}>
+    <div class="ticket dark" on:click={() => remove(ticket)} transition:slide>
       <div class="card dark text alt">{ticket.card.code}</div>
 
       <div class="date dark">{ticket.placedDate}</div>
