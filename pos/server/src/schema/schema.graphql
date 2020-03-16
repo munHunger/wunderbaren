@@ -1,0 +1,33 @@
+type Query {
+  getCard: Card
+  getItems: [Item]
+}
+
+type Mutation {
+  scanCard(card: String!): Card
+  fillCard(card: String, amount: Int!): Card
+  purchase(card: String, items: [Order!]): String
+}
+
+type Subscription {
+  scannedCard: Card
+}
+
+input Order {
+  category: String!
+  name: String!
+  amount: Int!
+}
+
+type Card {
+  code: String!
+  scannedDate: String
+  amount: Int
+}
+
+type Item {
+  category: String!
+  name: String!
+  image: String
+  price: Int!
+}

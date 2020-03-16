@@ -2,6 +2,16 @@
   import Cart from "./cart/Cart.svelte";
   import Tabs from "./tabs/Tabs.svelte";
   import ItemGrid from "./item/ItemGrid.svelte";
+
+  import { fetchCard } from "../server";
+  let card = "";
+
+  function handleKeydown(key) {
+    if (key.key === "Enter") {
+      fetchCard(card);
+      card = "";
+    } else if (key.key.length === 1) card += key.key;
+  }
 </script>
 
 <style type="text/scss">
@@ -65,6 +75,8 @@
     height: 100%;
   }
 </style>
+
+<svelte:window on:keydown={handleKeydown} />
 
 <div class="content">
   <Tabs tabs={['beer', 'cider', 'drinks', 'shots']} selected="drinks" />

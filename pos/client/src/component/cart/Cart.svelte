@@ -3,6 +3,8 @@
   import Hamburger from "../hamburger/Hamburger.svelte";
   import Keypad from "../keypad/Keypad.svelte";
 
+  import { fillCard } from "../../server.js";
+
   let keypadVisible = false;
 
   function update(item, amount) {
@@ -11,6 +13,11 @@
       if (existing) existing.amount += amount;
       return data;
     });
+  }
+
+  function keypadSend(value) {
+    fillCard($card.code, value);
+    keypadVisible = false;
   }
 </script>
 
@@ -110,16 +117,20 @@
 </style>
 
 <div class="dark card">
-  <div on:click={() => (keypadVisible = !keypadVisible)}>
-    <div class="group">
-      <div class="code text alt">{$card.code}</div>
-      <div class="date">{$card.scannedDate}</div>
+  {#if $card && $card.code}
+    <div on:click={() => (keypadVisible = !keypadVisible)}>
+      <div class="group">
+        <div class="code text alt">{$card.code}</div>
+        <div class="date">{$card.scannedDate}</div>
+      </div>
+      <div class="amount text alt">{$card.amount}$</div>
     </div>
-    <div class="amount text alt">{$card.amount}$</div>
-  </div>
-  <div class="keypad {keypadVisible ? '' : 'hidden'}">
-    <Keypad onSend={() => (keypadVisible = false)} />
-  </div>
+    <div class="keypad {keypadVisible ? '' : 'hidden'}">
+      <Keypad onSend={keypadSend} />
+    </div>
+  {:else}
+    <div class="code text alt">Scan card to begin</div>
+  {/if}
 </div>
 
 <div class="cart list">

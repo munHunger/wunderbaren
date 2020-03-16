@@ -1,8 +1,11 @@
 {
-  "name": "Boldrei",
+  "name": "wunderbaren-client",
   "version": "0.0.1",
-  "description": "homeautomation UI",
+  "description": "client of wunderbaren",
   "main": "index.js",
+  "files": [
+    "public/*"
+  ],
   "devDependencies": {
     "@babel/core": "7.7.2",
     "@storybook/addon-actions": "^5.2.6",
