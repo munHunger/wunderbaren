@@ -65,18 +65,31 @@ const resolverMap: IResolvers = {
     purchase(_: void, input: any): string {
       let card = (lastScanned || db.cards[input.card]) as Card;
       logger.info(`Making a purchase with card ${card.code}`);
-      let amount = input.items
-        .map((item: any) => ({
-          ...db.stock[item.category].find(
-            (stock: any) => stock.name === item.name
-          ),
-          amount: item.amount
-        }))
-        .reduce((acc: number, val: any) => (acc += val.price * val.amount), 0);
+      let items = input.items.map((item: any) => ({
+        ...db.stock[item.category].find(
+          (stock: any) => stock.name === item.name
+        ),
+        amount: item.amount
+      }));
+      let amount = items.reduce(
+        (acc: number, val: any) => (acc += val.price * val.amount),
+        0
+      );
       if (card.amount >= amount) {
         logger.info(`Card funded OK for amount ${amount}`);
         card.amount -= amount;
         card.save();
+
+        pubsub.publish(subscriptionTopics.transaction, {
+          transaction: {
+            card,
+            placedDate:
+              ("0" + new Date().getHours()).slice(-2) +
+              ":" +
+              ("0" + new Date().getMinutes()).slice(-2),
+            items
+          }
+        });
         return "OK";
       } else {
         logger.info(`Card is not funded for amount ${amount}`);
@@ -89,6 +102,12 @@ const resolverMap: IResolvers = {
       subscribe(): AsyncIterator<String, Card, Card> {
         logger.info("subscribed to scanned card");
         return pubsub.asyncIterator(subscriptionTopics.scannedCard);
+      }
+    },
+    transaction: {
+      subscribe() {
+        logger.info("subscribed to transactions");
+        return pubsub.asyncIterator(subscriptionTopics.transaction);
       }
     }
   }

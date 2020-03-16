@@ -2,7 +2,7 @@ import { SubscriptionClient } from "subscriptions-transport-ws";
 import { gql } from "apollo-boost";
 import { WebSocketLink } from "apollo-link-ws";
 
-import { items, card } from "./data";
+import { items, card, tickets } from "./data";
 
 const wsClient = new SubscriptionClient("ws://localhost:5001/graphql", {
   reconnect: true
@@ -23,6 +23,27 @@ wsClient
     `
   })
   .subscribe(data => card.set(data.data.scannedCard));
+
+wsClient
+  .request({
+    query: gql`
+      subscription {
+        transaction {
+          card {
+            code
+          }
+          placedDate
+          items {
+            name
+            amount
+          }
+        }
+      }
+    `
+  })
+  .subscribe(data =>
+    tickets.update(tickets => tickets.concat([data.data.transaction]))
+  );
 
 export function purchase(card, items) {
   return client.request({

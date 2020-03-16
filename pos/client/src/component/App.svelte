@@ -2,7 +2,7 @@
   import Cart from "./cart/Cart.svelte";
   import Tabs from "./tabs/Tabs.svelte";
   import ItemGrid from "./item/ItemGrid.svelte";
-
+  import Tickets from "./tickets/Tickets.svelte";
   import { fetchCard } from "../server";
   let card = "";
 
@@ -81,6 +81,7 @@
 <div class="content">
   <Tabs tabs={['beer', 'cider', 'drinks', 'shots']} selected="drinks" />
   <ItemGrid />
+  <Tickets />
 </div>
 <div class="sidebar dark">
   <Cart />

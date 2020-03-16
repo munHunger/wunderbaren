@@ -11,12 +11,19 @@ type Mutation {
 
 type Subscription {
   scannedCard: Card
+  transaction: Transaction
 }
 
 input Order {
   category: String!
   name: String!
   amount: Int!
+}
+
+type Transaction {
+  card: Card!
+  placedDate: String!
+  items: [Item!]
 }
 
 type Card {
@@ -26,8 +33,9 @@ type Card {
 }
 
 type Item {
-  category: String!
+  category: String
   name: String!
   image: String
+  amount: Int
   price: Int!
 }
