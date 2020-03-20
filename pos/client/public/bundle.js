@@ -6794,7 +6794,7 @@ var app = (function () {
     function purchase(card, items) {
       return client$1.request({
         query: src`
-      mutation Purchase($card: String!, $items: [Order!]) {
+      mutation Purchase($card: String!, $items: [OrderInput!]!) {
         purchase(card: $card, items: $items)
       }
     `,

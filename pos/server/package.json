@@ -27,6 +27,8 @@
     "graphql-tools": "4.0.5",
     "apollo-server-express": "2.9.0",
     "apollo-boost": "0.4.4",
+    "type-graphql": "0.17.6",
+    "reflect-metadata": "0.1.13",
     "wunderbaren-client": "file:../client"
   },
   "devDependencies": {

@@ -48,7 +48,7 @@ wsClient
 export function purchase(card, items) {
   return client.request({
     query: gql`
-      mutation Purchase($card: String!, $items: [Order!]) {
+      mutation Purchase($card: String!, $items: [OrderInput!]!) {
         purchase(card: $card, items: $items)
       }
     `,
